@@ -1,0 +1,30 @@
+[module]
+name = "rea"
+version = "0.1.0"
+description = "Rétro-ingénierie de binaires x86-64 : analyseur ELF64, désassembleur (Zydis, vendu en interne) et lifting C par fonction"
+type = "static"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src", "src/zydis"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.dataio"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

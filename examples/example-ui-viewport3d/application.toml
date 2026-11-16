@@ -1,0 +1,17 @@
+[application]
+name = "example-ui-viewport3d"
+version = "1.0.0"
+description = "Vues 3D intégrées à une interface : la même scène dans une vue perspective et une vue de dessus (rapports d'aspect très différents), sélection à la souris, déplacement dans la vue de dessus, propriétés modifiables"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

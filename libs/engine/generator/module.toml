@@ -1,0 +1,21 @@
+[module]
+name = "generator"
+version = "1.0.0"
+description = "Procedural geometry generators (C++23): composable shapes (2D), paths and meshes (3D) — boxes, spheres, cylinders, cones, capsules, tori, knots, springs, Bezier curves and patches, lathe, extrusion — and modifiers (transform, rotate, scale, translate, merge, repeat, flip, subdivide, spherify), OBJ and SVG writers; math from foundation.math"
+type = "static"            # static | shared | header-only
+language = "c++"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.math"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]

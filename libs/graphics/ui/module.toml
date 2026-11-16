@@ -1,0 +1,30 @@
+[module]
+name = "ui"
+version = "1.0.0"
+description = "Immediate-mode UI on sdl3::Canvas: hashed IDs, column layout, buttons, sliders, checkboxes, text input, tabs, scroll areas, plots, tooltips, notifications"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.dataio", "foundation.script", "platform.sdl3", "engine.voxel"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

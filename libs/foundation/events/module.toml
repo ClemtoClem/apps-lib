@@ -1,0 +1,30 @@
+[module]
+name = "events"
+version = "1.0.0"
+description = "Typed event bus (double-buffered queues, immediate signals) and string-keyed mod events"
+type = "header-only"           # static | shared | header-only
+
+[sources]
+dirs = []
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

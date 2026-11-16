@@ -1,0 +1,25 @@
+[module]
+name = "net"
+version = "1.0.0"
+description = "Local network chat on SDL_net (sdl3 wrapper): UDP broadcast discovery, TCP framed messaging, file transfers with CRC-32 check, non-blocking polling"
+type = "static"            # static | shared | header-only
+language = "c++"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.archive", "platform.sdl3"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

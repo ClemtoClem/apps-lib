@@ -1,0 +1,77 @@
+# Configuration du projet (cpp-maker 1.0.0).
+# Référence des clés : « cpp-maker config keys project » ; interface : « cpp-maker tui ».
+
+[project]
+name = "apps-lib"
+version = "0.1.0"
+description = "C++23 library to create applications and 2D/3D games"
+language = "c++"             # langage par défaut des nouvelles cibles : c | c++
+cxx_standard = "c++23"
+c_standard = "c17"
+
+[paths]
+layers = "libs"             # libs/<layer>/<module>/
+applications = ["apps", "games", "examples"]       # apps/<application>/ et examples/<application>/
+out = "build/out"
+
+[layers]
+# Couches de la plus basse à la plus haute : un module ne peut dépendre que
+# de sa couche ou d'une couche inférieure.
+order = ["foundation", "platform", "engine", "graphics"]
+
+[build]
+default_mode = "debug"      # release, debug, relwithdebinfo, minsize, asan, tsan, ubsan…
+default_toolchain = "host"  # host, gcc, clang, ou [toolchains.<nom>]
+jobs = 0                    # 0 = nombre de cœurs - 1
+cxxflags = ["-fno-exceptions", "-Werror=unused-result"]
+warnings = [
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Wformat=2",
+    "-Wshadow",
+    "-Wconversion",
+    "-Wsign-conversion",
+    "-Wdouble-promotion",
+    "-Wundef",
+    "-Wcast-align",
+    "-Wcast-qual",
+    "-Woverloaded-virtual",
+    "-Wnon-virtual-dtor"
+]
+
+[build.modes.release]
+flags = ["-O2"]
+defines = ["NDEBUG"]
+
+[build.modes.debug]
+flags = ["-O0", "-g3"]
+defines = ["DEBUG"]
+
+[build.modes.asan]
+base = "debug"
+sanitizer = "address"
+
+[tests]
+framework = "builtin"       # builtin (#include <cpp-maker/test.hpp>) | gtest | none
+timeout = 300
+
+[package]
+formats = ["tar.gz"]        # tar.gz, tar.xz, zip, deb
+
+# Mode personnalisé :
+# [build.modes.profiling]
+# base = "relwithdebinfo"
+# flags = ["-fno-omit-frame-pointer"]
+
+# Toolchain croisée :
+# [toolchains.armhf]
+# prefix = "arm-linux-gnueabihf-"
+
+# Déploiement (cpp-maker deploy rpi) :
+# [deploy.rpi]
+# method = "rsync"
+# host = "raspberrypi.local"
+# user = "pi"
+# path = "/home/pi/{name}"
+# toolchain = "armhf"

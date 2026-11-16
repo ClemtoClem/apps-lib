@@ -1,0 +1,9 @@
+[layer]
+name = "foundation"
+version = "1.0.0"
+description = "Pure C++23 standard-library building blocks: core types, math, jobs, diagnostics, data I/O, ECS, events, embedded SQL database, scripting"
+
+[dependencies]
+modules = []
+pkg_config = []
+system = []

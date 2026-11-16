@@ -1,0 +1,35 @@
+[module]
+name = "sdl3"
+version = "0.1.0"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+# exclude = ["src/experimental/**"]
+
+[include]
+public = ["include"]      # propagé aux modules dépendants
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.diagnostics"]
+pkg_config = ["sdl3", "sdl3-ttf", "sdl3-image", "sdl3-mixer", "sdl3-net", "sdl3-shadercross"]
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = ["-Werror", "-Wsign-compare"]
+
+[tests]
+dirs = ["tests"]
+framework = "none"           # tests du wrapper : leur propre lanceur (tests/test_runner.cpp)
+
+# Surcharges par plate-forme cible (linux | windows | macos | android | unix…)
+# [platform.windows]
+# system = ["ws2_32"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

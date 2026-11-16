@@ -1,0 +1,30 @@
+[module]
+name = "emu"
+version = "1.0.0"
+description = "Hardware emulation framework inspired by MAME: device tree, cycle scheduler with timers, paged address spaces, save states, screen/sound/input/NVRAM devices, system registry"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.archive"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

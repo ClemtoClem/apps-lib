@@ -1,0 +1,17 @@
+[application]
+name = "example-gpu-basics"
+version = "1.0.0"
+description = "API SDL_GPU brute par le wrapper sdl3 (remplace vk_triangle et vk_cube) : shaders SPIR-V, pipelines plein et filaire, tampons de sommets et d'index, texture téléversée avec mipmaps, trois échantillonneurs, profondeur, uniformes poussés"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

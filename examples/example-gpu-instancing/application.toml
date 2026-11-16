@@ -1,0 +1,17 @@
+[application]
+name = "example-gpu-instancing"
+version = "1.0.0"
+description = "Des dizaines de milliers d'objets sur SDL_GPU (remplace gfx_scene) : instanciation sdl3, élimination par frustum sur une grille de cellules, objets dynamiques en orbite, brouillard, mesures CPU et GPU"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

@@ -1,0 +1,11 @@
+[layer]
+name = "platform"
+version = "0.1.0"
+description = "SDL3-native platform layer: thin C++ façade, zero-copy events, direct device state"
+# modules = []              # liste explicite (défaut : sous-dossiers contenant module.toml)
+
+[dependencies]
+# Héritées par chaque module du layer.
+modules = []
+pkg_config = []
+system = []

@@ -1,0 +1,17 @@
+#pragma once
+/// @file voxel.hpp — en-tête parapluie du module voxel.
+#include "avatar.hpp"
+#include "blocks.hpp"
+#include "chunk.hpp"
+#include "entities.hpp"
+#include "inspect.hpp"
+#include "mechanics.hpp"
+#include "model.hpp"
+#include "mesher.hpp"
+#include "mods.hpp"
+#include "orientation.hpp"
+#include "renderer.hpp"
+#include "storage.hpp"
+#include "terrain.hpp"
+#include "types.hpp"
+#include "world.hpp"

@@ -1,0 +1,17 @@
+[application]
+name = "example-render3d"
+version = "1.0.0"
+description = "Rendu 3D sur SDL_GPU (sdl3) : cube, géométries procédurales et matériaux physiques, lumières ponctuelles et spots, ombres du soleil, ciel et réflexions, instances, réglages en direct"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

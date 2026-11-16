@@ -1,0 +1,25 @@
+[module]
+name = "app"
+version = "1.0.0"
+description = "Application lifecycle on SDL3: window (optional custom title bar), 2D renderer, canvas fonts, immediate UI context, fixed-step simulation clock, render loop, --frames/--screenshot options"
+type = "static"            # static | shared | header-only
+language = "c++"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.diagnostics", "platform.sdl3", "graphics.ui"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

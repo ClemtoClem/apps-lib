@@ -1,0 +1,17 @@
+[application]
+name = "example-ui-node-graph"
+version = "1.0.0"
+description = "Éditeur de graphes de nœuds (ui::NodeGraph) : calculatrice visuelle évaluée en ordre topologique, liens Bézier / orthogonaux / droits, points intermédiaires, menus contextuels, copier-coller, sauvegarde JSON"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

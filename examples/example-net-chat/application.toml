@@ -1,0 +1,17 @@
+[application]
+name = "example-net-chat"
+version = "1.0.0"
+description = "Messagerie de réseau local (platform.net sur SDL_net) : découverte des pairs par diffusion UDP, messages et fichiers par TCP avec progression, débit et annulation"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "foundation.archive", "platform.sdl3", "platform.net", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

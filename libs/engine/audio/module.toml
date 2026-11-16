@@ -1,0 +1,25 @@
+[module]
+name = "audio"
+version = "1.0.0"
+description = "Audio signal processing without I/O: band-limited oscillators (PolyBLEP), windows, radix-2 FFT, magnitude spectrum, RMS/peak metering, RBJ biquad filters, soft clipping, delay line, analysis ring buffer"
+type = "static"            # static | shared | header-only
+language = "c++"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

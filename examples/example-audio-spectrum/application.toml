@@ -1,0 +1,17 @@
+[application]
+name = "example-audio-spectrum"
+version = "1.0.0"
+description = "Analyseur de spectre temps réel : capture d'un périphérique d'enregistrement (sdl3::AudioStream) ou signal de test, gain, FFT réglable, fenêtres, maintien des crêtes, fréquence dominante et note"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app", "engine.audio"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

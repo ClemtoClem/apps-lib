@@ -1,0 +1,17 @@
+[application]
+name = "example-ui-shader-effects"
+version = "1.0.0"
+description = "Effets GPU sur des panneaux d'interface : shaders de fragments personnalisés du renderer 2D (sdl3::GpuRenderState) appliqués à des widgets restés interactifs — teinte, halo, écran cathodique, mosaïque, ondulation, verre dépoli"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

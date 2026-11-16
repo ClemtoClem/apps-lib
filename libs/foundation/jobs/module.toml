@@ -1,0 +1,30 @@
+[module]
+name = "jobs"
+version = "1.0.0"
+description = "Work-stealing-free thread pool on std::jthread, parallel_for, futures and MPSC channels"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"
