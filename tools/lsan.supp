@@ -1,0 +1,13 @@
+# Suppressions LeakSanitizer : fuites connues des bibliothèques système chargées par SDL3
+# (décorations de fenêtre GTK/libdecor, polices fontconfig/pango, glib). Aucune ne passe
+# par le code du projet ; ne jamais ajouter ici une fonction du projet.
+leak:libgtk-3.so
+leak:libgdk-3.so
+leak:libdecor
+leak:libfontconfig.so
+leak:libpango-1.0.so
+leak:libpangoft2-1.0.so
+leak:libpangocairo-1.0.so
+leak:libglib-2.0.so
+leak:libgobject-2.0.so
+leak:libdbus-1.so
