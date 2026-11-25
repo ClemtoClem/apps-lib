@@ -1,0 +1,21 @@
+# cpp-maker
+/build/
+/dist/
+/.cpp-maker.busy
+/.cpp-maker-trash/
+/compile_commands.json
+/.backups/
+/.vscode/
+/.claude/
+node_modules*/
+out*/
+
+# runtime captures
+/screenshots/
+
+# runtime data
+/data/
+/assets/roms/
+
+# Python
+__pycache__/
