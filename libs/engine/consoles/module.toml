@@ -1,0 +1,30 @@
+[module]
+name = "consoles"
+version = "1.0.0"
+description = "Emulated systems built on the emu framework: Game Boy / Game Boy Color (LR35902, PPU, APU, MBC cartridges), Game Boy Advance and Nintendo DS (ARM7TDMI / ARM946E-S interpreter core with 2D/3D GPU, SPU, cartridges and HLE BIOS, ported from the SDL3_Wrapper emulator — NooDS lineage, GPL-3.0)"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "engine.emu"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = ["-O2"]           # émulation temps réel, même en debug
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

@@ -1,0 +1,23 @@
+[module]
+name = "document"
+version = "0.1.0"
+description = "Document engine (word processing): node tree with stable ids, typed functional/structural/visual properties, hierarchical prioritized groups and property cascade (document < groups < node), copy-on-write snapshots for background work, pages, headers/footers, flow layout and pagination, display lists, .docdb persistence on foundation.sql, PDF/HTML/CSV export, selection, undoable commands"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.events", "foundation.jobs", "foundation.sql", "foundation.archive", "foundation.dataio", "foundation.pdf", "platform.sdl3"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "requested"

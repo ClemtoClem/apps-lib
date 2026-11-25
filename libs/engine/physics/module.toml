@@ -1,0 +1,24 @@
+[module]
+name = "physics"
+version = "1.0.0"
+description = "Rigid-body game physics: axis-aligned boxes and spheres against static triangle soups (spatial hash grid) and kinematic triangle meshes that follow a transform (doors, platforms), SAT contacts, impulses, step-up, per-body gravity scale and drag (buoyancy), sweep-and-prune body pairs, contact events, raycasts, ECS bridge (components and step system)"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.math", "foundation.ecs", "foundation.diagnostics"]
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-17"

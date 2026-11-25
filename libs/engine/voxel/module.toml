@@ -1,0 +1,30 @@
+[module]
+name = "voxel"
+version = "1.0.0"
+description = "Voxel world: Morton-keyed chunk hash map, async SQL-backed streaming, per-chunk entity grid, greedy AO mesher, terrain, raycast, collisions, mod content"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.jobs", "foundation.diagnostics", "foundation.dataio", "foundation.ecs", "foundation.events", "foundation.sql", "platform.sdl3"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

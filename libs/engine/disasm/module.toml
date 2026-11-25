@@ -1,0 +1,30 @@
+[module]
+name = "disasm"
+version = "0.1.0"
+description = "Désassembleur multi-architectures : x86-64 (Zydis), ARM/Thumb (noyau consoles) et MIPS32 (interprétation d'opcodes) pour les ROM console"
+type = "static"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.rea", "engine.consoles"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-15"

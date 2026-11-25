@@ -1,0 +1,177 @@
+/**
+ * @file spi.h
+ * @brief Définition de la classe Spi, gérant l'interface SPI, le firmware,
+ *        l'écran tactile et le microphone pour l’émulateur.
+ */
+
+#pragma once
+#include <cstdint>
+#include <mutex>
+#include <vector>
+#include <memory>
+#include "consoles/arm/state_archive.hpp"
+
+namespace consoles::arm {
+
+class Core;
+
+/**
+ * @class Spi
+ * @brief Gestion de la communication SPI, du firmware, du tactile et du microphone.
+ *
+ * Cette classe simule un contrôleur SPI utilisé pour :
+ * - Charger et modifier le firmware
+ * - Accéder aux registres SPI
+ * - Simuler les entrées tactiles
+ * - Fournir des données microphone
+ * - Gérer les commandes d’accès mémoire via SPI
+ */
+class Spi {
+  public:
+    /**
+     * @brief Constructeur.
+     * @param core Pointeur vers le cœur principal de l'émulateur.
+     */
+    Spi(Core *core_) : m_core(core_) {}
+
+    /**
+     * @brief Destructeur : libère la mémoire du firmware et du buffer micro.
+     */
+    ~Spi();
+    
+    /**
+     * @brief Charge le firmware depuis un fichier ou crée un firmware minimal si absent.
+     * Met également à jour l’ID et recalcule plusieurs CRC internes.
+     * @return true si le firmware chargé dépasse 0x20000 octets, false sinon.
+     */
+    bool LoadFirmware();
+
+    /**
+     * @brief Remplace un étalonnage tactile dégénéré (points confondus) des
+     *        réglages utilisateur par celui du firmware généré, CRC compris.
+     * @return true si une copie des réglages a été réparée
+     */
+    bool RepairTouchCalibration();
+    
+    /**
+     * @brief Effectue un "direct boot" en copiant une zone du firmware dans la mémoire de la console.
+     */
+    void DirectBoot();
+    
+    /**
+     * @brief Calcule la position tactile ADC à partir de coordonnées écran.
+     * @param x Position X (1–254)
+     * @param y Position Y (1–190)
+     */
+    void SetTouch(int x, int y);
+
+    /**
+     * @brief Dernière valeur ADC X/Y simulée par SetTouch() — lue par HleArm7
+     * pour répondre aux requêtes de polling tactile via IPC.
+     */
+    uint16_t ReadTouchX() const {
+        return m_touchX;
+    }
+    uint16_t ReadTouchY() const {
+        return m_touchY;
+    }
+
+    /**
+     * @brief Réinitialise les valeurs tactiles (stylet non pressé).
+     */
+    void ClearTouch();
+    
+    /**
+     * @brief Envoie un buffer audio (microphone).
+     * Calcule aussi le pas d'échantillonnage (micStep) en fonction du taux d'échantillonnage fourni.
+     * @param samples Tableau d'échantillons 16 bits
+     * @param count Nombre d'échantillons
+     * @param rate Fréquence d’échantillonnage
+     */
+    void SendMicData(const int16_t *samples, size_t count, size_t rate);
+    
+    /**
+     * @brief Lit le registre CNT du SPI.
+     * @return Valeur du registre spiCnt.
+     */
+    uint16_t ReadSpiCnt() const {
+      return m_spiCnt;
+    }
+
+    /**
+     * @brief Lit le registre DATA du SPI.
+     * @return Dernière donnée SPI lue ou générée.
+     */
+    uint8_t ReadSpiData() const {
+      return m_spiData;
+    }
+
+    /**
+     * @brief Écrit dans le registre SPI CNT en respectant un masque matériel.
+     * @param mask Masque de bits à modifier
+     * @param value Valeur à écrire
+     */
+    void WriteSpiCnt(uint16_t mask, uint16_t value);
+
+    /**
+     * @brief Traite l’envoi d’un octet sur le bus SPI et exécute la commande en fonction
+     * du mode SPI (lecture firmware, tactile, micro…)
+     * @param value Octet envoyé
+     */
+    void WriteSpiData(uint8_t value);
+
+    /**
+     * @brief Sérialise/désérialise l'état du SPI pour les save states.
+     *
+     * Le firmware (chargé depuis le disque via LoadFirmware()) et le buffer
+     * micro (entrée audio transitoire) ne font pas partie de l'état persistant.
+     * @param archive Archive de sauvegarde/chargement.
+     */
+    void IoState(StateArchive &archive) {
+        archive.Io(m_writeCount);
+        archive.Io(m_address);
+        archive.Io(m_command);
+        archive.Io(m_firmStatus);
+        archive.Io(m_touchX);
+        archive.Io(m_touchY);
+        archive.Io(m_spiCnt);
+        archive.Io(m_spiData);
+    }
+
+  private:
+    Core *m_core;                             ///< Pointeur vers le cœur de l'émulateur
+    std::vector<uint8_t> m_firmwareData;      ///< micrologiciel possédé ; `firmware` en est une vue
+    std::vector<int16_t> m_micData;           ///< échantillons du micro possédés ; `micBuffer` en est une vue
+    uint8_t        *m_firmware   = nullptr;   ///< Buffer firmware
+    size_t          m_firmSize   = 0;         ///< Taille du firmware
+    int16_t        *m_micBuffer  = nullptr;   ///< Buffer d’échantillons micro
+    size_t          m_micBufSize = 0;         ///< Taille du buffer micro
+    uint32_t        m_micCycles  = 0;         ///< Cycle global lors de la réception micro
+    uint32_t        m_micStep    = 0;         ///< Pas en cycles entre deux échantillons micro
+    uint16_t        m_micSample  = 0;         ///< Dernier échantillon micro traité
+    std::mutex      m_mutex;                  ///< Mutex protégeant micBuffer et les variables audio
+    unsigned int    m_writeCount = 0;         ///< Nombre d'écritures SPI consécutives
+    uint32_t        m_address    = 0;         ///< Adresse d’accès
+    uint8_t         m_command    = 0;         ///< Commande SPI en cours d’exécution
+    /// Registre d'état de la flash du firmware (M45PE20) : bit 1 = WEL
+    /// (écriture autorisée par WREN), bit 0 = WIP (toujours 0 : les écritures
+    /// sont instantanées). Les jeux Wi-Fi (Mario Kart DS, Pokémon…) écrivent
+    /// leur configuration réseau au démarrage et attendent WEL après WREN.
+    uint8_t         m_firmStatus = 0;
+    uint16_t        m_touchX     = 0x000;     ///< Dernière valeur ADC X simulée
+    uint16_t        m_touchY     = 0xFFF;     ///< Dernière valeur ADC Y simulée
+    uint16_t        m_spiCnt     = 0;         ///< Registre CNT du SPI
+    uint8_t         m_spiData    = 0;         ///< Registre DATA du SPI
+
+    /**
+     * @brief Calcule un CRC16 spécifique utilisé par le firmware.
+     * @param value Valeur initiale du CRC
+     * @param data Données à traiter
+     * @param size Taille des données
+     * @return CRC final
+     */
+    static uint16_t Crc16(uint32_t value, uint8_t *data, size_t size);
+};
+
+} // namespace consoles::arm
+
