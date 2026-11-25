@@ -1,0 +1,16 @@
+[application]
+name = "voxelia"
+version = "1.0.0"
+description = "Voxelia voxel sandbox: chunk streaming over the embedded SQL database, archetype ECS with spatial chunk grid, script mods, SDL_GPU rendering"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.jobs", "foundation.diagnostics", "foundation.dataio", "foundation.ecs", "foundation.events", "foundation.sql", "foundation.script", "engine.voxel", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "requested"

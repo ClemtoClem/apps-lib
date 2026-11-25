@@ -1,0 +1,136 @@
+// Outils du mod « edit » (un par action) et alias des blocs Minetest pour l'import
+// des fichiers .we / .mts (« structures.aliases » de la configuration).
+[
+	{
+		"type": "item",
+		"id": "tool_wand",
+		"displayName": "Baguette de sélection",
+		"description": "Clic droit : premier coin, puis second coin de la zone. Accroupi : efface la sélection.",
+		"icon": "edit:tool_wand",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_copy",
+		"displayName": "Copier",
+		"description": "Clic droit : copie la zone sélectionnée. Accroupi : coupe (copie puis efface).",
+		"icon": "edit:tool_copy",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_paste",
+		"displayName": "Coller",
+		"description": "Clic droit : colle le presse-papiers contre le bloc visé. Accroupi : options (rotation, miroir, fusion).",
+		"icon": "edit:tool_paste",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_move",
+		"displayName": "Déplacer",
+		"description": "Clic droit : déplace la zone sélectionnée contre le bloc visé.",
+		"icon": "edit:tool_move",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_fill",
+		"displayName": "Remplir",
+		"description": "Clic droit : remplit la zone sélectionnée (plein, creux, murs, arêtes, air seulement).",
+		"icon": "edit:tool_fill",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_delete",
+		"displayName": "Effacer",
+		"description": "Clic droit : efface les blocs de la zone sélectionnée.",
+		"icon": "edit:tool_delete",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_replace",
+		"displayName": "Remplacer",
+		"description": "Clic droit : remplace un bloc par un autre dans la zone sélectionnée.",
+		"icon": "edit:tool_replace",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_undo",
+		"displayName": "Annuler",
+		"description": "Clic droit : annule la dernière modification. Accroupi : rétablit.",
+		"icon": "edit:tool_undo",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_shape",
+		"displayName": "Formes",
+		"description": "Clic droit : construit une forme (ligne, cercle, sphère, cône, pyramide…) contre le bloc visé.",
+		"icon": "edit:tool_shape",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_formula",
+		"displayName": "Formule mathématique",
+		"description": "Clic droit : construit une surface, une courbe ou un solide d'après une formule.",
+		"icon": "edit:tool_formula",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+	{
+		"type": "item",
+		"id": "tool_library",
+		"displayName": "Bibliothèque de structures",
+		"description": "Clic droit : enregistrer, charger, importer, exporter des structures.",
+		"icon": "edit:tool_library",
+		"maxStack": 1,
+		"tags": [
+			"edit_tool",
+			"creative"
+		]
+	},
+]

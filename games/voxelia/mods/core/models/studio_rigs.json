@@ -1,0 +1,40 @@
+[
+
+	{
+		"type": "model",
+		"id": "Dalle",
+		"format": "rig",
+		"textureSize": [
+			64,
+			64
+		],
+		"parts": [
+			{
+				"name": "dalle",
+				"pivot": [
+					0,
+					0,
+					0
+				],
+				"boxes": [
+					{
+						"from": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							16,
+							8,
+							16
+						],
+						"uv": [
+							0,
+							0
+						]
+					}
+				]
+			}
+		]
+	}
+]

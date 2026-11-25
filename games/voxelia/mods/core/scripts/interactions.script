@@ -1,0 +1,75 @@
+# Interactions au clic sur les objets du jeu (clic gauche / clic droit).
+#
+# Deux façons d'associer une fonction de mod à un objet :
+#  - dans la définition du bloc : "interact": {"call": "press_button"} — la fonction globale
+#    est appelée au clic droit à la place de l'action par défaut ;
+#  - voxel.interact(cible, fn) : cible = identifiant de bloc (« core:lamp »), étiquette
+#    (« #door »), genre d'entité (« core:pig »), « block », « entity » ou « * ».
+#
+# Les paramètres des fonctions sont liés par nom aux champs de l'évènement : button
+# ("left"/"right"), x, y, z, root_x/y/z, nx/ny/nz, block, entity, kind, player, sneaking,
+# held. Une fonction à un seul paramètre inconnu (ev) reçoit la table entière.
+# `return false` annule l'action par défaut (casser, poser, frapper, basculer).
+
+let pressed = []
+
+fn toggle_lamps_around(x, y, z, r) {
+    let n = 0
+    for (dx in range(0 - r, r + 1)) {
+        for (dy in range(0 - 2, 3)) {
+            for (dz in range(0 - r, r + 1)) {
+                let b = world.get(x + dx, y + dy, z + dz)
+                if (b == "core:lamp") {
+                    world.set(x + dx, y + dy, z + dz, "core:lamp_off")
+                    n += 1
+                } else if (b == "core:lamp_off") {
+                    world.set(x + dx, y + dy, z + dz, "core:lamp")
+                    n += 1
+                }
+            }
+        }
+    }
+    return n
+}
+
+# Bouton (core:button) : s'enfonce une seconde et bascule les lampes à moins de 6 blocs.
+fn press_button(x, y, z) {
+    world.set(x, y, z, "core:button_pressed")
+    push(pressed, {x: x, y: y, z: z, t: 1.0})
+    game.sound("ui_click", x + 0.5, y + 0.5, z + 0.5)
+    let n = toggle_lamps_around(x, y, z, 6)
+    game.say(format("Clic ! {} lampe(s) basculée(s)", n))
+}
+
+voxel.system("buttons", fn(dt) {
+    let still = []
+    for (b in pressed) {
+        b.t -= dt
+        if (b.t > 0) {
+            push(still, b)
+            continue
+        }
+        if (world.get(b.x, b.y, b.z) == "core:button_pressed") { world.set(b.x, b.y, b.z, "core:button") }
+    }
+    pressed = still
+})
+
+# Animaux : clic droit pour les caresser (ils sautent de joie) ; le clic gauche garde le coup.
+fn pet_animal(ev) {
+    if (ev.button != "right") { return true }
+    entity.impulse(ev.entity, 0, 6, 0)
+    game.say(format("Vous caressez : {}", ev.kind))
+    return false
+}
+for (kind in ["core:pig", "core:cow", "core:sheep", "core:chicken", "core:cat", "core:dog", "core:fox", "core:llama", "core:rabbit_mob"]) {
+    voxel.interact(kind, pet_animal)
+}
+
+# Clic gauche accroupi sur une lampe : la casse sans l'éteindre d'abord ; sinon le clic
+# gauche l'éteint (l'action par défaut — casser — est annulée).
+voxel.interact("core:lamp", fn(button, x, y, z, sneaking) {
+    if (button != "left" or sneaking) { return true }
+    world.set(x, y, z, "core:lamp_off")
+    game.sound("ui_click", x + 0.5, y + 0.5, z + 0.5)
+    return false
+})

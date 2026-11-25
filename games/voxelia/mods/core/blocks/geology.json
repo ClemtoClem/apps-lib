@@ -1,0 +1,861 @@
+// Roches et minerais de la géologie (croûte → manteau → noyau).
+// Textures issues du pack MinecraftMineralogy (x128), copiées et renommées
+// dans textures/blocks/. Les minerais métalliques proviennent de BaseMetals / ModernMetals.
+[
+	{
+		"id": "limestone",
+		"displayName": "Calcaire",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:limestone"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 2.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "chalk",
+		"displayName": "Craie",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:chalk"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 1.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "chert",
+		"displayName": "Silex",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:chert"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "conglomerate",
+		"displayName": "Poudingue",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:conglomerate"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "dolomite",
+		"displayName": "Dolomie",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:dolomite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "shale",
+		"displayName": "Schiste argileux",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:shale"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 2.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "siltstone",
+		"displayName": "Siltite",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:siltstone"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 2.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "gypsum",
+		"displayName": "Gypse",
+		"tags": [
+			"stone",
+			"sedimentary"
+		],
+		"graphics": {
+			"texture": "core:gypsum"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 2.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "gneiss",
+		"displayName": "Gneiss",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:gneiss"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "marble",
+		"displayName": "Marbre",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:marble"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "slate",
+		"displayName": "Ardoise",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:slate"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "schist",
+		"displayName": "Schiste",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:schist"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "phyllite",
+		"displayName": "Phyllite",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:phyllite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "hornfels",
+		"displayName": "Cornéenne",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:hornfels"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "quartzite",
+		"displayName": "Quartzite",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:quartzite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "novaculite",
+		"displayName": "Novaculite",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:novaculite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "basalt",
+		"displayName": "Basalte",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:basalt"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "gabbro",
+		"displayName": "Gabbro",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:gabbro"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 6.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "peridotite",
+		"displayName": "Péridotite",
+		"tags": [
+			"stone",
+			"ultramafic"
+		],
+		"graphics": {
+			"texture": "core:peridotite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 7.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "diabase",
+		"displayName": "Diabase",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:diabase"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "dolerite",
+		"displayName": "Dolérite",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:dolerite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "amphibolite",
+		"displayName": "Amphibolite",
+		"tags": [
+			"stone",
+			"metamorphic"
+		],
+		"graphics": {
+			"texture": "core:amphibolite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "rhyolite",
+		"displayName": "Rhyolite",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:rhyolite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "scoria",
+		"displayName": "Scories",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:scoria"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "tuff",
+		"displayName": "Tuf",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:tuff"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "basaltic_glass",
+		"displayName": "Verre basaltique",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:basaltic_glass"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "pegmatite",
+		"displayName": "Pegmatite",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:pegmatite"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "pumice",
+		"displayName": "Ponce",
+		"tags": [
+			"stone",
+			"igneous"
+		],
+		"graphics": {
+			"texture": "core:pumice"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "salt",
+		"displayName": "Sel gemme",
+		"tags": [
+			"stone",
+			"crystal"
+		],
+		"graphics": {
+			"texture": "core:salt"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 2.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "copper_ore",
+		"displayName": "Minerai de cuivre",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:copper_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "tin_ore",
+		"displayName": "Minerai d'étain",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:tin_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "lead_ore",
+		"displayName": "Minerai de plomb",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:lead_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "silver_ore",
+		"displayName": "Minerai d'argent",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:silver_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "nickel_ore",
+		"displayName": "Minerai de nickel",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:nickel_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "zinc_ore",
+		"displayName": "Minerai de zinc",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:zinc_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "platinum_ore",
+		"displayName": "Minerai de platine",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:platinum_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "mercury_ore",
+		"displayName": "Minerai de mercure",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:mercury_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "aluminum_ore",
+		"displayName": "Minerai d'aluminium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:aluminum_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "titanium_ore",
+		"displayName": "Minerai de titane",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:titanium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "tungsten_ore",
+		"displayName": "Minerai de tungstène",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:tungsten_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 6.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "chromium_ore",
+		"displayName": "Minerai de chrome",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:chromium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "uranium_ore",
+		"displayName": "Minerai d'uranium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:uranium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "manganese_ore",
+		"displayName": "Minerai de manganèse",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:manganese_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.5,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "magnesium_ore",
+		"displayName": "Minerai de magnésium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:magnesium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "zirconium_ore",
+		"displayName": "Minerai de zirconium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:zirconium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 5.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "tantalum_ore",
+		"displayName": "Minerai de tantale",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:tantalum_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 6.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "osmium_ore",
+		"displayName": "Minerai d'osmium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:osmium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 6.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "cadmium_ore",
+		"displayName": "Minerai de cadmium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:cadmium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "iridium_ore",
+		"displayName": "Minerai d'iridium",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:iridium_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 6.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "rutile_ore",
+		"displayName": "Minerai de rutile",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:rutile_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "sulfur_ore",
+		"displayName": "Minerai de soufre",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:sulfur_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "nitrate_ore",
+		"displayName": "Minerai de nitrate",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:nitrate_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "phosphorous_ore",
+		"displayName": "Minerai de phosphore",
+		"tags": [
+			"ore"
+		],
+		"graphics": {
+			"texture": "core:phosphorous_ore"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 3.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "amethyst",
+		"displayName": "Cristal d'améthyste",
+		"tags": [
+			"stone",
+			"crystal"
+		],
+		"graphics": {
+			"texture": "core:amethyst_block"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	},
+	{
+		"id": "quartz",
+		"displayName": "Cristal de quartz",
+		"tags": [
+			"stone",
+			"crystal"
+		],
+		"graphics": {
+			"texture": "core:quartz"
+		},
+		"sounds": "core:stone",
+		"gameplay": {
+			"hardness": 4.0,
+			"tool": "pickaxe"
+		}
+	}
+]

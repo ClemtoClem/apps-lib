@@ -1,0 +1,16 @@
+[application]
+name = "abyssale"
+version = "1.0.0"
+description = "Abyssale — jardin abyssal sous-marin procédural (portage C++23 du prototype WebGPU abyssal-garden)"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.ecs", "foundation.diagnostics", "foundation.dataio", "foundation.jobs", "foundation.sql", "engine.audio", "engine.physics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []            # arguments par défaut de « cpp-maker run »
+
+[review]
+status = "requested"
