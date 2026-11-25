@@ -1,0 +1,25 @@
+[module]
+name = "pdf"
+version = "0.1.0"
+description = "PDF files: writer (pages of any size, paths, RGB colours with transparency, standard-14 Latin fonts with WinAnsi encoding and exact widths, RGBA images with soft masks, links, bookmarks, metadata, Flate-compressed streams, atomic save) and reader (classic and stream cross-reference tables, incremental updates, object streams, repair by object scan, inherited page attributes, Flate/PNG predictors, ASCIIHex, ASCII85, metadata, text extraction)"
+type = "static"            # static | shared | header-only
+language = "c++"
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.archive", "foundation.dataio"]         # « layer.module », « module » ou « layer.* »
+pkg_config = []
+system = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-22"

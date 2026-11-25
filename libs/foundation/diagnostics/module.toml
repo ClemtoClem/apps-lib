@@ -1,0 +1,30 @@
+[module]
+name = "diagnostics"
+version = "1.0.0"
+description = "Assertions, lock-free trace recorder (zones, frames, counters, allocations), .vcap capture format, diagnostic sessions (periodic checkpoints, log file, crash and hang reports with stacks)"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.dataio"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

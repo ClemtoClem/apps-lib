@@ -1,0 +1,30 @@
+[module]
+name = "script"
+version = "1.0.0"
+description = "Script language for mods: lexer, parser, slot-resolved tree interpreter, host bindings"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

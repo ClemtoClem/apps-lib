@@ -1,0 +1,30 @@
+[module]
+name = "core"
+version = "1.0.0"
+description = "Std-backed vocabulary types (Option, Result, Ref, Wrapper, String), hashing, Morton keys, RobinMap, logging, clocks"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = []
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

@@ -1,0 +1,30 @@
+[module]
+name = "sql"
+version = "1.0.0"
+description = "Embedded typed database: columnar tables, hash/ordered/Morton spatial indexes, SQL subset, paged binary storage, async I/O"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core", "foundation.dataio", "foundation.jobs"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"

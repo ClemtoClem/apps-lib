@@ -1,0 +1,30 @@
+[module]
+name = "dataio"
+version = "1.0.0"
+description = "Data files: JSON value tree (comments, writer, in-place edits), binary byte streams with varints, and format-independent documents (JSON, XML, YAML, TOML, INI, CSV, CSS, HTML, glTF) on a common Node tree, Base64 (RFC 4648), raw CSV grids"
+type = "static"              # static | shared | header-only
+
+[sources]
+dirs = ["src"]
+
+[include]
+public = ["include"]
+private = ["src"]
+
+[dependencies]
+modules = ["foundation.core"]
+pkg_config = []
+system = []
+
+[flags]
+defines = []
+public_defines = []
+cflags = []
+cxxflags = []
+
+[tests]
+dirs = ["tests"]
+
+[review]
+status = "approved"
+date = "2026-11-10"
