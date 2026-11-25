@@ -1,0 +1,17 @@
+[application]
+name = "example-audio-patchbay"
+version = "1.0.0"
+description = "Patchbay audio : graphe de nœuds (ui::NodeGraph) de sources (oscillateur, bruit coloré, clavier polyphonique, lecteur OGG/MP3, entrée au choix), effets (filtre, gain, mélangeur, retard, écrêtage, réverbération, limiteur) et visualisations, joué par sdl3::AudioStream vers le périphérique de sortie choisi"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app", "engine.audio"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

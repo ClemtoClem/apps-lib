@@ -1,0 +1,17 @@
+[application]
+name = "example-renderer"
+version = "1.0.0"
+description = "Rendu 2D direct avec sdl3::Renderer dans une texture cible (rectangles, lignes, cercles, géométrie), clavier, souris, molette, dépôt de fichiers et journal des évènements"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

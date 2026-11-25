@@ -1,0 +1,17 @@
+[application]
+name = "example-ui-plot"
+version = "1.0.0"
+description = "Galerie de graphiques interactifs (ui::PlotView) : courbes, aires, barres d'erreur, barres et tiges, nuage de points sur deux axes, chandeliers OHLC, signal en direct, carte de chaleur"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

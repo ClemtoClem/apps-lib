@@ -1,0 +1,17 @@
+[application]
+name = "example-platform"
+version = "1.0.0"
+description = "Cycle de vie d'une application (graphics.app) : simulation à pas fixe réglable, rendu interpolé, barre de titre personnalisée, mesures en direct"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

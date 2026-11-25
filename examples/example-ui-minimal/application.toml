@@ -1,0 +1,17 @@
+[application]
+name = "example-ui-minimal"
+version = "1.0.0"
+description = "Exemple minimal de l'interface retenue : une carte centrée (texte, curseur lié, bouton, bascule) dans une fenêtre à barre de titre personnalisée"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

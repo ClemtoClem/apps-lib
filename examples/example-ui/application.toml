@@ -1,0 +1,17 @@
+[application]
+name = "example-ui"
+version = "1.0.0"
+description = "Catalogue complet du module ui : builder factory, CSS, Modèle-Vue, navigation, fenêtrage, animations, drag & drop, i18n et DataViz — exercés sur app::Application"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.jobs", "foundation.diagnostics", "foundation.dataio", "foundation.events", "foundation.ecs", "foundation.sql", "foundation.script", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-11"
