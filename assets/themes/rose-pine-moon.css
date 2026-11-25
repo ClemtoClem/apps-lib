@@ -1,0 +1,78 @@
+/* rose-pine-moon — thème « rose-pine-moon ». Appliqué par-dessus assets/ui.css.
+ * Couvre l'ensemble des widgets du module ui : les couleurs des pistes, sélections
+ * et en-têtes sont pilotées par les couleurs sémantiques (accent-color, widget-color…). */
+:root {
+    color: #e0def4;
+    accent-color: #c4a7e7;
+    widget-color: #2a273f;
+    widget-hover-color: #37344b;
+    widget-active-color: #444156;
+    titlebar-color: #2a273f;
+}
+
+/* Barre d'état */
+.status { background-color: #2a273f; color: #8b899e; }
+.status .left { color: #e0def4; }
+
+/* Typographie */
+.muted { color: #8b899e; }
+.accent { color: #ea9a97; }
+.heading { color: #e0def4; }
+.title { color: #c4a7e7; }
+
+/* Boutons */
+button, toolbutton { background-color: #2a273f; color: #e0def4; border: 1px solid #48455a; }
+button:hover, toolbutton:hover { background-color: #37344b; }
+button:active, toolbutton:active { background-color: #444156; }
+button.primary { background-color: #c4a7e7; color: #232136; border: 1px solid #c4a7e7; }
+button.primary:hover { background-color: #cab0e9; }
+button.danger { background-color: #413049; color: #eb6f92; border: 1px solid #814764; }
+button.danger:hover { background-color: #543751; }
+
+/* Bascules */
+toggle { background-color: #2a273f; color: #e0def4; border: 1px solid #48455a; }
+toggle:hover { background-color: #37344b; }
+toggle:checked { background-color: #c4a7e7; color: #232136; border: 1px solid #c4a7e7; }
+
+/* Cases, radios, interrupteurs */
+checkbox { color: #e0def4; }
+checkbox:checked { color: #c4a7e7; }
+radio { color: #e0def4; }
+radio:checked { color: #c4a7e7; }
+switchbox { color: #e0def4; }
+switchbox:checked { color: #c4a7e7; }
+
+/* Lignes et entrées de menu */
+selectable { color: #e0def4; }
+selectable:checked { color: #c4a7e7; }
+menubutton { color: #e0def4; }
+menubutton:hover { background-color: #37344b; }
+badge { color: #e0def4; }
+
+/* Saisie */
+lineedit, textarea, combobox, spinbox { background-color: #262339; color: #e0def4; border: 1px solid #48455a; }
+lineedit:hover, textarea:hover, combobox:hover, spinbox:hover { border: 1px solid #c4a7e7; }
+codeeditor { background-color: #262339; color: #e0def4; border: 1px solid #48455a; }
+
+/* Valeurs */
+slider { color: #c4a7e7; }
+knob { color: #c4a7e7; }
+progress { color: #c4a7e7; }
+
+/* Conteneurs */
+panel { background-color: #393552; border: 1px solid #48455a; }
+panel .title { color: #c4a7e7; }
+expander { color: #e0def4; }
+subwindow { background-color: #393552; border: 1px solid #48455a; }
+popup { background-color: #393552; border: 1px solid #48455a; }
+
+/* Vues Modèle-Vue */
+listview, treeview, tableview { background-color: #262339; color: #e0def4; border: 1px solid #48455a; }
+
+/* Navigation */
+tabbar, tabwidget { color: #e0def4; }
+menubar { color: #e0def4; }
+settingrow { color: #e0def4; }
+
+/* Séparateurs */
+separator { border-color: #48455a; }

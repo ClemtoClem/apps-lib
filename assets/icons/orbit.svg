@@ -1,0 +1,6 @@
+<!-- Orbite -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-35 12 12)" fill="none" stroke="#FF5252" stroke-width="1.8" />
+  <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(35 12 12)" fill="none" stroke="#4FC3F7" stroke-width="1.8" />
+  <circle cx="12" cy="12" r="2.6" fill="#FFFFFF" />
+</svg>

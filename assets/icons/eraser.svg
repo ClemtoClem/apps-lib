@@ -1,0 +1,12 @@
+<!-- Gomme -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g stroke="#263238" stroke-width="0.9" stroke-linejoin="round">
+    <!-- Partie caoutchouc rose (avant-gauche) -->
+    <polygon points="7.5,7.5 16.5,12.5 13,16 4,11" fill="#F8BBD0" />
+    <polygon points="4,11 13,16 13,20 4,15" fill="#F48FB1" />
+    <polygon points="13,16 16.5,12.5 16.5,16.5 13,20" fill="#EC407A" />
+    <!-- Fourreau papier (arrière-droite) -->
+    <polygon points="11,4 20,9 16.5,12.5 7.5,7.5" fill="#FFFFFF" />
+    <polygon points="16.5,12.5 20,9 20,13 16.5,16.5" fill="#B0BEC5" />
+  </g>
+</svg>

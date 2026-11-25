@@ -1,0 +1,240 @@
+/* =============================================================================
+ * ui.css — feuille de style de l'interface retenue (builder factory).
+ *
+ * Sous-ensemble CSS : type, #id, .classe, :hover / :active / :checked / :focus /
+ * :disabled / :selected / :open, combinateurs descendant/enfant ; déclarations
+ * (box model, position, taille, flex, grid, police, curseur) avec unités
+ * auto-adaptatives : px, %, em, rem, vw, vh, auto, fr.
+ *
+ * Couleurs sémantiques (héritables) : accent-color, widget-color,
+ * widget-hover-color, widget-active-color, titlebar-color — elles remplacent
+ * les couleurs du `ui::Theme` (pistes, sélections, en-têtes) par widget.
+ * =========================================================================== */
+
+:root {
+	font-size: 15px;
+	color: #e4e8f0;
+	/* Couleurs sémantiques — remplaçables par widget (héritées). */
+	accent-color: #4a90ff;
+	widget-color: #242c42;
+	widget-hover-color: #303a56;
+	widget-active-color: #3e4a6c;
+	titlebar-color: #141926;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+/* ── Barre d'état ─────────────────────────────────────────────────────────── */
+.status {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0 12px;
+	height: 26px;
+	background-color: #1e222b;
+	color: #929aaa;
+	font-size: 12px;
+}
+.status .left { font-weight: 600; color: #c8d0e0; }
+.status .right { margin-left: auto; }
+
+/* ── Typographie ──────────────────────────────────────────────────────────── */
+.heading { font-size: 20px; font-weight: 700; }
+.muted { color: #929aaa; }
+.accent { color: #4a90ff; }
+.title { color: #4a90ff; }
+/* Lien cliquable d'un RichTextLabel. */
+richtext { color: #e4e8f0; }
+
+/* ── Boutons ──────────────────────────────────────────────────────────────── */
+button, toolbutton {
+	padding: 8px 14px;
+	border-radius: 6px;
+	background-color: #242c42;
+	color: #e4e8f0;
+	font-size: 14px;
+	text-align: center;
+}
+button:hover, toolbutton:hover { background-color: #303a56; }
+button:active, toolbutton:active { background-color: #3e4a6c; }
+button:disabled, toolbutton:disabled { cursor: not-allowed; }
+button:focus, toolbutton:focus { border: 1px solid #4a90ff; }
+
+/* Bouton d'icône seule : gabarit carré, plus compact. */
+toolbutton { padding: 8px; min-width: 32px; }
+
+/* Variantes de bouton (classes). */
+button.primary { background-color: #3c6eaa; color: #ffffff; }
+button.primary:hover { background-color: #4a7fc0; }
+button.danger { background-color: #5c2430; color: #ff8a8f; }
+button.danger:hover { background-color: #743040; }
+button.success { background-color: #2f6b3f; color: #ffffff; }
+button.success:hover { background-color: #3a8050; }
+
+/* Bouton basculant : même gabarit qu'un bouton, accent quand enfoncé. */
+toggle {
+	padding: 8px 14px;
+	border-radius: 6px;
+	background-color: #242c42;
+	color: #e4e8f0;
+}
+toggle:hover { background-color: #303a56; }
+toggle:checked { background-color: #4a90ff; color: #ffffff; }
+
+/* ── Cases et radios ──────────────────────────────────────────────────────── */
+checkbox {
+	padding: 4px 2px;
+	gap: 8px;
+	color: #e4e8f0;
+}
+checkbox:hover { color: #ffffff; }
+checkbox:checked { color: #4a90ff; }
+checkbox:disabled { cursor: not-allowed; }
+
+radio {
+	padding: 4px 2px;
+	gap: 8px;
+	color: #e4e8f0;
+}
+radio:hover { color: #ffffff; }
+radio:checked { color: #4a90ff; }
+radio:disabled { cursor: not-allowed; }
+
+/* Interrupteur à glissière. */
+switchbox {
+	padding: 4px 2px;
+	gap: 8px;
+	color: #e4e8f0;
+}
+switchbox:checked { color: #4a90ff; }
+switchbox:disabled { cursor: not-allowed; }
+
+/* Ligne cliquable (sélection surlignée). */
+selectable {
+	padding: 6px 10px;
+	color: #e4e8f0;
+}
+selectable:hover { color: #ffffff; }
+selectable:checked { color: #4a90ff; }
+
+/* Grande entrée de menu (icône + titre + sous-titre). */
+menubutton {
+	padding: 10px 12px;
+	border-radius: 8px;
+	color: #e4e8f0;
+}
+menubutton:hover { background-color: #303a56; }
+
+/* Pilule de statut / étiquette colorée. */
+badge {
+	padding: 4px 10px;
+	border-radius: 999px;
+	color: #e4e8f0;
+}
+
+/* ── Champs de saisie ─────────────────────────────────────────────────────── */
+lineedit, textarea, combobox, spinbox {
+	background-color: #121725;
+	border: 1px solid #303a54;
+	border-radius: 6px;
+	padding: 6px 8px;
+	color: #e4e8f0;
+}
+lineedit:hover, textarea:hover, combobox:hover, spinbox:hover { border: 1px solid #4a5a82; }
+lineedit:focus, textarea:focus, combobox:focus, spinbox:focus { border: 1px solid #4a90ff; }
+lineedit:disabled, textarea:disabled, combobox:disabled, spinbox:disabled { cursor: not-allowed; }
+
+/* Éditeur de code : police à chasse fixe, même gabarit qu'une zone de texte. */
+codeeditor {
+	background-color: #0d1120;
+	border: 1px solid #303a54;
+	border-radius: 6px;
+	padding: 6px 8px;
+	color: #e4e8f0;
+}
+codeeditor:focus { border: 1px solid #4a90ff; }
+
+/* ── Valeurs : curseurs, cadrans, progression ─────────────────────────────── */
+slider { padding: 4px 2px; color: #4a90ff; }
+knob { padding: 2px; color: #4a90ff; }
+progress { padding: 4px 2px; color: #4a90ff; }
+
+/* ── Conteneurs ───────────────────────────────────────────────────────────── */
+panel {
+	background-color: #161c2bcc;
+	border: 1px solid #2a3450;
+	border-radius: 8px;
+	padding: 10px;
+	gap: 6px;
+}
+panel .title {
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #4a90ff;
+}
+
+/* Section dépliante : en-tête cliquable + corps. */
+expander {
+	gap: 4px;
+	color: #e4e8f0;
+}
+expander:hover { color: #ffffff; }
+
+/* Zone défilante : ses enfants défilent dans un clip. */
+scroll { display: flex; flex-direction: column; }
+
+/* Séparateur redimensionnable. */
+splitter { gap: 2px; }
+
+/* Fenêtre interne flottante (MDI). */
+subwindow {
+	padding: 8px 10px;
+	gap: 6px;
+	background-color: #181e2ef5;
+	border: 1px solid #303a54;
+	border-radius: 8px;
+}
+
+/* Surface flottante transitoire. */
+popup {
+	padding: 8px 10px;
+	gap: 6px;
+	background-color: #181e2ef5;
+	border: 1px solid #303a54;
+	border-radius: 8px;
+}
+
+/* ── Vues Modèle-Vue ──────────────────────────────────────────────────────── */
+listview, treeview, tableview {
+	background-color: #10141f;
+	border: 1px solid #242c42;
+	border-radius: 6px;
+	color: #e4e8f0;
+}
+
+/* ── Navigation : onglets et menus ────────────────────────────────────────── */
+tabbar, tabwidget {
+	color: #c8d0e0;
+	font-size: 13px;
+}
+menubar {
+	padding: 2px 6px;
+	gap: 4px;
+	color: #e4e8f0;
+	font-size: 14px;
+}
+
+/* Ligne de réglage (titre + description + contrôle). */
+settingrow {
+	gap: 6px;
+	color: #e4e8f0;
+}
+
+/* ── Séparateurs ──────────────────────────────────────────────────────────── */
+separator {
+	margin: 4px 0;
+	border-color: #303a54;
+}

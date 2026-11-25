@@ -1,0 +1,78 @@
+/* contrast — thème « Contraste élevé ». Appliqué par-dessus assets/ui.css.
+ * Couvre l'ensemble des widgets du module ui : les couleurs des pistes, sélections
+ * et en-têtes sont pilotées par les couleurs sémantiques (accent-color, widget-color…). */
+:root {
+    color: #ffffff;
+    accent-color: #ffff00;
+    widget-color: #000000;
+    widget-hover-color: #333300;
+    widget-active-color: #ffff00;
+    titlebar-color: #000000;
+}
+
+/* Barre d'état */
+.status { background-color: #000000; color: #ffff00; }
+.status .left { color: #ffffff; }
+
+/* Typographie */
+.muted { color: #d0d0d0; }
+.accent { color: #ffff00; }
+.heading { color: #ffffff; }
+.title { color: #ffff00; }
+
+/* Boutons */
+button, toolbutton { background-color: #000000; color: #ffffff; border: 2px solid #ffffff; }
+button:hover, toolbutton:hover { background-color: #333300; color: #ffff00; }
+button:active, toolbutton:active { background-color: #ffff00; color: #000000; }
+button.primary { background-color: #ffff00; color: #000000; border: 2px solid #ffff00; }
+button.primary:hover { background-color: #ffffff; color: #000000; }
+button.danger { background-color: #000000; color: #ff6b6b; border: 2px solid #ff6b6b; }
+button.danger:hover { background-color: #2a0000; }
+
+/* Bascules */
+toggle { background-color: #000000; color: #ffffff; border: 2px solid #ffffff; }
+toggle:hover { background-color: #333300; }
+toggle:checked { background-color: #ffff00; color: #000000; border: 2px solid #ffff00; }
+
+/* Cases, radios, interrupteurs */
+checkbox { color: #ffffff; }
+checkbox:checked { color: #ffff00; }
+radio { color: #ffffff; }
+radio:checked { color: #ffff00; }
+switchbox { color: #ffffff; }
+switchbox:checked { color: #ffff00; }
+
+/* Lignes et entrées de menu */
+selectable { color: #ffffff; }
+selectable:checked { color: #ffff00; }
+menubutton { color: #ffffff; }
+menubutton:hover { background-color: #333300; }
+badge { color: #ffffff; }
+
+/* Saisie */
+lineedit, textarea, combobox, spinbox { background-color: #000000; color: #ffffff; border: 2px solid #ffffff; }
+lineedit:hover, textarea:hover, combobox:hover, spinbox:hover { border: 2px solid #ffff00; }
+codeeditor { background-color: #000000; color: #ffffff; border: 2px solid #ffffff; }
+
+/* Valeurs */
+slider { color: #ffff00; }
+knob { color: #ffff00; }
+progress { color: #ffff00; }
+
+/* Conteneurs */
+panel { background-color: #000000; border: 2px solid #ffffff; }
+panel .title { color: #ffff00; }
+expander { color: #ffffff; }
+subwindow { background-color: #000000; border: 2px solid #ffffff; }
+popup { background-color: #000000; border: 2px solid #ffffff; }
+
+/* Vues Modèle-Vue */
+listview, treeview, tableview { background-color: #000000; color: #ffffff; border: 2px solid #ffffff; }
+
+/* Navigation */
+tabbar, tabwidget { color: #ffffff; }
+menubar { color: #ffffff; }
+settingrow { color: #ffffff; }
+
+/* Séparateurs */
+separator { border-color: #ffffff; }

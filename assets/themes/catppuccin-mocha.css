@@ -1,0 +1,78 @@
+/* catppuccin-mocha — thème « catppuccin-mocha ». Appliqué par-dessus assets/ui.css.
+ * Couvre l'ensemble des widgets du module ui : les couleurs des pistes, sélections
+ * et en-têtes sont pilotées par les couleurs sémantiques (accent-color, widget-color…). */
+:root {
+    color: #cdd6f4;
+    accent-color: #F5C2E7;
+    widget-color: #313244;
+    widget-hover-color: #3d3e4f;
+    widget-active-color: #4a4b5a;
+    titlebar-color: #313244;
+}
+
+/* Barre d'état */
+.status { background-color: #313244; color: #7c8097; }
+.status .left { color: #cdd6f4; }
+
+/* Typographie */
+.muted { color: #7c8097; }
+.accent { color: #fab387; }
+.heading { color: #cdd6f4; }
+.title { color: #F5C2E7; }
+
+/* Boutons */
+button, toolbutton { background-color: #313244; color: #cdd6f4; border: 1px solid #4e4f5e; }
+button:hover, toolbutton:hover { background-color: #3d3e4f; }
+button:active, toolbutton:active { background-color: #4a4b5a; }
+button.primary { background-color: #F5C2E7; color: #181825; border: 1px solid #F5C2E7; }
+button.primary:hover { background-color: #f6c8e9; }
+button.danger { background-color: #483d51; color: #F28FAD; border: 1px solid #885c73; }
+button.danger:hover { background-color: #5b465b; }
+
+/* Bascules */
+toggle { background-color: #313244; color: #cdd6f4; border: 1px solid #4e4f5e; }
+toggle:hover { background-color: #3d3e4f; }
+toggle:checked { background-color: #F5C2E7; color: #181825; border: 1px solid #F5C2E7; }
+
+/* Cases, radios, interrupteurs */
+checkbox { color: #cdd6f4; }
+checkbox:checked { color: #F5C2E7; }
+radio { color: #cdd6f4; }
+radio:checked { color: #F5C2E7; }
+switchbox { color: #cdd6f4; }
+switchbox:checked { color: #F5C2E7; }
+
+/* Lignes et entrées de menu */
+selectable { color: #cdd6f4; }
+selectable:checked { color: #F5C2E7; }
+menubutton { color: #cdd6f4; }
+menubutton:hover { background-color: #3d3e4f; }
+badge { color: #cdd6f4; }
+
+/* Saisie */
+lineedit, textarea, combobox, spinbox { background-color: #2c2d3d; color: #cdd6f4; border: 1px solid #4e4f5e; }
+lineedit:hover, textarea:hover, combobox:hover, spinbox:hover { border: 1px solid #F5C2E7; }
+codeeditor { background-color: #2c2d3d; color: #cdd6f4; border: 1px solid #4e4f5e; }
+
+/* Valeurs */
+slider { color: #F5C2E7; }
+knob { color: #F5C2E7; }
+progress { color: #F5C2E7; }
+
+/* Conteneurs */
+panel { background-color: #45475a; border: 1px solid #4e4f5e; }
+panel .title { color: #F5C2E7; }
+expander { color: #cdd6f4; }
+subwindow { background-color: #45475a; border: 1px solid #4e4f5e; }
+popup { background-color: #45475a; border: 1px solid #4e4f5e; }
+
+/* Vues Modèle-Vue */
+listview, treeview, tableview { background-color: #2c2d3d; color: #cdd6f4; border: 1px solid #4e4f5e; }
+
+/* Navigation */
+tabbar, tabwidget { color: #cdd6f4; }
+menubar { color: #cdd6f4; }
+settingrow { color: #cdd6f4; }
+
+/* Séparateurs */
+separator { border-color: #4e4f5e; }
