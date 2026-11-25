@@ -1,0 +1,10 @@
+# Radio : la musique démarre avec la visite (son « au départ », en boucle) ; E la coupe ou la
+# relance (Interrupteur + source sonore).
+
+const i = import "interactions"
+
+class Radio extends i.Interrupteur, AudioSource {
+    fn basculer(joue) {
+        if (joue) { this.play() } else { this.stop() }
+    }
+}

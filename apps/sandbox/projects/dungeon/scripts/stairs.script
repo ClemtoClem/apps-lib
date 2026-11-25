@@ -1,0 +1,30 @@
+# ── Escalier : passage vers un autre étage ───────────────────────────────────
+#
+# Attaché au nœud « Passage » des pièces escalier_descente (en haut des
+# marches) et escalier_arrivee (au pied des marches de l'étage du dessous).
+# Le Dungeon relie les deux passages (propriété `vers` : chemin de l'autre).
+# Entrer dans la zone (rayon `rayon`) DEMANDE la traversée ; le Dungeon la
+# joue (fondu, changement d'étage). La visite guidée ne remonte jamais.
+
+class Stairs extends Behaviour {
+    let radius = 1.1
+
+    fn OnStart() { this.radius = this.prop("radius") or 1.1 }
+
+    fn OnUpdate(dt) {
+        let target = this.prop("target")
+        if (target == nil) { return nil }
+        let state = game.state()
+        if (state.transit != nil or (state.transitEnd or 0) > game.time()) { return nil }
+        let j = node.position("Player")
+        if (j == nil) { return nil }
+        let p = this.world_position()
+        if (math.abs(j[1] - 1 - p[1]) > 2.5) { return nil }
+        let dx = j[0] - p[0]
+        let dz = j[2] - p[2]
+        if (dx * dx + dz * dz > this.radius * this.radius) { return nil }
+        let role = this.prop("role")
+        if (node.prop("Player", "manual") != true and role == "up") { return nil }
+        state.transitRequest = {de: this.path(), target: target, kind: "stairs", role: role}
+    }
+}

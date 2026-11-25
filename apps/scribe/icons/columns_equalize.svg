@@ -1,0 +1,6 @@
+<!-- Scribe : columns_equalize -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M3 4 V20 M9 4 V20 M15 4 V20 M21 4 V20" stroke="#ffffff" stroke-width="1.8"/>
+  <path d="M4.5 12 H7.5 M10.5 12 H13.5 M16.5 12 H19.5" stroke="#ffffff" stroke-width="1.6"/>
+  <path d="M5.5 10.5 L4.2 12 L5.5 13.5 M6.5 10.5 L7.8 12 L6.5 13.5 M11.5 10.5 L10.2 12 L11.5 13.5 M12.5 10.5 L13.8 12 L12.5 13.5 M17.5 10.5 L16.2 12 L17.5 13.5 M18.5 10.5 L19.8 12 L18.5 13.5" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+</svg>

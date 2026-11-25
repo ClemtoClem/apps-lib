@@ -1,0 +1,13 @@
+# Module commun (import "interactions") : comportements réutilisés par plusieurs groupes.
+
+# Interrupteur : E bascule un état ; la classe dérivée dit ce que « basculer » fait.
+class Interrupteur extends Behaviour {
+    let actif = true
+
+    fn OnUse() {
+        this.actif = not this.actif
+        this.basculer(this.actif)
+    }
+
+    fn basculer(etat) {}   # à redéfinir
+}

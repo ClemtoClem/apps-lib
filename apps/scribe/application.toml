@@ -1,0 +1,16 @@
+[application]
+name = "scribe"
+version = "0.1.0"
+description = "Document editor in the spirit of Word / LibreOffice Writer on engine.document: contextual ribbon, page view with selection, dockable Properties / History / Tree panels, undo/redo, .docdb files, PDF / HTML / CSV export, background layout, saving and export"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.jobs", "platform.sdl3", "graphics.ui", "graphics.app", "engine.document"]         # « layer.module », « module » ou « layer.* »
+pkg_config = []
+system = []
+
+[run]
+args = []                    # arguments par défaut de « cpp-maker run » : accueil
+
+[review]
+status = "requested"

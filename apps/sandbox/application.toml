@@ -1,0 +1,16 @@
+[application]
+name = "sandbox"
+version = "2.0.0"
+description = "Modeleur et éditeur de scènes 3D à la SketchUp : maillage éditable (Pousser/Tirer, Décalage, Suivez-moi…), inférences, groupes, matériaux, calques, annulation, projets JSON ; rendu SDL_GPU par sdl3"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.dataio", "foundation.diagnostics", "foundation.script", "foundation.jobs", "engine.physics", "engine.audio", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "requested"

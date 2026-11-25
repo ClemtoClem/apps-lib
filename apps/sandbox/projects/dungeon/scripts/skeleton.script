@@ -1,0 +1,45 @@
+# ── Squelette : gardien du donjon ────────────────────────────────────────────
+#
+# Repère le joueur à une dizaine de mètres et le POURSUIT de case en case
+# (il contourne les murs au lieu de s'y coller), frappe de l'épée à portée,
+# rougit sous les coups et, à 0 PV, s'effondre puis DISPARAÎT de la scène.
+# Démarche animée : jambes et bras balancés, crâne qui pivote.
+# Réglages (propriétés du nœud « Corps » de l'objet squelette) : pv, degats,
+# vitesse.
+
+const m = import "monsters"
+
+class Skeleton extends m.Monster {
+    let swing = 0
+
+    fn Prepare() {
+        this.range = 1.7
+        this.delay = 1.0
+        for (name in ["Skull", "Ribcage", "Spine", "Pelvis", "Left Shoulder/Arm", "Right Shoulder/Arm",
+                     "Left Hip/Leg", "Right Hip/Leg"]) {
+            this.Tint(name, 226, 218, 196)
+        }
+    }
+
+    fn Attack(d) {
+        this.swing = 0.45
+        this.HitPlayer()
+    }
+
+    fn Animate(dt, pace) {
+        let amplitude = math.min(1, pace / 1.5)
+        let a = math.sin(this.walk * 4) * 32 * amplitude
+        node.set_rotation(this.Child("Left Hip"), a, 0, 0)
+        node.set_rotation(this.Child("Right Hip"), -a, 0, 0)
+        node.set_rotation(this.Child("Left Shoulder"), -a * 0.8, 0, -8)
+        let arm = a * 0.8
+        if (this.swing > 0) {
+            this.swing -= dt
+            arm = -115 * math.sin((1 - math.max(0, this.swing) / 0.45) * math.pi)
+        }
+        node.set_rotation(this.Child("Right Shoulder"), arm, 0, 8)
+        node.set_rotation(this.Child("Skull"), 0, math.sin(this.walk * 1.7) * 14, 0)
+        # Pas claudicant : un léger rebond à chaque foulée.
+        this.Place(this.here[0], this.origin[1] + math.abs(math.sin(this.walk * 4)) * 0.06 * amplitude, this.here[2])
+    }
+}

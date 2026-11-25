@@ -1,0 +1,75 @@
+# ── Eau courante : l'écume dérive dans le sens du courant ────────────────────
+#
+# Attaché aux nœuds d'eau des pièces d'égout. Ses enfants « Écume 1… »
+# glissent le long de l'axe local z (et reviennent à l'autre bout), avec un
+# léger roulis ; pour une cascade (`chute`), les « Filet 1… » tombent ; pour
+# un bassin (`tourbillon`), l'écume tourne autour du centre.
+# Propriétés : longueur (m), vitesse (m/s, négative : vers -z), largeur,
+# chute, tourbillon.
+
+const sounds = import "sounds"
+
+class RunningWater extends Behaviour {
+    let length = 3.0
+    let speed = 0.9
+    let fall = false
+    let whirlpool = false
+    let chunks = []    # [chemin, position de départ]
+    let time = 0
+    let noise = nil      # sons.Proximite : le clapotis, à portée du joueur
+
+    fn OnStart() {
+        this.length = this.prop("length") or 3.0
+        this.speed = this.prop("speed") or 0.9
+        this.fall = this.prop("fall") == true
+        this.whirlpool = this.prop("whirlpool") == true
+        let prefix = "Foam "
+        if (this.fall) { prefix = "Stream " }
+        for (i in range(1, 13)) {
+            let name = this.child(prefix .. i)
+            if (name == nil) { break }
+            let p = node.position(name)
+            if (p == nil) { break }
+            this.chunks.append([name, p])
+        }
+        # Cascade : un ruissellement plus fort ; canal : un murmure d'eau.
+        if (this.fall) {
+            this.noise = sounds.Proximity("default_ambience_sulfur_3", this.path(), 0.45, 9.0)
+        } else if (this.whirlpool) {
+            this.noise = sounds.Proximity("default_ambience_sulfur_2", this.path(), 0.3, 7.0)
+        } else {
+            this.noise = sounds.Proximity("default_ambience_sulfur_1", this.path(), 0.2, 5.5)
+        }
+    }
+
+    fn Wrap(v, bottom, top) {
+        let span = top - bottom
+        while (v > top) { v -= span }
+        while (v < bottom) { v += span }
+        return v
+    }
+
+    fn OnUpdate(dt) {
+        if (this.noise != nil) { this.noise.Follow(this.world_position()) }
+        this.time += dt
+        let t = this.time
+        let half = this.length / 2
+        for (i in range(len(this.chunks))) {
+            let name = this.chunks[i][0]
+            let p = this.chunks[i][1]
+            if (this.fall) {
+                # Les filets tombent de la bouche jusqu'au bassin, en boucle.
+                let y = this.Wrap(p[1] - t * this.speed, -this.length, 0)
+                node.set_position(name, p[0] + math.sin(t * 9 + i) * 0.02, y, p[2])
+            } else if (this.whirlpool) {
+                let a = math.atan2(p[2], p[0]) + t * this.speed
+                let r = math.sqrt(p[0] * p[0] + p[2] * p[2])
+                node.set_position(name, math.cos(a) * r, p[1] + math.sin(t * 2 + i) * 0.01, math.sin(a) * r)
+                node.set_rotation(name, 0, -a * 180 / math.pi, 0)
+            } else {
+                let z = this.Wrap(p[2] + t * this.speed, -half, half)
+                node.set_position(name, p[0] + math.sin(t * 1.3 + i * 1.7) * 0.07, p[1] + math.sin(t * 3 + i) * 0.012, z)
+            }
+        }
+    }
+}

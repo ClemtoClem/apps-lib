@@ -1,0 +1,32 @@
+{
+  "format": "sandbox.object",
+  "version": 1,
+  "name": "New Object",
+  "description": "",
+  "tree": {
+    "format": "scene.tree",
+    "version": 1,
+    "root": {
+      "id": "0:0",
+      "type": "Node",
+      "name": "New Object",
+      "transform": {
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  }
+}

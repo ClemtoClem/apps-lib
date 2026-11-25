@@ -1,0 +1,109 @@
+{
+  "format": "sandbox.project",
+  "version": 1,
+  "name": "dungeon",
+  "active_scene": "parts_workshop",
+  "scenes": [
+    "scenes/main_menu.scene",
+    "scenes/generation.scene",
+    "scenes/dungeon.scene",
+    "scenes/dungeon_upper_floor.scene",
+    "scenes/sewers.scene",
+    "scenes/parts_workshop.scene"
+  ],
+  "objects": [
+    "objects/ceiling.object",
+    "objects/corner_corridor.object",
+    "objects/crossroads.object",
+    "objects/crypt.object",
+    "objects/dead_end.object",
+    "objects/entrance.object",
+    "objects/exit.object",
+    "objects/flagstones.object",
+    "objects/guard_room.object",
+    "objects/ladder_arrival.object",
+    "objects/ladder_well.object",
+    "objects/new_object.object",
+    "objects/pillar_room.object",
+    "objects/piranha.object",
+    "objects/sewer_corner.object",
+    "objects/sewer_crossroads.object",
+    "objects/sewer_dead_end.object",
+    "objects/sewer_room.object",
+    "objects/sewer_straight.object",
+    "objects/sewer_t.object",
+    "objects/skeleton.object",
+    "objects/spider.object",
+    "objects/stairs_arrival.object",
+    "objects/stairs_descent.object",
+    "objects/straight_corridor.object",
+    "objects/t_corridor.object",
+    "objects/torch.object",
+    "objects/treasure_room.object",
+    "objects/wall_door.object",
+    "objects/walled_door.object",
+    "objects/zombie.object"
+  ],
+  "scripts": [
+    {
+      "name": "torchlight",
+      "description": "Flamme vacillante (intensité + flamme enfant)",
+      "file": "scripts/torchlight.script"
+    },
+    {
+      "name": "player",
+      "description": "Contrôleur à la première personne + visite guidée",
+      "file": "scripts/player.script"
+    },
+    {
+      "name": "chest",
+      "description": "Ouvre le couvercle quand la propriété `open` est vraie",
+      "file": "scripts/chest.script"
+    },
+    {
+      "name": "skeleton",
+      "description": "Squelette (objet « squelette ») : poursuit le joueur de case en case, frappe, s'effondre et disparaît",
+      "file": "scripts/skeleton.script"
+    },
+    {
+      "name": "spider",
+      "description": "Araignée (objet « araignee ») : rapide, bondit sur sa proie",
+      "file": "scripts/spider.script"
+    },
+    {
+      "name": "zombie",
+      "description": "Zombie (objet « zombie ») : lent, 6 PV, frappe fort",
+      "file": "scripts/zombie.script"
+    },
+    {
+      "name": "piranha",
+      "description": "Piranha (objet « pirana ») : nage dans les canaux des égouts, bondit pour mordre",
+      "file": "scripts/piranha.script"
+    },
+    {
+      "name": "running-water",
+      "description": "Eau courante des égouts : écume qui file dans le sens du courant, cascades, tourbillon",
+      "file": "scripts/running-water.script"
+    },
+    {
+      "name": "ladder",
+      "description": "Échelle entre deux étages : E pour la prendre (le Dungeon joue la traversée)",
+      "file": "scripts/ladder.script"
+    },
+    {
+      "name": "stairs",
+      "description": "Escalier entre deux étages : y entrer demande la traversée au Dungeon",
+      "file": "scripts/stairs.script"
+    },
+    {
+      "name": "monsters",
+      "description": "Module : base Monstre (carte des étages, poursuite, coups, mort)",
+      "file": "scripts/monsters.script"
+    },
+    {
+      "name": "sounds",
+      "description": "Module : sons du projet (variantes au hasard, ambiances en fondu, boucles à portée de l'auditeur, bruits isolés)",
+      "file": "scripts/sounds.script"
+    }
+  ]
+}

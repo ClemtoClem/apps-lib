@@ -1,0 +1,37 @@
+# Script de la scène « Maison » : une classe dérivée de Scene.
+# OnStart() au lancement de la visite, OnUpdate(dt) à chaque pas,
+# OnTouch(groupe, autre) pour chaque nouveau contact d'un groupe.
+# Calque 2D (onglet Vue 2D) : hud.* modifie ses éléments par leur nom, draw2d.* dessine
+# à chaque pas (coordonnées de l'écran de référence 1280 × 720).
+
+class Maison extends Scene {
+    export let vitesse = 4.0      # marche du joueur (m/s), réglable dans l'inspecteur
+    export let saut = 4.8
+    let caisses_sur_paillasson = 0
+
+    fn OnStart() {
+        this.set_player_speed(this.vitesse)
+        this.set_jump(this.saut)
+        this.say("Bienvenue ! E (ou clic) : ouvrir la porte, allumer la lanterne, couper la radio.")
+    }
+
+    fn OnUpdate(dt) {
+        # Horloge de la visite, en bas à droite.
+        let t = math.floor(this.time())
+        let minutes = math.floor(t / 60)
+        let secondes = t % 60
+        let zero = ""
+        if (secondes < 10) { zero = "0" }
+        draw2d.rect(1150, 652, 110, 44, "#10131ab4")
+        draw2d.text(1168, 660, minutes .. ":" .. zero .. secondes, 24, "#ffffff")
+    }
+
+    fn OnTouch(groupe, autre) {
+        # Une caisse poussée sur le paillasson : la scène réagit.
+        if (groupe == "Paillasson" and autre != "joueur") {
+            this.caisses_sur_paillasson += 1
+            this.say(autre .. " est sur le paillasson (" .. this.caisses_sur_paillasson .. ")")
+            hud.text("compteur", "Caisses sur le paillasson : " .. this.caisses_sur_paillasson)
+        }
+    }
+}

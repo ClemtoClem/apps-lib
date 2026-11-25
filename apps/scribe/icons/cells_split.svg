@@ -1,0 +1,6 @@
+<!-- Scribe : cells_split -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <rect x="2.5" y="4.5" width="19" height="15" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+  <path d="M12 4.5 V19.5" stroke="#ffffff" stroke-width="1.4"/>
+  <path d="M10 12 H5 M7 10 L5 12 L7 14 M14 12 H19 M17 10 L19 12 L17 14" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,5 @@
+<!-- Scribe : shape_text -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M8.5 8.5 H15.5 V10.3 H12.9 V16 H11.1 V10.3 H8.5 Z" fill="#ffffff"/>
+</svg>

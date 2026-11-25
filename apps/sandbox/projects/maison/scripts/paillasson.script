@@ -1,0 +1,7 @@
+# Paillasson : zone fantôme devant la porte ; accueille le joueur.
+
+class Paillasson extends Behaviour {
+    fn OnTouch(qui) {
+        if (qui == "joueur") { game.say("Bienvenue ! Entrez, la lanterne vous attend.") }
+    }
+}

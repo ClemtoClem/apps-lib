@@ -1,0 +1,43 @@
+{
+  "format": "sandbox.project",
+  "version": 1,
+  "name": "maison",
+  "active_scene": "maison",
+  "scenes": [
+    "scenes/maison.scene"
+  ],
+  "objects": [],
+  "models": [],
+  "scripts": [
+    {
+      "name": "scene",
+      "description": "Scène : accueil, horloge, compteur du paillasson (calque 2D)",
+      "file": "scripts/scene.script"
+    },
+    {
+      "name": "porte",
+      "description": "Porte d'entrée : quart de tour autour de sa charnière (E)",
+      "file": "scripts/porte.script"
+    },
+    {
+      "name": "lanterne",
+      "description": "Lanterne flottante qu'on allume ou éteint (E)",
+      "file": "scripts/lanterne.script"
+    },
+    {
+      "name": "radio",
+      "description": "Radio : musique en boucle, coupée ou relancée (E)",
+      "file": "scripts/radio.script"
+    },
+    {
+      "name": "paillasson",
+      "description": "Zone d'accueil devant la porte",
+      "file": "scripts/paillasson.script"
+    },
+    {
+      "name": "interactions",
+      "description": "Module commun : classe Interrupteur (E bascule un état)",
+      "file": "scripts/interactions.script"
+    }
+  ]
+}

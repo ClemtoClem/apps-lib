@@ -1,0 +1,87 @@
+{
+  "format": "sandbox.scene",
+  "version": 1,
+  "name": "Dungeon Upper Floor",
+  "description": "Scénario fixe : donjon de deux étages (graine 2026, Facile) — lance Génération puis Dungeon",
+  "gameplay_script_file": "../scripts/dungeon-upper-floor.gameplay.script",
+  "environment": {
+    "sun_direction": [
+      0.30000001192092896,
+      -0.699999988079071,
+      0.44999998807907104
+    ],
+    "sun_intensity": 0.05999999865889549,
+    "sun_color": [
+      110,
+      120,
+      140
+    ],
+    "ambient_color": [
+      46,
+      38,
+      32
+    ],
+    "background_color": [
+      8,
+      6,
+      6
+    ],
+    "gravity": [
+      0.0,
+      -9.8100004196167,
+      0.0
+    ]
+  },
+  "camera": {
+    "edit_position": [
+      0.0,
+      12.0,
+      -22.0
+    ],
+    "edit_yaw": 0.0,
+    "edit_pitch": -0.699999988079071,
+    "play_position": [
+      0.0,
+      1.7000000476837158,
+      -28.0
+    ],
+    "play_yaw": 0.0,
+    "play_pitch": -0.10000000149011612
+  },
+  "canvas2d": {
+    "width": 1280,
+    "height": 720,
+    "render_3d": true,
+    "background": [
+      24,
+      26,
+      34
+    ]
+  },
+  "tree": {
+    "format": "scene.tree",
+    "version": 1,
+    "root": {
+      "id": "0:0",
+      "type": "Node",
+      "name": "dungeon_upper_floor",
+      "transform": {
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  }
+}

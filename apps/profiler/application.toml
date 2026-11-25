@@ -1,0 +1,17 @@
+[application]
+name = "profiler"
+version = "1.0.0"
+description = "Profiler for programs instrumented with diagnostics::trace: record (.vcap), report, compare, Chrome Trace export and an interactive timeline viewer"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "foundation.jobs", "foundation.diagnostics", "foundation.dataio", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-10"

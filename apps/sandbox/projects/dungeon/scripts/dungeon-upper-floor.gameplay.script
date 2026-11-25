@@ -1,0 +1,24 @@
+# ── Dungeon à deux étages : un scénario fixe ──────────────────────────────────
+#
+# Raccourci d'essai : la graine 2026 en difficulté Facile donne toujours le
+# même donjon de deux étages (les salles hautes puis les égouts, reliés par
+# un escalier). La scène confie la graine à « Génération », qui construit le
+# plan et lance « Dungeon » au premier étage.
+
+class UpperFloor extends Scene {
+    let started = false
+
+    fn OnStart() {
+        ui.label("Dungeon à deux étages, Facile", {anchor: "center", font_size: 22, color: "#e8c27a"})
+    }
+
+    fn OnUpdate(dt) {
+        if (this.started) { return nil }
+        this.started = true
+        let state = this.state()
+        state.seed = 2026
+        state.difficulty = "Easy"
+        state.startFloor = 0
+        this.load("generation")
+    }
+}

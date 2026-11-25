@@ -1,0 +1,72 @@
+# ── Araignée géante : rapide, elle bondit sur sa proie ───────────────────────
+#
+# Court sur huit pattes animées ; à quelques mètres du joueur, elle BONDIT
+# (arc de cercle) puis mord à l'atterrissage. Deux points de vie.
+
+const m = import "monsters"
+
+class Spider extends m.Monster {
+    let jump = 0
+    let start = nil
+    let arrival = nil
+    let jumpCooldown = 1.5
+
+    fn Prepare() {
+        this.range = 1.3
+        this.delay = 0.8
+        this.detection = 13.0
+        this.Tint("Thorax", 36, 30, 28)
+        this.Tint("Abdomen", 48, 36, 30)
+    }
+
+    fn Special(e, player, d, dt) {
+        this.jumpCooldown -= dt
+        if (this.jump > 0) {
+            this.jump += dt
+            let t = math.min(1, this.jump / 0.55)
+            let x = math.lerp(this.start[0], this.arrival[0], t)
+            let z = math.lerp(this.start[2], this.arrival[2], t)
+            this.Place(x, this.origin[1] + math.sin(t * math.pi) * 0.9, z)
+            if (t >= 1) {
+                this.jump = 0
+                this.Place(x, this.origin[1], z)
+                if (m.PlaneDistance(this.here, player) < 1.6) { this.HitPlayer() }
+            }
+            return true
+        }
+        if (d > 2.4 and d < 5 and this.jumpCooldown <= 0) {
+            # Atterrir à 1,2 m du joueur, sur un sol praticable.
+            let k = (d - 1.2) / d
+            let fx = this.here[0] + (player[0] - this.here[0]) * k
+            let fz = this.here[2] + (player[2] - this.here[2]) * k
+            if (m.Walkable(e, fx, fz)) {
+                this.start = this.here
+                this.arrival = [fx, this.origin[1], fz]
+                this.jump = 0.001
+                this.jumpCooldown = 3
+                this.Noise("alert", 0.5)   # le bond : un froissement sec
+                this.Face(player[0] - this.here[0], player[2] - this.here[2], 1, 100)
+                return true
+            }
+        }
+        return false
+    }
+
+    fn Animate(dt, pace) {
+        # Démarche en trépied alterné : pattes 1, 3, 6, 8 contre 2, 4, 5, 7.
+        let fast = math.min(1.5, 0.3 + pace / 2)
+        for (i in range(8)) {
+            let side = 1
+            if (i < 4) { side = -1 }
+            let rank = i % 4
+            let phase = 0
+            if ((rank + i32(i / 4)) % 2 == 1) { phase = math.pi }
+            let swing = math.sin(this.walk * 9 + phase) * 16 * fast
+            let rest = 90 * side + (rank - 1.5) * -28 * side
+            node.set_rotation(this.Child("Leg " .. (i + 1)), 0, rest + swing, math.max(0, math.cos(this.walk * 9 + phase)) * 12 * fast * side)
+        }
+        if (this.jump == 0) {
+            this.Place(this.here[0], this.origin[1] + math.abs(math.sin(this.walk * 9)) * 0.03, this.here[2])
+        }
+    }
+}

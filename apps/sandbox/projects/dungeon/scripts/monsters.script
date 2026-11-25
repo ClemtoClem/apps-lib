@@ -1,0 +1,442 @@
+# ── Monstres : base commune (module importé par squelette, zombie, araignee,
+#    pirana) ────────────────────────────────────────────────────────────────
+#
+# Chaque monstre est un OBJET du projet (objects/<espèce>.object) dont le nœud
+# « Corps » porte le comportement de son espèce. Le Dungeon en pose des
+# instances et publie dans game.state().donjon la carte des étages : cases,
+# ouvertures, salles, égouts. Les monstres s'y déplacent de case en case
+# (parcours en largeur jusqu'à la case du joueur), en glissant le long des
+# murs, et ne quittent jamais leur étage.
+#
+# Échanges avec le Dungeon (game.state()) :
+#   - le Dungeon compte les coups d'épée reçus dans la propriété `coups` du
+#     nœud « Corps » ; le monstre les lit, clignote en rouge, s'effondre à
+#     0 PV puis retire son instance de la scène ;
+#   - un coup porté au joueur s'ajoute à `degats_joueur`, une mort à `morts`.
+
+const sounds = import "sounds"
+
+const CELL = 8.0
+const FLOOR = 7.0
+const DIRS = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+const WALKWAY = 1.15   # dans les égouts : on longe le canal à cette distance de l'axe
+const AUDIBLE = 14.0    # au-delà, un monstre ne fait plus de bruit (ni pas ni grognement)
+
+# Les bruits de chaque espèce (familles du module « sons ») : pas, coup reçu,
+# mort, cri quand il repère le joueur, son attaque. Volume et hauteur propres.
+const NOISES = {
+    "skeleton": {step: "default_bamboo_hit", stepVolume: 0.18, stepPitch: 0.75, stepRhythm: 1.27, stepGap: 0.3,
+                  hit: "default_bamboo_hit", death: "default_gravel_dug", alert: "default_bamboo_hit",
+                  attack: "default_tool_breaks.1", pitch: 1.0},
+    "zombie": {step: "default_mud_footstep", stepVolume: 0.35, stepPitch: 0.8, stepRhythm: 0.7, stepGap: 0.45,
+               hit: "default_mud_footstep", death: "default_ambience_monster_sigh_cave",
+               alert: "default_ambience_monster_sigh_cave", attack: "default_dirt_hit", pitch: 0.8},
+    "spider": {step: "default_leaves_footstep", stepVolume: 0.1, stepPitch: 1.6, stepRhythm: 1.0, stepGap: 0.15,
+                 hit: "default_leaves_dug", death: "default_leaves_dug", alert: "default_leaves_hit",
+                 attack: "default_leaves_hit", pitch: 1.5},
+    "piranha": {step: nil, hit: "default_water_footstep", death: "default_underwater_bubbles",
+               alert: "default_underwater_bubbles", attack: "default_water_footstep", pitch: 1.2},
+}
+
+fn PlaneDistance(a, b) {
+    let dx = a[0] - b[0]
+    let dz = a[2] - b[2]
+    return math.sqrt(dx * dx + dz * dz)
+}
+
+fn WrapAngle(a) {
+    while (a > math.pi) { a -= 2 * math.pi }
+    while (a < -math.pi) { a += 2 * math.pi }
+    return a
+}
+
+# ── Lecture de la carte publiée par le Dungeon ───────────────────────────────
+
+fn FloorOf(map, y) {
+    let k = i64(math.round(-y / FLOOR))
+    if (k < 0 or k >= len(map.floors)) { return nil }
+    return map.floors[k]
+}
+
+fn Center(e, x, y) { return [(x - (e.width - 1) / 2) * CELL, (y - (e.height - 1) / 2) * CELL] }
+
+fn CellOf(e, px, pz) {
+    return [i64(math.round(px / CELL + (e.width - 1) / 2)), i64(math.round(pz / CELL + (e.height - 1) / 2))]
+}
+
+fn Inside(e, c) { return c[0] >= 0 and c[1] >= 0 and c[0] < e.width and c[1] < e.height }
+
+fn CellAt(e, c) { return e.cells[c[1] * e.width + c[0]] }
+
+# Un marcheur (rayon ~0,4 m) peut-il se tenir en (px, pz) ? Intérieur des
+# salles, voies des couloirs, passages par les portes ouvertes ; dans les
+# égouts, les trottoirs et le pont central (jamais le canal).
+fn Walkable(e, px, pz) {
+    let c = CellOf(e, px, pz)
+    if (not Inside(e, c)) { return false }
+    let k = CellAt(e, c)
+    let o = Center(e, c[0], c[1])
+    let lx = px - o[0]
+    let lz = pz - o[1]
+    if (k.isRoom) {
+        if (math.abs(lx) < 2.9 and math.abs(lz) < 2.9) { return true }
+        if (k.open[0] and math.abs(lx) < 1.05 and lz > 0) { return true }
+        if (k.open[1] and math.abs(lz) < 1.05 and lx > 0) { return true }
+        if (k.open[2] and math.abs(lx) < 1.05 and lz < 0) { return true }
+        if (k.open[3] and math.abs(lz) < 1.05 and lx < 0) { return true }
+        return false
+    }
+    if (k.sewer) {
+        if (math.abs(lx) < 0.95 and math.abs(lz) < 0.95) { return true }   # le pont
+        return Walkway(lx, lz, k.open)
+    }
+    let lane = 1.05
+    if (math.abs(lx) < lane and math.abs(lz) < lane) { return true }
+    if (k.open[0] and math.abs(lx) < lane and lz > 0) { return true }
+    if (k.open[1] and math.abs(lz) < lane and lx > 0) { return true }
+    if (k.open[2] and math.abs(lx) < lane and lz < 0) { return true }
+    if (k.open[3] and math.abs(lz) < lane and lx < 0) { return true }
+    return false
+}
+
+# Trottoirs d'un bras d'égout : entre le garde-corps (0,8) et le mur (1,45).
+fn Walkway(lx, lz, open) {
+    let ax = math.abs(lx)
+    let az = math.abs(lz)
+    if (open[0] and lz > 0 and ax > 0.8 and ax < 1.45) { return true }
+    if (open[2] and lz < 0 and ax > 0.8 and ax < 1.45) { return true }
+    if (open[1] and lx > 0 and az > 0.8 and az < 1.45) { return true }
+    if (open[3] and lx < 0 and az > 0.8 and az < 1.45) { return true }
+    # croisement : les quatre coins entre bras ouverts
+    if (ax < 1.45 and az < 1.45 and (ax > 0.8 or az > 0.8)) { return true }
+    return false
+}
+
+# L'eau d'un canal (pour les piranhas) : bras ouverts et centre, sous le pont.
+fn InWater(e, px, pz) {
+    let c = CellOf(e, px, pz)
+    if (not Inside(e, c)) { return false }
+    let k = CellAt(e, c)
+    if (not k.sewer) { return false }
+    let o = Center(e, c[0], c[1])
+    let lx = px - o[0]
+    let lz = pz - o[1]
+    let r = 0.5
+    if (math.abs(lx) < r and math.abs(lz) < r) { return true }
+    if (k.open[0] and math.abs(lx) < r and lz > 0 and lz < 3.9) { return true }
+    if (k.open[2] and math.abs(lx) < r and lz < 0 and lz > -3.9) { return true }
+    if (k.open[1] and math.abs(lz) < r and lx > 0 and lx < 3.9) { return true }
+    if (k.open[3] and math.abs(lz) < r and lx < 0 and lx > -3.9) { return true }
+    return false
+}
+
+# Prochaine case vers `but` (parcours en largeur sur les ouvertures), ou nil.
+fn NextCell(e, start, goal) {
+    if (start[0] == goal[0] and start[1] == goal[1]) { return nil }
+    let n = e.width * e.height
+    let previous = []
+    for (i in range(n)) { previous.append(-1) }
+    let d0 = start[1] * e.width + start[0]
+    let end = goal[1] * e.width + goal[0]
+    previous[d0] = d0
+    let queue = [d0]
+    let head = 0
+    while (head < len(queue)) {
+        let i = queue[head]
+        head += 1
+        if (i == end) { break }
+        let k = e.cells[i]
+        for (s in range(4)) {
+            if (not k.open[s]) { continue }
+            let nx = i % e.width + DIRS[s][0]
+            let ny = i32(i / e.width) + DIRS[s][1]
+            if (nx < 0 or ny < 0 or nx >= e.width or ny >= e.height) { continue }
+            let j = ny * e.width + nx
+            if (previous[j] < 0) {
+                previous[j] = i
+                queue.append(j)
+            }
+        }
+    }
+    if (previous[end] < 0) { return nil }
+    let i = end
+    while (previous[i] != d0) { i = previous[i] }
+    return [i % e.width, i32(i / e.width)]
+}
+
+# Point de passage entre deux cases voisines : le milieu de leur bord (sur le
+# trottoir si l'une d'elles est un égout).
+fn DoorBetween(e, a, b) {
+    let ca = Center(e, a[0], a[1])
+    let cb = Center(e, b[0], b[1])
+    let mx = (ca[0] + cb[0]) / 2
+    let mz = (ca[1] + cb[1]) / 2
+    if (CellAt(e, a).sewer or CellAt(e, b).sewer) {
+        if (a[0] == b[0]) { mx += WALKWAY } else { mz += WALKWAY }
+    }
+    return [mx, mz]
+}
+
+# ── La base ──────────────────────────────────────────────────────────────────
+
+abstract class Monster extends Behaviour {
+    let species = "monster"
+    let hp = 3
+    let maxHp = 3
+    let damage = 1.0
+    let speed = 1.5
+    let range = 1.6       # distance de frappe
+    let detection = 11.0   # distance à laquelle il repère le joueur
+    let cooldown = 0
+    let delay = 1.1        # entre deux coups
+    let readHits = 0
+    let hurt = 0
+    let death = 0           # > 0 : effondrement en cours
+    let origin = nil      # position monde de la racine de l'instance
+    let here = nil          # position monde du corps
+    let cap = 0
+    let walk = 0         # phase de l'animation de marche
+    let target = nil        # point (x, z) visé
+    let planTime = 0
+    let tints = []       # [chemin de la pièce, [r, g, b]] : couleurs d'origine
+    let alerted = false     # a déjà crié en repérant le joueur
+    let stepPhase = 0      # dernier pas joué (en demi-cycles de marche)
+    let stepTime = 0      # instant du dernier pas (game.time())
+    let playerDistance = 1e9
+
+    fn OnStart() {
+        this.species = this.prop("species") or this.species
+        this.hp = this.prop("hp") or this.hp
+        this.maxHp = this.hp
+        this.damage = this.prop("damage") or this.damage
+        this.speed = this.prop("speed") or this.speed
+        let world = this.world_position()
+        let local = this.position()
+        this.origin = [world[0] - local[0], world[1] - local[1], world[2] - local[2]]
+        this.here = world
+        this.cap = math.random() * 2 * math.pi
+        this.Prepare()
+    }
+
+    # À redéfinir : animation propre à l'espèce (vitesse au sol, temps).
+    fn Animate(dt, pace) { }
+    # À redéfinir : réglages au démarrage.
+    fn Prepare() { }
+
+    fn Map() {
+        let d = game.state().dungeon
+        if (d == nil) { return nil }
+        return FloorOf(d, this.here[1])
+    }
+
+    fn Place(x, y, z) {
+        this.here = [x, y, z]
+        this.set_position(x - this.origin[0], y - this.origin[1], z - this.origin[2])
+    }
+
+    fn Face(dx, dz, dt, angularSpeed) {
+        if (dx * dx + dz * dz < 0.0001) { return nil }
+        let wanted = math.atan2(dx, dz)
+        this.cap += math.clamp(WrapAngle(wanted - this.cap), -angularSpeed * dt, angularSpeed * dt)
+    }
+
+    # Un pas vers (tx, tz), en glissant le long des murs ; rend vrai s'il a bougé.
+    fn MoveToward(e, tx, tz, speed, dt) {
+        let dx = tx - this.here[0]
+        let dz = tz - this.here[2]
+        let d = math.sqrt(dx * dx + dz * dz)
+        if (d < 0.05) { return false }
+        let step = math.min(d, speed * dt)
+        let nx = this.here[0] + dx / d * step
+        let nz = this.here[2] + dz / d * step
+        if (this.CanGo(e, nx, nz)) {
+            this.Place(nx, this.here[1], nz)
+        } else if (this.CanGo(e, nx, this.here[2])) {
+            this.Place(nx, this.here[1], this.here[2])
+        } else if (this.CanGo(e, this.here[0], nz)) {
+            this.Place(this.here[0], this.here[1], nz)
+        } else {
+            return false
+        }
+        this.Face(dx, dz, dt, 6)
+        return true
+    }
+
+    # À redéfinir pour les nageurs (piranha : l'eau au lieu du sol).
+    fn CanGo(e, x, z) { return Walkable(e, x, z) }
+
+    # Le point à viser pour rejoindre le joueur : lui-même s'il est dans la
+    # même case, sinon le passage vers la case suivante du chemin.
+    fn Aim(e, player) {
+        let myCell = CellOf(e, this.here[0], this.here[2])
+        let theirCell = CellOf(e, player[0], player[2])
+        if (myCell[0] == theirCell[0] and myCell[1] == theirCell[1]) { return [player[0], player[2]] }
+        let next = NextCell(e, myCell, theirCell)
+        if (next == nil) { return nil }
+        let p = DoorBetween(e, myCell, next)
+        # Déjà sur le seuil : viser le centre de la case suivante.
+        if (PlaneDistance(this.here, [p[0], 0, p[1]]) < 0.4) {
+            let c = Center(e, next[0], next[1])
+            return [c[0], c[1]]
+        }
+        return p
+    }
+
+    # Déclare une pièce du corps et sa couleur (pour l'éclat « blessé »).
+    fn Tint(name, r, g, b) { this.tints.append([this.Child(name), [r, g, b]]) }
+
+    fn Color(r, g, b) {
+        for (t in this.tints) { node.set_color(t[0], r, g, b) }
+    }
+
+    # ── Bruits ───────────────────────────────────────────────────────────────
+
+    fn Noises() { return NOISES[this.species] or NOISES["skeleton"] }
+
+    # Un bruit de l'espèce, accroché au corps (il le suit tant qu'il existe).
+    fn Noise(key, volume) {
+        if (this.playerDistance > AUDIBLE) { return nil }
+        let family = this.Noises()[key]
+        if (family == nil) { return nil }
+        let b = this.Noises()
+        sounds.Variant(family, {volume: volume, node: this.path(), pitch: b.pitch * sounds.Rand(0.9, 1.1)})
+    }
+
+    # Un pas à chaque demi-cycle de la démarche (`marche` avance avec l'allure ;
+    # `pas_rythme` : demi-cycles de l'animation de l'espèce par unité de marche).
+    fn StepNoise(pace) {
+        let b = this.Noises()
+        if (b.step == nil or pace <= 0.05) { return nil }
+        let phase = i64(math.floor(this.walk * b.stepRhythm))
+        if (phase == this.stepPhase) { return nil }
+        this.stepPhase = phase
+        # Au plus un pas tous les `pas_ecart` secondes : une araignée qui
+        # trottine crépite, elle ne mitraille pas.
+        if (this.playerDistance > AUDIBLE or game.time() - this.stepTime < b.stepGap) { return nil }
+        this.stepTime = game.time()
+        sounds.Variant(b.step, {volume: b.stepVolume, node: this.path(), pitch: b.stepPitch * sounds.Rand(0.9, 1.1)})
+    }
+
+    fn HitPlayer() {
+        this.Noise("attack", 0.55)
+        let state = game.state()
+        state.playerDamage = (state.playerDamage or 0) + this.damage
+        state.lastHit = this.species
+    }
+
+    fn ReadHits() {
+        let hits = this.prop("hits") or 0
+        if (hits <= this.readHits) { return nil }
+        this.hp -= hits - this.readHits
+        this.readHits = hits
+        this.hurt = 0.25
+        if (this.hp <= 0) {
+            this.Die()
+        } else {
+            this.Noise("hit", 0.7)
+        }
+    }
+
+    fn Die() {
+        this.Noise("death", 0.85)
+        this.death = 0.001
+        let state = game.state()
+        if (state.deaths == nil) { state.deaths = [] }
+        state.deaths.append({species: this.species, pos: this.here})
+    }
+
+    # Effondrement : le corps bascule et s'enfonce, puis l'instance disparaît.
+    fn Collapse(dt) {
+        this.death += dt
+        let t = math.min(1, this.death / 1.1)
+        this.set_rotation(t * 85, this.cap * 180 / math.pi, t * 25)
+        this.Place(this.here[0], this.origin[1] - t * 0.6, this.here[2])
+        if (this.death > 1.4) { this.RemoveSelf() }
+    }
+
+    # Retire la racine de l'instance (le parent du « Corps »), avec tout le monstre.
+    fn RemoveSelf() {
+        let path = this.path()
+        scene.remove(std.string.substr(path, 0, std.string.rfind(path, "/")))
+    }
+
+    fn OnUpdate(dt) {
+        if (this.death > 0) {
+            this.Collapse(dt)
+            return nil
+        }
+        this.ReadHits()
+        if (this.death > 0) { return nil }
+        if (this.hurt > 0) {
+            this.hurt -= dt
+            this.Color(230, 60, 50)
+            if (this.hurt <= 0) { this.RestoreColors() }
+        }
+        this.cooldown -= dt
+        let e = this.Map()
+        let player = node.position("Player")
+        let pace = 0
+        this.playerDistance = 1e9
+        if (player != nil and math.abs(player[1] - 1 - this.here[1]) < 3) {
+            this.playerDistance = PlaneDistance(this.here, player)
+        }
+        if (e != nil and player != nil and math.abs(player[1] - 1 - this.here[1]) < 3) {
+            let d = PlaneDistance(this.here, player)
+            if (d < this.detection and not this.alerted) {
+                this.alerted = true
+                this.Noise("alert", 0.6)
+            } else if (d > this.detection * 1.6) {
+                this.alerted = false   # perdu de vue : il criera en le retrouvant
+            }
+            if (d < this.range) {
+                this.Face(player[0] - this.here[0], player[2] - this.here[2], dt, 8)
+                if (this.cooldown <= 0) {
+                    this.cooldown = this.delay
+                    this.Attack(d)
+                }
+            } else if (d < this.detection and this.Special(e, player, d, dt)) {
+                pace = this.speed
+            } else if (d < this.detection) {
+                this.planTime -= dt
+                if (this.planTime <= 0 or this.target == nil) {
+                    this.target = this.Aim(e, player)
+                    this.planTime = 0.4
+                }
+                if (this.target != nil and this.MoveToward(e, this.target[0], this.target[1], this.speed, dt)) {
+                    pace = this.speed
+                }
+            } else {
+                pace = this.Wander(e, dt)
+            }
+        }
+        this.walk += dt * (1 + pace * 2.5)
+        this.StepNoise(pace)
+        this.Animate(dt, pace)
+        this.set_rotation(0, this.cap * 180 / math.pi, 0)
+    }
+
+    # Sans proie : quelques pas au hasard dans sa case.
+    fn Wander(e, dt) {
+        if (this.target == nil or PlaneDistance(this.here, [this.target[0], 0, this.target[1]]) < 0.3) {
+            let c = CellOf(e, this.here[0], this.here[2])
+            let o = Center(e, c[0], c[1])
+            this.target = [o[0] + (math.random() - 0.5) * 3, o[1] + (math.random() - 0.5) * 3]
+        }
+        if (this.MoveToward(e, this.target[0], this.target[1], this.speed * 0.35, dt)) { return this.speed * 0.35 }
+        this.target = nil
+        return 0
+    }
+
+    # À redéfinir : manœuvre propre à l'espèce (bond de l'araignée…) ; vrai
+    # si elle a pris la main sur la poursuite pour cette image.
+    fn Special(e, player, d, dt) { return false }
+
+    # Par défaut : un coup au contact.
+    fn Attack(d) { this.HitPlayer() }
+
+    fn RestoreColors() {
+        for (t in this.tints) { node.set_color(t[0], t[1][0], t[1][1], t[1][2]) }
+    }
+
+    fn Child(name) { return this.path() .. "/" .. name }
+}

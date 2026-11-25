@@ -1,0 +1,381 @@
+# ── Génération : le plan du donjon, étage par étage ──────────────────────────
+#
+# Le donjon compte plusieurs ÉTAGES superposés ; chacun est une grille de
+# CASES, et chaque case recevra une pièce (un objet du projet,
+# objects/<pièce>.object) dont les ouvertures sont centrées sur ses côtés.
+# Pour chaque étage :
+#  1. un labyrinthe parfait (parcours en profondeur au hasard) relie toutes
+#     les cases, depuis la case d'ARRIVÉE (l'entrée au premier étage, le pied
+#     de l'escalier ou de l'échelle venus d'en haut aux suivants), puis
+#     quelques passages en plus créent des boucles ;
+#  2. la case la plus éloignée à pied devient la DESCENTE vers l'étage
+#     suivant (un escalier ou une échelle, posé à la même case et avec la même
+#     rotation à l'étage du dessous) — ou la SORTIE au dernier étage ;
+#  3. chaque case reçoit sa pièce : salles aux culs-de-sac et çà et là,
+#     couloirs ailleurs ; l'étage des ÉGOUTS reçoit ses couloirs à canaux et
+#     ses citernes ;
+#  4. les monstres sont répartis : squelettes partout, araignées et zombies
+#     plus bas, piranhas dans les canaux.
+# Le plan passe à la scène « Dungeon » par game.state().plan.
+
+const sounds = import "sounds"
+
+const DIRS = [[0, 1], [1, 0], [0, -1], [-1, 0]]        # nord (+z), est, sud, ouest
+# Étages et taille de chaque étage selon la difficulté.
+const FLOORS = {"Easy": 2, "Normal": 3, "Hard": 3}
+const SIZES = {"Easy": [3, 3], "Normal": [4, 3], "Hard": [4, 4]}
+const MONSTERS_PER_FLOOR = {"Easy": 3, "Normal": 5, "Hard": 7}
+# Couloirs : ouvertures du modèle (nord, est, sud, ouest).
+const CORRIDORS = [
+    {room: "crossroads", open: [true, true, true, true]},
+    {room: "t_corridor", open: [true, true, false, true]},
+    {room: "straight_corridor", open: [true, false, true, false]},
+    {room: "corner_corridor", open: [true, true, false, false]},
+    {room: "dead_end", open: [true, false, false, false]},
+]
+const SEWERS = [
+    {room: "sewer_crossroads", open: [true, true, true, true]},
+    {room: "sewer_t", open: [true, true, false, true]},
+    {room: "sewer_straight", open: [true, false, true, false]},
+    {room: "sewer_corner", open: [true, true, false, false]},
+    {room: "sewer_dead_end", open: [true, false, false, false]},
+]
+const END_ROOMS = ["treasure_room", "crypt", "guard_room", "treasure_room", "crypt"]
+const NAMES = ["valdrakar", "morthelion", "sombrevault", "karnethys", "ulmgard", "vorhaven", "nekrolis", "thalgrim",
+              "ossuaria", "grimbaldor"]
+const FLOOR_NAMES = ["Les salles hautes", "Les égouts", "Les cryptes profondes", "L'abîme"]
+
+var progress = 0.0     # écrites par le fil de génération, lues par la scène :
+var step = "Préparation"  # protégées automatiquement (verrou par variable)
+var log = []
+
+fn Note(message) {
+    step = message
+    log.append(message)
+}
+
+# Ouvertures `ouvert` tournées de k quarts de tour : le côté s devient s + k.
+fn Rotate(open, k) {
+    let r = [false, false, false, false]
+    for (s in range(4)) { r[(s + k) % 4] = open[s] }
+    return r
+}
+
+fn Same(a, b) {
+    for (s in range(4)) { if (a[s] != b[s]) { return false } }
+    return true
+}
+
+fn Degree(open) {
+    let n = 0
+    for (o in open) { if (o) { n += 1 } }
+    return n
+}
+
+# Couloir (ou égout) et rotation pour des ouvertures données.
+fn CorridorFor(table, open) {
+    for (c in table) {
+        for (k in range(4)) {
+            if (Same(Rotate(c.open, k), open)) { return [c.room, k] }
+        }
+    }
+    return [table[0].room, 0]
+}
+
+# Un étage : `arrivee` = [x, y] de la case d'arrivée ; `venue` = pièce et
+# rotation imposées à cette case (nil au premier étage) ; `dernier` : pose la
+# sortie ; `egout` : étage des égouts.
+fn GenerateFloor(rng, number, w, h, arrival, incoming, last, sewer, difficulty) {
+    let open = []
+    for (i in range(w * h)) { open.append([false, false, false, false]) }
+    fn Link(x, y, d) {
+        open[y * w + x][d] = true
+        open[(y + DIRS[d][1]) * w + x + DIRS[d][0]][(d + 2) % 4] = true
+    }
+    fn Inside(x, y) { return x >= 0 and y >= 0 and x < w and y < h }
+
+    let vu = []
+    for (i in range(w * h)) { vu.append(false) }
+    let stack = [arrival]
+    vu[arrival[1] * w + arrival[0]] = true
+    while (len(stack) > 0) {
+        let c = stack[len(stack) - 1]
+        let choices = []
+        for (d in range(4)) {
+            let nx = c[0] + DIRS[d][0]
+            let ny = c[1] + DIRS[d][1]
+            if (Inside(nx, ny) and not vu[ny * w + nx]) { choices.append(d) }
+        }
+        if (len(choices) == 0) {
+            stack.pop()
+        } else {
+            let d = choices[rng.int(0, len(choices) - 1)]
+            Link(c[0], c[1], d)
+            let n = [c[0] + DIRS[d][0], c[1] + DIRS[d][1]]
+            vu[n[1] * w + n[0]] = true
+            stack.append(n)
+        }
+    }
+    let loops = 0
+    for (y in range(h)) {
+        for (x in range(w)) {
+            for (d in [0, 1]) {
+                let nx = x + DIRS[d][0]
+                let ny = y + DIRS[d][1]
+                if (Inside(nx, ny) and not open[y * w + x][d] and rng.bool(0.12)) {
+                    Link(x, y, d)
+                    loops += 1
+                }
+            }
+        }
+    }
+
+    # Distances depuis l'arrivée : la case la plus lointaine mène plus loin.
+    let distance = []
+    let previous = []
+    for (i in range(w * h)) {
+        distance.append(-1)
+        previous.append(-1)
+    }
+    let start = arrival[1] * w + arrival[0]
+    let queue = [start]
+    distance[start] = 0
+    let head = 0
+    while (head < len(queue)) {
+        let i = queue[head]
+        head += 1
+        let x = i % w
+        let y = i32(i / w)
+        for (d in range(4)) {
+            if (open[i][d]) {
+                let j = (y + DIRS[d][1]) * w + x + DIRS[d][0]
+                if (distance[j] < 0) {
+                    distance[j] = distance[i] + 1
+                    previous[j] = i
+                    queue.append(j)
+                }
+            }
+        }
+    }
+    let farthest = start
+    for (i in range(w * h)) { if (distance[i] > distance[farthest]) { farthest = i } }
+    let path = [farthest]
+    while (previous[path[0]] >= 0) { path.insert(0, previous[path[0]]) }
+
+    # La descente : escalier aux étages pairs, échelle aux impairs.
+    let link = nil
+    if (not last) {
+        let kind = "stairs"
+        if (number % 2 == 1) { kind = "ladder" }
+        link = {x: farthest % w, y: i32(farthest / w), kind: kind, rotation: rng.int(0, 3)}
+    }
+
+    let cells = []
+    let rooms = 0
+    for (i in range(w * h)) {
+        let room = ""
+        let k = 0
+        let isRoom = false
+        let n = Degree(open[i])
+        if (i == start) {
+            isRoom = true
+            if (incoming == nil) {
+                room = "entrance"
+                k = rng.int(0, 3)
+            } else {
+                room = incoming.room
+                k = incoming.rotation
+            }
+        } else if (i == farthest and last) {
+            room = "exit"
+            isRoom = true
+            k = rng.int(0, 3)
+        } else if (i == farthest) {
+            isRoom = true
+            k = link.rotation
+            room = "stairs_descent"
+            if (link.kind == "ladder") { room = "ladder_well" }
+        } else if (sewer and n >= 2 and rng.bool(0.22)) {
+            room = "sewer_room"
+            isRoom = true
+            k = rng.int(0, 3)
+        } else if (not sewer and n == 1 and rng.bool(0.8)) {
+            room = END_ROOMS[rng.int(0, len(END_ROOMS) - 1)]
+            isRoom = true
+            k = rng.int(0, 3)
+        } else if (not sewer and n >= 2 and rng.bool(0.18)) {
+            room = "pillar_room"
+            if (rng.bool(0.4)) { room = "guard_room" }
+            isRoom = true
+            k = rng.int(0, 3)
+        } else {
+            let table = CORRIDORS
+            if (sewer) { table = SEWERS }
+            let c = CorridorFor(table, open[i])
+            room = c[0]
+            k = c[1]
+        }
+        if (isRoom) { rooms += 1 }
+        let isSewer = sewer and not isRoom
+        cells.append({x: i % w, y: i32(i / w), open: open[i], room: room, rotation: k, isRoom: isRoom,
+                      sewer: isSewer, distance: distance[i]})
+    }
+    # Au moins une salle du trésor hors des égouts.
+    if (not sewer) {
+        let treasure = false
+        for (c in cells) { if (c.room == "treasure_room") { treasure = true } }
+        if (not treasure) {
+            for (i in range(w * h)) {
+                if (not treasure and i != start and i != farthest and Degree(open[i]) == 1) {
+                    cells[i].room = "treasure_room"
+                    cells[i].isRoom = true
+                    cells[i].sewer = false
+                    treasure = true
+                }
+            }
+        }
+    }
+
+    # Monstres : [x, y, dx, dz, espèce], jamais au pied de l'arrivée.
+    let monsters = []
+    let wanted = (MONSTERS_PER_FLOOR[difficulty] or 5) + number
+    let species = ["skeleton", "skeleton", "spider"]
+    if (number >= 1) { species = ["skeleton", "zombie", "spider", "zombie"] }
+    let attempts = 0
+    while (len(monsters) < wanted and attempts < 400) {
+        attempts += 1
+        let i = rng.int(0, w * h - 1)
+        if (distance[i] < 1) { continue }
+        let c = cells[i]
+        if (c.sewer) {
+            # Un banc de piranhas dans le canal, un zombie sur le trottoir.
+            # (le long d'un bras ouvert : l'axe du canal, ou le trottoir à 1,15 m)
+            let arms = []
+            for (s in range(4)) { if (c.open[s]) { arms.append(s) } }
+            for (n in range(2)) {
+                let s = arms[rng.int(0, len(arms) - 1)]
+                let t = rng.float(0.8, 3.0)
+                monsters.append([c.x, c.y, DIRS[s][0] * t, DIRS[s][1] * t, "piranha"])
+            }
+            if (rng.bool(0.4)) {
+                let s = arms[rng.int(0, len(arms) - 1)]
+                let t = rng.float(1.6, 3.0)
+                monsters.append([c.x, c.y, DIRS[s][0] * t + DIRS[s][1] * 1.15, DIRS[s][1] * t + DIRS[s][0] * 1.15,
+                                 "zombie"])
+            }
+        } else if (c.isRoom or rng.bool(0.4)) {
+            monsters.append([c.x, c.y, rng.float(-1.0, 1.0), rng.float(-1.0, 1.0),
+                             species[rng.int(0, len(species) - 1)]])
+        }
+    }
+    let name = FLOOR_NAMES[number % len(FLOOR_NAMES)]
+    if (sewer) { name = "Les égouts" }
+    return {number: number, name: name, width: w, height: h, cells: cells, start: arrival, path: path,
+            link: link, exit: [farthest % w, i32(farthest / w)], last: last, sewer: sewer, monsters: monsters,
+            loops: loops, rooms: rooms}
+}
+
+async fn Generate(seed, difficulty) {
+    let rng = math.random_engine(seed)
+    let size = SIZES[difficulty] or [4, 3]
+    let w = size[0]
+    let h = size[1]
+    let count = FLOORS[difficulty] or 3
+    # L'étage des égouts : le deuxième (le dernier s'il n'y en a que deux).
+    let sewers = 1
+    let floors = []
+    let arrival = [rng.int(0, w - 1), 0]
+    let incoming = nil
+    for (n in range(count)) {
+        let last = n == count - 1
+        Note(format("Étage {} : labyrinthe de {} × {} cases…", n + 1, w, h))
+        let e = GenerateFloor(rng, n, w, h, arrival, incoming, last, n == sewers, difficulty)
+        Note(format("Étage {} : {} salles, {} boucles, {} monstres{}", n + 1, e.rooms, e.loops,
+                     len(e.monsters), (n == sewers and " — égouts") or ""))
+        floors.append(e)
+        if (e.link != nil) {
+            arrival = [e.link.x, e.link.y]
+            incoming = {room: "stairs_arrival", rotation: e.link.rotation}
+            if (e.link.kind == "ladder") { incoming.room = "ladder_arrival" }
+            Note(format("  {} vers l'étage {} en ({}, {})", (e.link.kind == "ladder" and "Échelle") or "Escalier",
+                         n + 2, e.link.x, e.link.y))
+        }
+        progress = (n + 1) / (count + 1)
+        sleep(220)
+    }
+
+    Note("Baptême du donjon…")
+    let name = gen.names(NAMES, 2, seed).generate(6, 10) or "Sans-Nom"
+    progress = 1.0
+    sleep(200)
+    return {name: "Crypte de " .. name, seed: seed, difficulty: difficulty, floors: floors}
+}
+
+# La rune du décor tourne sur elle-même pendant l'attente.
+class Rune extends Behaviour {
+    let angle = 0
+    fn OnUpdate(dt) {
+        this.angle += dt * 60
+        this.set_rotation(0, this.angle, 0)
+    }
+}
+
+class Generation extends Scene {
+    let task = nil
+    let time = 0
+    let started = false
+    let bar = nil
+    let text = nil
+    let lines = nil
+    let ambience = nil
+    let read = 0      # lignes du journal déjà affichées
+
+    fn OnStart() {
+        Rune("Rune")
+        # La porte du donjon grince ; le vent souffle pendant qu'on bâtit, et
+        # chaque étape posée sonne comme une pierre. On en profite pour
+        # décoder à l'avance les sons de la partie.
+        sounds.Variant("default_creaky_door_open", {volume: 0.7})
+        this.ambience = sounds.Ambience()
+        this.ambience.Crossfade([{sound: "default_ambience_wind_cave_1", volume: 0.45},
+                              {sound: "default_ambience_cave_2", volume: 0.25}], 1.5)
+        sounds.Preload(["default_stone_footstep", "backrooms_step_stone", "default_water_footstep",
+                         "default_metal_footstep", "default_bamboo_hit", "default_mud_footstep",
+                         "default_leaves_footstep", "default_grass_hit", "default_dirt_hit", "game-music-cave",
+                         "backrooms_drip", "default_ambience_hot_stone_1", "default_ambience_sulfur_1"])
+        let state = this.state()
+        let seed = state.seed or 1234
+        let difficulty = state.difficulty or "Normal"
+        let panel = ui.column({anchor: "center", gap: 12, pad: 28, bg: "#120e0ce8", radius: 10, w: 560,
+                                 align: "center"})
+        ui.label("Génération du donjon", {parent: panel, font_size: 30, bold: true, color: "#e8c27a"})
+        ui.label(format("Graine {} · {} · {} étages", seed, difficulty, FLOORS[difficulty] or 3),
+                 {parent: panel, color: "#c9bfae"})
+        this.bar = ui.progress(0, 1, {parent: panel, w: 480})
+        this.text = ui.label("Préparation", {parent: panel, font_size: 15})
+        this.lines = ui.column({parent: panel, gap: 2, align: "start", w: 480})
+        this.task = Generate(seed, difficulty)
+    }
+
+    fn OnUpdate(dt) {
+        this.time += dt
+        this.bar.value = progress
+        this.text.text = step
+        this.ambience.Update(dt)
+        if (this.read < len(log)) {
+            sounds.Variant("default_stone_place", {volume: 0.5})
+            ui.label("· " .. log[this.read], {parent: this.lines, font_size: 12, color: "#9a917f"})
+            this.read += 1
+        }
+        if (this.started or not this.task.done) { return nil }
+        if (this.task.failed) {
+            this.text.text = "La génération a échoué : " .. this.task.error
+            return nil
+        }
+        if (this.time >= 2) {
+            this.state().plan = this.task.value
+            this.started = true
+            this.load("Dungeon")
+        }
+    }
+}

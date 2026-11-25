@@ -1,0 +1,29 @@
+# ── Coffre : le couvercle (enfant nommé par la propriété `lid`) s'ouvre ─────
+# quand la propriété `open` devient vraie (le script du donjon la pose).
+const sounds = import "sounds"
+
+class Chest extends Behaviour {
+    let angle = 0
+    let lid = nil
+    let sounded = false
+
+    fn OnStart() {
+        this.lid = this.child(this.prop("lid") or "Lid")
+    }
+
+    fn OnUpdate(dt) {
+        if (this.prop("open") == true and not this.sounded) {
+            this.sounded = true
+            # Le couvercle grince, puis l'or tinte (accord de trois clochettes).
+            sounds.OnNode("default_chest_open", this.path(), 0.9)
+            sounds.OnNode("default_item_drop_pickup", this.path(), 0.7)
+            for (h in [1.0, 1.26, 1.5]) {
+                sounds.Variant("default_crystal_chime", {volume: 0.35, pitch: h, node: this.path()})
+            }
+        }
+        if (this.prop("open") == true and this.angle < 105 and this.lid != nil) {
+            this.angle = math.min(105, this.angle + dt * 80)
+            node.set_rotation(this.lid, -this.angle, 0, 0)
+        }
+    }
+}

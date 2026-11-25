@@ -1,0 +1,97 @@
+# ── Joueur : contrôleur à la première personne ───────────────────────────────
+#
+# Souris (capturée) : regarder ; ZQSD / WASD ou flèches : marcher ; Maj :
+# courir. Le corps est une capsule physique (PhysicsBody) : on lui donne une
+# vitesse, la physique gère murs et sol. Sans joueur, visite guidée : le
+# chevalier suit les étapes (nœuds étiquetés « etape », posés par le script
+# du donjon) et se tourne vers la cible que ce script lui désigne
+# (propriété `cible`). Il publie `manuel` pour que le donjon sache qui joue.
+# Pendant une traversée d'étage (propriété `transit`, posée par le donjon),
+# le corps ne bouge plus de lui-même : le donjon le déplace.
+fn WrapAngle(a) {
+    while (a > math.pi) { a -= 2 * math.pi }
+    while (a < -math.pi) { a += 2 * math.pi }
+    return a
+}
+
+class Player extends Behaviour, PhysicsBody {
+    let yaw = 0
+    let pitch = 0
+    let manual = false
+    let steps = []
+    let next = 0
+    let speed = 4
+    let eye = nil           # la caméra enfant (propriété `eye`), qui porte le tangage
+
+    fn OnStart() {
+        this.steps = scene.find_tag("step")
+        let name = this.prop("eye")
+        if (name != nil) { this.eye = this.child(name) }
+        let r = this.rotation()
+        if (r) { this.yaw = r[1] * math.pi / 180 }
+        this.prop("manual", false)
+    }
+
+    fn Aim(target, dt) {
+        let here = this.position()
+        let targetPos = node.world_position(target)   # le « Corps » d'un monstre (chemin)
+        if (not here or not targetPos) { return nil }
+        this.yaw += math.clamp(WrapAngle(math.atan2(targetPos[0] - here[0], targetPos[2] - here[2]) - this.yaw), -4 * dt, 4 * dt)
+    }
+
+    fn OnUpdate(dt) {
+        let mouse = input.mouse_delta()
+        if (mouse[0] != 0 or mouse[1] != 0) { this.manual = true }
+        # Repère direct : la droite de l'écran est −x quand on regarde +z, donc
+        # tourner à droite fait DÉCROÎTRE le lacet.
+        this.yaw -= mouse[0] * 0.0025
+        this.pitch = math.clamp(this.pitch - mouse[1] * 0.0025, -1.2, 1.2)
+
+        let forward = math.clamp(input.axis("s", "w") + input.axis("s", "z") + input.axis("down", "up"), -1, 1)
+        let side = math.clamp(input.axis("a", "d") + input.axis("q", "d") + input.axis("left", "right"), -1, 1)
+        if (forward != 0 or side != 0) { this.manual = true }
+        this.prop("manual", this.manual)
+
+        # Visite guidée : cap vers la prochaine étape ; halte pour combattre.
+        if (not this.manual) {
+            let target = this.prop("target")
+            if (target != nil and target != "") {
+                this.Aim(target, dt)
+            } else if (this.next < len(this.steps) and not scene.exists(this.steps[this.next])) {
+                this.next += 1   # étape retirée par le donjon (passage d'étage franchi)
+            } else if (this.next < len(this.steps)) {
+                let here = this.position()
+                let targetPos = node.position(this.steps[this.next])
+                let dx = targetPos[0] - here[0]
+                let dz = targetPos[2] - here[2]
+                if (dx * dx + dz * dz < 0.6) {
+                    this.next += 1
+                } else {
+                    this.yaw += math.clamp(WrapAngle(math.atan2(dx, dz) - this.yaw), -3 * dt, 3 * dt)
+                    forward = 1
+                }
+            }
+            this.pitch = math.lerp(this.pitch, -0.05, math.min(1, dt * 2))
+        }
+
+        # Traversée d'étage : le donjon déplace le corps ; on garde le regard.
+        if (this.prop("transit") == true) {
+            this.set_velocity(0, 0, 0)
+            this.set_rotation(0, this.yaw * 180 / math.pi, 0)
+            if (this.eye != nil) { node.set_rotation(this.eye, -this.pitch * 180 / math.pi, 0, 0) }
+            return nil
+        }
+
+        let v = this.speed
+        if (input.key("shift")) { v = this.speed * 1.8 }
+        let current = this.velocity()
+        let vy = 0
+        if (current) { vy = current[1] }
+        # Droite = (−cos, 0, sin) quand l'avant est (sin, 0, cos).
+        let vx = (math.sin(this.yaw) * forward - math.cos(this.yaw) * side) * v
+        let vz = (math.cos(this.yaw) * forward + math.sin(this.yaw) * side) * v
+        this.set_velocity(vx, vy, vz)
+        this.set_rotation(0, this.yaw * 180 / math.pi, 0)
+        if (this.eye != nil) { node.set_rotation(this.eye, -this.pitch * 180 / math.pi, 0, 0) }
+    }
+}

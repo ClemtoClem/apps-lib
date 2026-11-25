@@ -1,0 +1,5 @@
+<!-- Scribe : text_box -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <rect x="2.5" y="4.5" width="19" height="15" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2.2 1.6"/>
+  <path d="M7.5 8 H16.5 V10.2 H13.1 V17 H10.9 V10.2 H7.5 Z" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,1068 @@
+{
+  
+  "format": "sandbox.scene",
+  "version": 1,
+  "name": "Parts Workshop",
+  "description": "Chaque objet du donjon (pièces, passages, égouts, monstres) posé en instance, rangée par rangée",
+  "gameplay_script": "",
+  "environment": {
+    "sun_direction": [
+      0.30000001192092896,
+      -0.699999988079071,
+      0.44999998807907104
+    ],
+    "sun_intensity": 1.0,
+    "sun_color": [
+      255,
+      244,
+      228
+    ],
+    "ambient_color": [
+      120,
+      112,
+      104
+    ],
+    "background_color": [
+      30,
+      32,
+      40
+    ],
+    "gravity": [
+      0.0,
+      -9.8100004196167,
+      0.0
+    ]
+  },
+  "camera": {
+    "edit_position": [
+      -10.0,
+      28.0,
+      -20.0
+    ],
+    "edit_yaw": 0.75,
+    "edit_pitch": -0.949999988079071,
+    "play_position": [
+      0.0,
+      1.7000000476837158,
+      0.0
+    ],
+    "play_yaw": 0.0,
+    "play_pitch": -0.10000000149011612
+  },
+  "canvas2d": {
+    "width": 1280,
+    "height": 720,
+    "render_3d": true,
+    "background": [
+      24,
+      26,
+      34
+    ]
+  },
+  "tree": {
+    "format": "scene.tree",
+    "version": 1,
+    "root": {
+      "id": "0:0",
+      "type": "Node",
+      "name": "parts-workshop",
+      "transform": {
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "children": [
+        {
+          "id": "8:0",
+          "type": "Node",
+          "name": "Dungeon Rooms",
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "children": [
+            {
+              "id": "1:0",
+              "type": "Node3D",
+              "name": "entrance",
+              "transform": {
+                "position": [
+                  -30.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "entrance"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "2:0",
+              "type": "Node3D",
+              "name": "exit",
+              "transform": {
+                "position": [
+                  -20.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "exit"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "3:0",
+              "type": "Node3D",
+              "name": "straight_corridor",
+              "transform": {
+                "position": [
+                  -10.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "straight_corridor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "4:0",
+              "type": "Node3D",
+              "name": "corner_corridor",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "corner_corridor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "5:0",
+              "type": "Node3D",
+              "name": "t_corridor",
+              "transform": {
+                "position": [
+                  10.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "t_corridor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "6:0",
+              "type": "Node3D",
+              "name": "crossroads",
+              "transform": {
+                "position": [
+                  20.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "crossroads"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "7:0",
+              "type": "Node3D",
+              "name": "dead_end",
+              "transform": {
+                "position": [
+                  30.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "dead_end"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "14:0",
+          "type": "Node",
+          "name": "Rooms",
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              12.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "children": [
+            {
+              "id": "9:0",
+              "type": "Node3D",
+              "name": "guard_room",
+              "transform": {
+                "position": [
+                  -20.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "guard_room"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "10:0",
+              "type": "Node3D",
+              "name": "pillar_room",
+              "transform": {
+                "position": [
+                  -10.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "pillar_room"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "11:0",
+              "type": "Node3D",
+              "name": "treasure_room",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "treasure_room"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "12:0",
+              "type": "Node3D",
+              "name": "crypt",
+              "transform": {
+                "position": [
+                  10.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "crypt"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "13:0",
+              "type": "Node3D",
+              "name": "walled_door",
+              "transform": {
+                "position": [
+                  20.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "walled_door"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "19:0",
+          "type": "Node",
+          "name": "Passages Between Floors",
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              24.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "children": [
+            {
+              "id": "15:0",
+              "type": "Node3D",
+              "name": "stairs_descent",
+              "transform": {
+                "position": [
+                  -15.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "stairs_descent"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "16:0",
+              "type": "Node3D",
+              "name": "stairs_arrival",
+              "transform": {
+                "position": [
+                  -5.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "stairs_arrival"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "17:0",
+              "type": "Node3D",
+              "name": "ladder_well",
+              "transform": {
+                "position": [
+                  5.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "ladder_well"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "18:0",
+              "type": "Node3D",
+              "name": "ladder_arrival",
+              "transform": {
+                "position": [
+                  15.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "ladder_arrival"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "26:0",
+          "type": "Node",
+          "name": "sewers",
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              36.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "children": [
+            {
+              "id": "20:0",
+              "type": "Node3D",
+              "name": "sewer_straight",
+              "transform": {
+                "position": [
+                  -25.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_straight"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "21:0",
+              "type": "Node3D",
+              "name": "sewer_corner",
+              "transform": {
+                "position": [
+                  -15.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_corner"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "22:0",
+              "type": "Node3D",
+              "name": "sewer_t",
+              "transform": {
+                "position": [
+                  -5.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_t"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "23:0",
+              "type": "Node3D",
+              "name": "sewer_crossroads",
+              "transform": {
+                "position": [
+                  5.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_crossroads"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "24:0",
+              "type": "Node3D",
+              "name": "sewer_dead_end",
+              "transform": {
+                "position": [
+                  15.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_dead_end"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "25:0",
+              "type": "Node3D",
+              "name": "sewer_room",
+              "transform": {
+                "position": [
+                  25.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "sewer_room"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "31:0",
+          "type": "Node",
+          "name": "Monsters",
+          "transform": {
+            "position": [
+              0.0,
+              0.0,
+              -8.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "children": [
+            {
+              "id": "27:0",
+              "type": "Node3D",
+              "name": "skeleton",
+              "transform": {
+                "position": [
+                  -3.75,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  -179.99993896484375,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "skeleton"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "28:0",
+              "type": "Node3D",
+              "name": "zombie",
+              "transform": {
+                "position": [
+                  -1.25,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  -179.99993896484375,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "zombie"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "29:0",
+              "type": "Node3D",
+              "name": "spider",
+              "transform": {
+                "position": [
+                  1.25,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  -179.99993896484375,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "spider"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "30:0",
+              "type": "Node3D",
+              "name": "piranha",
+              "transform": {
+                "position": [
+                  3.75,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  -179.99993896484375,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "ObjectInstance",
+                  "props": {
+                    "source": {
+                      "type": "string",
+                      "value": "piranha"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

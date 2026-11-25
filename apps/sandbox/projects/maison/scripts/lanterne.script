@@ -1,0 +1,15 @@
+# Lanterne : flotte doucement ; E l'allume ou l'éteint (Interrupteur + lampe).
+
+const i = import "interactions"
+
+class Lanterne extends i.Interrupteur, Light3D {
+    export let amplitude = 0.15   # hauteur du flottement (m)
+    let t = 0
+
+    fn OnUpdate(dt) {
+        this.t += dt
+        this.move(0, math.cos(this.t * 2) * dt * this.amplitude, 0)
+    }
+
+    fn basculer(allumee) { this.light(allumee) }
+}

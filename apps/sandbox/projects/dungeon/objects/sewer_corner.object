@@ -1,0 +1,5921 @@
+{
+  "format": "sandbox.object",
+  "version": 1,
+  "name": "sewer_corner",
+  "description": "Égout : coude du canal",
+  "tree": {
+    "format": "scene.tree",
+    "version": 1,
+    "root": {
+      "id": "78:0",
+      "type": "Node",
+      "name": "sewer_corner",
+      "transform": {
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "properties": {
+        "description": {
+          "type": "string",
+          "value": "Égout : coude du canal"
+        },
+        "tag": {
+          "type": "string",
+          "value": "sewer"
+        }
+      },
+      "children": [
+        {
+          "id": "1:0",
+          "type": "MeshInstance",
+          "name": "Walkway",
+          "transform": {
+            "position": [
+              -2.3499999046325684,
+              -0.42500001192092896,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    3.299999952316284,
+                    0.8500000238418579,
+                    8.0
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "pbr"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    66.0,
+                    62.0,
+                    56.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.800000011920929
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.649999976158142,
+                    0.42500001192092896,
+                    4.0
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "2:0",
+          "type": "MeshInstance",
+          "name": "Walkway 2",
+          "transform": {
+            "position": [
+              2.3499999046325684,
+              -0.42500001192092896,
+              -2.3499999046325684
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    3.299999952316284,
+                    0.8500000238418579,
+                    3.299999952316284
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "pbr"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    66.0,
+                    62.0,
+                    56.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.800000011920929
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.649999976158142,
+                    0.42500001192092896,
+                    1.649999976158142
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "3:0",
+          "type": "MeshInstance",
+          "name": "Walkway 3",
+          "transform": {
+            "position": [
+              2.3499999046325684,
+              -0.42500001192092896,
+              2.3499999046325684
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    3.299999952316284,
+                    0.8500000238418579,
+                    3.299999952316284
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "pbr"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    66.0,
+                    62.0,
+                    56.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.800000011920929
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.649999976158142,
+                    0.42500001192092896,
+                    1.649999976158142
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "4:0",
+          "type": "MeshInstance",
+          "name": "Walkway 4",
+          "transform": {
+            "position": [
+              0.0,
+              -0.42500001192092896,
+              -2.3499999046325684
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    1.399999976158142,
+                    0.8500000238418579,
+                    3.299999952316284
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "pbr"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    66.0,
+                    62.0,
+                    56.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.800000011920929
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.699999988079071,
+                    0.42500001192092896,
+                    1.649999976158142
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "5:0",
+          "type": "MeshInstance",
+          "name": "Canal Bottom",
+          "transform": {
+            "position": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    1.399999976158142,
+                    0.30000001192092896,
+                    1.399999976158142
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    30.0,
+                    38.0,
+                    30.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.699999988079071,
+                    0.15000000596046448,
+                    0.699999988079071
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "6:0",
+          "type": "MeshInstance",
+          "name": "Canal Bottom 2",
+          "transform": {
+            "position": [
+              0.0,
+              -1.0,
+              2.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    1.399999976158142,
+                    0.30000001192092896,
+                    4.0
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    30.0,
+                    38.0,
+                    30.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.699999988079071,
+                    0.15000000596046448,
+                    2.0
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "7:0",
+          "type": "MeshInstance",
+          "name": "Canal Bottom 3",
+          "transform": {
+            "position": [
+              2.0,
+              -1.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    4.0,
+                    0.30000001192092896,
+                    1.399999976158142
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    30.0,
+                    38.0,
+                    30.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    2.0,
+                    0.15000000596046448,
+                    0.699999988079071
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "9:0",
+          "type": "MeshInstance",
+          "name": "Bridge",
+          "transform": {
+            "position": [
+              0.0,
+              -0.15000000596046448,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    1.899999976158142,
+                    0.30000001192092896,
+                    1.899999976158142
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    88.0,
+                    80.0,
+                    70.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.949999988079071,
+                    0.15000000596046448,
+                    0.949999988079071
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "8:0",
+              "type": "MeshInstance",
+              "name": "Moss",
+              "transform": {
+                "position": [
+                  0.20000000298023224,
+                  0.1599999964237213,
+                  -0.30000001192092896
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.8999999761581421,
+                        0.019999999552965164,
+                        0.6000000238418579
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        54.0,
+                        70.0,
+                        48.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "17:0",
+          "type": "Node",
+          "name": "North Water",
+          "transform": {
+            "position": [
+              0.0,
+              -0.4000000059604645,
+              2.4749999046325684
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "Script",
+              "props": {
+                "script": {
+                  "type": "string",
+                  "value": "running-water"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "length": {
+              "type": "float",
+              "value": 3.049999952316284
+            },
+            "speed": {
+              "type": "float",
+              "value": -0.8999999761581421
+            },
+            "width": {
+              "type": "float",
+              "value": 1.2999999523162842
+            }
+          },
+          "children": [
+            {
+              "id": "16:0",
+              "type": "MeshInstance",
+              "name": "Surface",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.3799999952316284,
+                        0.03999999910593033,
+                        3.049999952316284
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "pbr"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        34.0,
+                        86.0,
+                        104.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.3499999940395355
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.11999999731779099
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "10:0",
+              "type": "MeshInstance",
+              "name": "Foam 1",
+              "transform": {
+                "position": [
+                  -0.11379552632570267,
+                  0.029999999329447746,
+                  -1.2708333730697632
+                ],
+                "rotation": [
+                  0.0,
+                  -10.012195587158203,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.3156047463417053,
+                        0.029999999329447746,
+                        0.24249151349067688
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "11:0",
+              "type": "MeshInstance",
+              "name": "Foam 2",
+              "transform": {
+                "position": [
+                  0.2650231122970581,
+                  0.029999999329447746,
+                  -0.762499988079071
+                ],
+                "rotation": [
+                  -0.0,
+                  8.849687576293945,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.29764482378959656,
+                        0.029999999329447746,
+                        0.24806079268455505
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "12:0",
+              "type": "MeshInstance",
+              "name": "Foam 3",
+              "transform": {
+                "position": [
+                  -0.01951959729194641,
+                  0.029999999329447746,
+                  -0.2541666626930237
+                ],
+                "rotation": [
+                  -0.0,
+                  4.135139465332031,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.42609667778015137,
+                        0.029999999329447746,
+                        0.2032310962677002
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "13:0",
+              "type": "MeshInstance",
+              "name": "Foam 4",
+              "transform": {
+                "position": [
+                  -0.4099298119544983,
+                  0.029999999329447746,
+                  0.2541666626930237
+                ],
+                "rotation": [
+                  0.0,
+                  -1.965531349182129,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.32985666394233704,
+                        0.029999999329447746,
+                        0.1768573522567749
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "14:0",
+              "type": "MeshInstance",
+              "name": "Foam 5",
+              "transform": {
+                "position": [
+                  0.2219649702310562,
+                  0.029999999329447746,
+                  0.762499988079071
+                ],
+                "rotation": [
+                  -0.0,
+                  15.102771759033203,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.5480860471725464,
+                        0.029999999329447746,
+                        0.1916794329881668
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "15:0",
+              "type": "MeshInstance",
+              "name": "Foam 6",
+              "transform": {
+                "position": [
+                  0.09279868751764297,
+                  0.029999999329447746,
+                  1.2708333730697632
+                ],
+                "rotation": [
+                  -0.0,
+                  2.6443331241607666,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.3605588972568512,
+                        0.029999999329447746,
+                        0.22200706601142883
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "25:0",
+          "type": "Node",
+          "name": "East Water",
+          "transform": {
+            "position": [
+              2.4749999046325684,
+              -0.4000000059604645,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "Script",
+              "props": {
+                "script": {
+                  "type": "string",
+                  "value": "running-water"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "length": {
+              "type": "float",
+              "value": 3.049999952316284
+            },
+            "speed": {
+              "type": "float",
+              "value": 0.8999999761581421
+            },
+            "width": {
+              "type": "float",
+              "value": 1.2999999523162842
+            }
+          },
+          "children": [
+            {
+              "id": "24:0",
+              "type": "MeshInstance",
+              "name": "Surface",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.3799999952316284,
+                        0.03999999910593033,
+                        3.049999952316284
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "pbr"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        34.0,
+                        86.0,
+                        104.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.3499999940395355
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.11999999731779099
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "18:0",
+              "type": "MeshInstance",
+              "name": "Foam 1",
+              "transform": {
+                "position": [
+                  0.3426583707332611,
+                  0.029999999329447746,
+                  -1.2708333730697632
+                ],
+                "rotation": [
+                  -0.0,
+                  16.313777923583984,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.3092076778411865,
+                        0.029999999329447746,
+                        0.22295796871185303
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "19:0",
+              "type": "MeshInstance",
+              "name": "Foam 2",
+              "transform": {
+                "position": [
+                  -0.14964079856872559,
+                  0.029999999329447746,
+                  -0.762499988079071
+                ],
+                "rotation": [
+                  0.0,
+                  -13.996337890625,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.4370465576648712,
+                        0.029999999329447746,
+                        0.13586601614952087
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "20:0",
+              "type": "MeshInstance",
+              "name": "Foam 3",
+              "transform": {
+                "position": [
+                  0.19910700619220734,
+                  0.029999999329447746,
+                  -0.2541666626930237
+                ],
+                "rotation": [
+                  -0.0,
+                  16.174283981323242,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.3830256462097168,
+                        0.029999999329447746,
+                        0.137776717543602
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "21:0",
+              "type": "MeshInstance",
+              "name": "Foam 4",
+              "transform": {
+                "position": [
+                  -0.33447617292404175,
+                  0.029999999329447746,
+                  0.2541666626930237
+                ],
+                "rotation": [
+                  0.0,
+                  -14.012474060058594,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.5966460108757019,
+                        0.029999999329447746,
+                        0.13644865155220032
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "22:0",
+              "type": "MeshInstance",
+              "name": "Foam 5",
+              "transform": {
+                "position": [
+                  -0.2796723246574402,
+                  0.029999999329447746,
+                  0.762499988079071
+                ],
+                "rotation": [
+                  -0.0,
+                  18.935806274414062,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.39907920360565186,
+                        0.029999999329447746,
+                        0.18613240122795105
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "23:0",
+              "type": "MeshInstance",
+              "name": "Foam 6",
+              "transform": {
+                "position": [
+                  -0.17251932621002197,
+                  0.029999999329447746,
+                  1.2708333730697632
+                ],
+                "rotation": [
+                  0.0,
+                  -9.230785369873047,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.27004894614219666,
+                        0.029999999329447746,
+                        0.14710813760757446
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "unlit"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        214.0,
+                        230.0,
+                        236.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "26:0",
+          "type": "MeshInstance",
+          "name": "Central Water",
+          "transform": {
+            "position": [
+              0.0,
+              -0.4000000059604645,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    1.3799999952316284,
+                    0.03999999910593033,
+                    1.3799999952316284
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "pbr"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    34.0,
+                    86.0,
+                    104.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.3499999940395355
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.11999999731779099
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "32:0",
+          "type": "Node",
+          "name": "North Left Guardrail",
+          "transform": {
+            "position": [
+              -0.75,
+              0.0,
+              2.5
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.05999999865889549,
+                    0.5,
+                    1.4500000476837158
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "27:0",
+              "type": "MeshInstance",
+              "name": "Rail",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.949999988079071,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.05999999865889549,
+                        2.9000000953674316
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "28:0",
+              "type": "MeshInstance",
+              "name": "Post 1",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "29:0",
+              "type": "MeshInstance",
+              "name": "Post 2",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "30:0",
+              "type": "MeshInstance",
+              "name": "Post 3",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "31:0",
+              "type": "MeshInstance",
+              "name": "Post 4",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "38:0",
+          "type": "Node",
+          "name": "North Right Guardrail",
+          "transform": {
+            "position": [
+              0.75,
+              0.0,
+              2.5
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.05999999865889549,
+                    0.5,
+                    1.4500000476837158
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "33:0",
+              "type": "MeshInstance",
+              "name": "Rail",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.949999988079071,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.05999999865889549,
+                        2.9000000953674316
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "34:0",
+              "type": "MeshInstance",
+              "name": "Post 1",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "35:0",
+              "type": "MeshInstance",
+              "name": "Post 2",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "36:0",
+              "type": "MeshInstance",
+              "name": "Post 3",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "37:0",
+              "type": "MeshInstance",
+              "name": "Post 4",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "44:0",
+          "type": "Node",
+          "name": "East Left Guardrail",
+          "transform": {
+            "position": [
+              2.5,
+              0.0,
+              -0.75
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.05999999865889549,
+                    0.5,
+                    1.4500000476837158
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "39:0",
+              "type": "MeshInstance",
+              "name": "Rail",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.949999988079071,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.05999999865889549,
+                        2.9000000953674316
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "40:0",
+              "type": "MeshInstance",
+              "name": "Post 1",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "41:0",
+              "type": "MeshInstance",
+              "name": "Post 2",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "42:0",
+              "type": "MeshInstance",
+              "name": "Post 3",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43:0",
+              "type": "MeshInstance",
+              "name": "Post 4",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "50:0",
+          "type": "Node",
+          "name": "East Right Guardrail",
+          "transform": {
+            "position": [
+              2.5,
+              0.0,
+              0.75
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    0.05999999865889549,
+                    0.5,
+                    1.4500000476837158
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "45:0",
+              "type": "MeshInstance",
+              "name": "Rail",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.949999988079071,
+                  0.0
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.05999999865889549,
+                        2.9000000953674316
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "46:0",
+              "type": "MeshInstance",
+              "name": "Post 1",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "47:0",
+              "type": "MeshInstance",
+              "name": "Post 2",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  -0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "48:0",
+              "type": "MeshInstance",
+              "name": "Post 3",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  0.4833333194255829
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "49:0",
+              "type": "MeshInstance",
+              "name": "Post 4",
+              "transform": {
+                "position": [
+                  0.0,
+                  0.4749999940395355,
+                  1.4500000476837158
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        0.05999999865889549,
+                        0.949999988079071,
+                        0.05999999865889549
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "metal"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        52.0,
+                        54.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.44999998807907104
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "53:0",
+          "type": "MeshInstance",
+          "name": "North Wall (left)",
+          "transform": {
+            "position": [
+              -1.7999999523162842,
+              2.0999999046325684,
+              2.6500000953674316
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    2.700000047683716,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.350000023841858,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "51:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  0.334637314081192,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.458410620689392,
+                        0.7410470843315125,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        71.0,
+                        59.0,
+                        56.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "52:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  -0.043943118304014206,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.7991344928741455,
+                        0.7286016941070557,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        70.0,
+                        61.0,
+                        55.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "56:0",
+          "type": "MeshInstance",
+          "name": "North Wall (right)",
+          "transform": {
+            "position": [
+              1.7999999523162842,
+              2.0999999046325684,
+              2.6500000953674316
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    2.700000047683716,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.350000023841858,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "54:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  -0.2057626098394394,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.8644450902938843,
+                        0.7537676692008972,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        69.0,
+                        69.0,
+                        53.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "55:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  -0.43785881996154785,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.761482834815979,
+                        0.8266530632972717,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        66.0,
+                        61.0,
+                        51.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "60:0",
+          "type": "MeshInstance",
+          "name": "East Wall (left)",
+          "transform": {
+            "position": [
+              2.6500000953674316,
+              2.0999999046325684,
+              -1.7999999523162842
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    2.700000047683716,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.350000023841858,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "57:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  0.49159035086631775,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.4669643640518188,
+                        0.7823987007141113,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        79.0,
+                        59.0,
+                        53.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "58:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  -0.48767268657684326,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.560050368309021,
+                        0.7493217587471008,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        73.0,
+                        69.0,
+                        60.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "59:0",
+              "type": "MeshInstance",
+              "name": "Stone 3",
+              "transform": {
+                "position": [
+                  -0.4205804765224457,
+                  1.5499999523162842,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.8403291702270508,
+                        0.7709436416625977,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        70.0,
+                        67.0,
+                        53.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "64:0",
+          "type": "MeshInstance",
+          "name": "East Wall (right)",
+          "transform": {
+            "position": [
+              2.6500000953674316,
+              2.0999999046325684,
+              1.7999999523162842
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    2.700000047683716,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    1.350000023841858,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "61:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  0.42946377396583557,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.764286994934082,
+                        0.7577671408653259,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        81.0,
+                        68.0,
+                        59.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "62:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  0.3005237281322479,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.6329638957977295,
+                        0.8376866579055786,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        75.0,
+                        68.0,
+                        54.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "63:0",
+              "type": "MeshInstance",
+              "name": "Stone 3",
+              "transform": {
+                "position": [
+                  -0.5003727674484253,
+                  1.5499999523162842,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.5507440567016602,
+                        0.8128291368484497,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        79.0,
+                        66.0,
+                        50.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "67:0",
+          "type": "MeshInstance",
+          "name": "South Wall",
+          "transform": {
+            "position": [
+              0.0,
+              2.0999999046325684,
+              -1.7999999523162842
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    4.199999809265137,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    2.0999999046325684,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "65:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  -0.476071298122406,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.843055009841919,
+                        0.7650755643844604,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        81.0,
+                        70.0,
+                        58.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "66:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  -0.4890744686126709,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.5428837537765503,
+                        0.8185256719589233,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        79.0,
+                        66.0,
+                        54.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "70:0",
+          "type": "MeshInstance",
+          "name": "West Wall",
+          "transform": {
+            "position": [
+              -1.7999999523162842,
+              2.0999999046325684,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              89.9999771118164,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    4.199999809265137,
+                    4.599999904632568,
+                    0.6000000238418579
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            },
+            {
+              "type": "RigidBody",
+              "props": {
+                "body": {
+                  "type": "string",
+                  "value": "static"
+                },
+                "collider": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "half_extents": {
+                  "type": "vec3",
+                  "value": [
+                    2.0999999046325684,
+                    2.299999952316284,
+                    0.30000001192092896
+                  ]
+                },
+                "mass": {
+                  "type": "float",
+                  "value": 1.0
+                },
+                "restitution": {
+                  "type": "float",
+                  "value": 0.30000001192092896
+                },
+                "friction": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "68:0",
+              "type": "MeshInstance",
+              "name": "Stone",
+              "transform": {
+                "position": [
+                  1.1479281187057495,
+                  -1.649999976158142,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.6557146310806274,
+                        0.8179987668991089,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        79.0,
+                        65.0,
+                        56.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "69:0",
+              "type": "MeshInstance",
+              "name": "Stone 2",
+              "transform": {
+                "position": [
+                  0.8256176710128784,
+                  -0.05000000074505806,
+                  -0.36000001430511475
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        1.808516263961792,
+                        0.7578639984130859,
+                        0.14000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "plastic"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        68.0,
+                        59.0,
+                        57.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "73:0",
+          "type": "MeshInstance",
+          "name": "Ceiling",
+          "transform": {
+            "position": [
+              0.0,
+              4.650000095367432,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "box"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    8.0,
+                    0.5,
+                    8.0
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "plastic"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    58.0,
+                    50.0,
+                    44.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.0
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.8500000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            }
+          ],
+          "children": [
+            {
+              "id": "71:0",
+              "type": "MeshInstance",
+              "name": "Beam",
+              "transform": {
+                "position": [
+                  0.0,
+                  -0.41999998688697815,
+                  -1.899999976158142
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        5.199999809265137,
+                        0.3499999940395355,
+                        0.4000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "wood"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        84.0,
+                        53.0,
+                        30.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "72:0",
+              "type": "MeshInstance",
+              "name": "Beam 2",
+              "transform": {
+                "position": [
+                  0.0,
+                  -0.41999998688697815,
+                  1.899999976158142
+                ],
+                "rotation": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              },
+              "components": [
+                {
+                  "type": "MeshInstance",
+                  "props": {
+                    "shape": {
+                      "type": "string",
+                      "value": "box"
+                    },
+                    "dimensions": {
+                      "type": "vec3",
+                      "value": [
+                        5.199999809265137,
+                        0.3499999940395355,
+                        0.4000000059604645
+                      ]
+                    },
+                    "segments": {
+                      "type": "int",
+                      "value": 24
+                    },
+                    "material": {
+                      "type": "string",
+                      "value": "wood"
+                    },
+                    "base_color": {
+                      "type": "color",
+                      "value": [
+                        84.0,
+                        53.0,
+                        30.0,
+                        255.0
+                      ]
+                    },
+                    "metallic": {
+                      "type": "float",
+                      "value": 0.0
+                    },
+                    "roughness": {
+                      "type": "float",
+                      "value": 0.8500000238418579
+                    },
+                    "double_sided": {
+                      "type": "bool",
+                      "value": false
+                    },
+                    "wireframe": {
+                      "type": "bool",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "74:0",
+          "type": "MeshInstance",
+          "name": "Pipe",
+          "transform": {
+            "position": [
+              1.350000023841858,
+              3.5999999046325684,
+              0.0
+            ],
+            "rotation": [
+              89.98020935058594,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "MeshInstance",
+              "props": {
+                "shape": {
+                  "type": "string",
+                  "value": "cylinder"
+                },
+                "dimensions": {
+                  "type": "vec3",
+                  "value": [
+                    0.2199999988079071,
+                    7.599999904632568,
+                    0.2199999988079071
+                  ]
+                },
+                "segments": {
+                  "type": "int",
+                  "value": 24
+                },
+                "material": {
+                  "type": "string",
+                  "value": "metal"
+                },
+                "base_color": {
+                  "type": "color",
+                  "value": [
+                    70.0,
+                    60.0,
+                    50.0,
+                    255.0
+                  ]
+                },
+                "metallic": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                },
+                "roughness": {
+                  "type": "float",
+                  "value": 0.6000000238418579
+                },
+                "double_sided": {
+                  "type": "bool",
+                  "value": false
+                },
+                "wireframe": {
+                  "type": "bool",
+                  "value": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "79:0",
+          "type": "Node3D",
+          "name": "Torch",
+          "transform": {
+            "position": [
+              -1.350000023841858,
+              2.299999952316284,
+              -1.2000000476837158
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "components": [
+            {
+              "type": "ObjectInstance",
+              "props": {
+                "source": {
+                  "type": "string",
+                  "value": "torch"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

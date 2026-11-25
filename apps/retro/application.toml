@@ -1,0 +1,17 @@
+[application]
+name = "retro"
+version = "0.1.0"
+description = "Emulateur de console Nintendo (Game Boy Color, Game Boy Advance, Nintendo DS)"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.math", "engine.emu", "engine.consoles", "platform.sdl3", "graphics.ui"]
+pkg_config = []
+system = []
+
+[run]
+args = []            # arguments par défaut de « cpp-maker run »
+
+[review]
+status = "approved"
+date = "2026-11-15"

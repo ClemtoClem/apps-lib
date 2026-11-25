@@ -1,0 +1,22 @@
+# Porte d'entrée : groupe solide scripté, elle heurte le joueur et les caisses avec sa forme
+# exacte. E l'ouvre ou la ferme : quart de tour autour de l'origine du groupe (la charnière).
+
+class Porte extends Behaviour {
+    export let vitesse = 120     # degrés par seconde (réglable dans l'inspecteur)
+    export let ouverture = 90    # angle d'ouverture
+    let ouverte = false
+    let angle = 0
+
+    fn OnUse() {
+        this.ouverte = not this.ouverte
+        if (this.ouverte) { game.say("La porte s'ouvre") } else { game.say("La porte se ferme") }
+    }
+
+    fn OnUpdate(dt) {
+        let cible = 0
+        if (this.ouverte) { cible = this.ouverture }
+        let pas = math.min(math.max(cible - this.angle, -this.vitesse * dt), this.vitesse * dt)
+        this.angle += pas
+        this.turn(pas)
+    }
+}

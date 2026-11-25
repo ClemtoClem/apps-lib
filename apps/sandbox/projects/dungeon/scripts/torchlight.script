@@ -1,0 +1,43 @@
+# ── Torche : flamme vacillante (attachée à chaque torche des pièces) ─────────
+# Propriétés lues sur le nœud : flicker_speed, flicker_min, flicker_max,
+# seed (sinon tirée de la position), flame (nom de l'ENFANT flamme). Les pièces étant instanciées
+# plusieurs fois, la flamme se désigne par son chemin sous la torche
+# (`this.child(nom)`) : chaque torche anime la sienne.
+const sounds = import "sounds"
+
+class Torch extends Behaviour, Light3D {
+    let base = 0
+    let flame = nil
+
+    fn Setting(key, default) {
+        let value = this.prop(key)
+        if (value == nil) { return default }
+        return value
+    }
+
+    let phase = 0
+    let crackle = nil   # sons.Proximite : le feu ne crépite qu'à portée du joueur
+
+    fn OnStart() {
+        this.base = this.intensity()
+        # Sans `seed` (torche de l'objet « torche », posée en instances), la
+        # phase vient de la position : deux torches ne vacillent pas ensemble.
+        let p = this.world_position()
+        this.phase = this.Setting("seed", p[0] * 0.73 + p[2] * 1.31)
+        let name = this.prop("flame")
+        if (name != nil) { this.flame = this.child(name) }
+        if (this.prop("silent") != true) {
+            this.crackle = sounds.Proximity("default_ambience_hot_stone_1", this.path(), 0.22, 7.0)
+        }
+    }
+
+    fn OnUpdate(dt) {
+        let t = editor.time() * this.Setting("flickerSpeed", 1.5) + this.phase
+        # Somme de trois sinus incommensurables : un bruit sans motif visible.
+        let n = (math.sin(t * 7.3) + math.sin(t * 13.1 + 1.7) * 0.5 + math.sin(t * 23.7 + 0.4) * 0.25) / 1.75
+        let k = math.lerp(this.Setting("flickerMin", 0.75), this.Setting("flickerMax", 1.2), n * 0.5 + 0.5)
+        this.set_intensity(this.base * k)
+        if (this.flame != nil) { node.set_scale(this.flame, 1, 0.85 + k * 0.2, 1) }
+        if (this.crackle != nil) { this.crackle.Follow(this.world_position()) }
+    }
+}

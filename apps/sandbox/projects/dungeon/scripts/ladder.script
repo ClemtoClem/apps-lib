@@ -1,0 +1,33 @@
+# ── Échelle : passage vers un autre étage ────────────────────────────────────
+#
+# Attaché au nœud « Passage » des pièces puits_echelle (trappe en haut) et
+# echelle_arrivee (pied de l'échelle à l'étage du dessous). Près de
+# l'échelle, le message de la propriété `message` s'affiche ; E (ou la
+# visite guidée, qui ne fait que descendre) DEMANDE la traversée, que le
+# Dungeon joue (montée ou descente, fondu, changement d'étage).
+
+class Ladder extends Behaviour {
+    let radius = 1.1
+
+    fn OnStart() { this.radius = this.prop("radius") or 1.1 }
+
+    fn OnUpdate(dt) {
+        let target = this.prop("target")
+        if (target == nil) { return nil }
+        let state = game.state()
+        if (state.transit != nil or (state.transitEnd or 0) > game.time()) { return nil }
+        let j = node.position("Player")
+        if (j == nil) { return nil }
+        let p = this.world_position()
+        if (math.abs(j[1] - 1 - p[1]) > 2.5) { return nil }
+        let dx = j[0] - p[0]
+        let dz = j[2] - p[2]
+        if (dx * dx + dz * dz > this.radius * this.radius) { return nil }
+        let role = this.prop("role")
+        let manual = node.prop("Player", "manual") == true
+        state.hint = this.prop("message") or "E : prendre l'échelle"
+        if ((manual and input.key("e")) or (not manual and role == "down")) {
+            state.transitRequest = {de: this.path(), target: target, kind: "ladder", role: role}
+        }
+    }
+}

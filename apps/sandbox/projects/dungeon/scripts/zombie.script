@@ -1,0 +1,54 @@
+# ── Zombie : lent mais coriace ───────────────────────────────────────────────
+#
+# Six points de vie, avance en titubant les bras tendus et frappe fort des
+# deux bras au corps-à-corps. Rougit sous les coups, s'effondre puis
+# disparaît à 0 PV.
+
+const m = import "monsters"
+
+class Zombie extends m.Monster {
+    let swing = 0
+
+    fn Prepare() {
+        this.range = 1.5
+        this.delay = 1.6
+        this.detection = 9.0
+        this.Tint("Head", 112, 134, 98)
+        this.Tint("Torso", 82, 66, 50)
+        this.Tint("Left Shoulder/Arm", 112, 134, 98)
+        this.Tint("Right Shoulder/Arm", 112, 134, 98)
+        this.Tint("Left Hip/Leg", 82, 66, 50)
+        this.Tint("Right Hip/Leg", 82, 66, 50)
+    }
+
+    fn Attack(d) {
+        this.swing = 0.6
+        this.HitPlayer()
+    }
+
+    fn Animate(dt, pace) {
+        let amplitude = math.min(1, pace / 0.9)
+        let a = math.sin(this.walk * 2.2) * 22 * amplitude
+        node.set_rotation(this.Child("Left Hip"), a, 0, 0)
+        node.set_rotation(this.Child("Right Hip"), -a, 0, 0)
+        # Bras tendus, qui battent l'air ; les deux s'abattent pour frapper.
+        let arm = -80 + math.sin(this.walk * 3.1) * 8
+        if (this.swing > 0) {
+            this.swing -= dt
+            arm = -80 - 70 * math.sin((1 - math.max(0, this.swing) / 0.6) * math.pi)
+        }
+        node.set_rotation(this.Child("Left Shoulder"), arm, 0, -4)
+        node.set_rotation(this.Child("Right Shoulder"), arm + 6, 0, 4)
+        node.set_rotation(this.Child("Head"), 14, math.sin(this.walk * 0.9) * 18, 9 + math.sin(this.walk * 1.3) * 6)
+        # Titubation : le corps penche d'un pied sur l'autre.
+        this.set_rotation(0, this.cap * 180 / math.pi, math.sin(this.walk * 2.2) * 7 * amplitude)
+    }
+
+    # La titubation porte sa propre rotation : ne pas l'écraser.
+    fn OnUpdate(dt) {
+        super.OnUpdate(dt)
+        if (this.death == 0) {
+            this.set_rotation(0, this.cap * 180 / math.pi, math.sin(this.walk * 2.2) * 7)
+        }
+    }
+}

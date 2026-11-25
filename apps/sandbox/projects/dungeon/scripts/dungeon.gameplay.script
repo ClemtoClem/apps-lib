@@ -1,0 +1,875 @@
+# ── Dungeon : assemble les étages d'après le plan, puis la partie ─────────────
+#
+# Le plan (game.state().plan, cf. scène « Génération ») compte plusieurs
+# ÉTAGES ; chacun est une grille de cases, chaque case nomme une pièce — un
+# OBJET du projet (objects/<pièce>.object) — et une rotation en quarts de
+# tour. Toutes les pièces partagent la même convention (case de 8 m, portes
+# centrées sur les côtés) : posées côte à côte, leurs portes se raccordent.
+# Les salles ont quatre portes : celles qui ne mènent nulle part reçoivent
+# une « porte murée ». L'étage k est posé à y = −7 k.
+#
+# Les étages se rejoignent par un escalier ou une échelle : la pièce du haut
+# (escalier_descente, puits_echelle) et celle du bas (escalier_arrivee,
+# echelle_arrivee) occupent la même case avec la même rotation ; leurs nœuds
+# « Passage » (comportements escalier / echelle) sont reliés par la
+# propriété `vers`. Un passage DEMANDE la traversée
+# (game.state().demande_transit) ; le Dungeon la joue : fondu au noir, le
+# joueur réapparaît au repère « Arrivée » de l'autre passage.
+#
+# Les monstres (squelettes, zombies, araignées, piranhas) sont aussi des
+# objets ; leur comportement (scripts/mobs) lit la carte publiée dans
+# game.state().donjon. Un coup d'épée incrémente la propriété `coups` de leur
+# nœud « Corps » ; leurs coups et leurs morts reviennent par
+# game.state().degats_joueur et game.state().morts.
+#
+# Vue à la première personne (Behaviour « Joueur », script de nœud
+# « player ») ; la souris est capturée — F7 la libère pour cliquer
+# l'interface. Sans joueur, le chevalier suit seul le chemin, d'étage en
+# étage, jusqu'au portail et combat en route.
+#
+# Le son (module « sons ») : une ambiance par genre d'étage (musique de
+# caverne, vent, gouttes des égouts, plaintes des profondeurs) en fondu
+# enchaîné à chaque traversée, des bruits isolés au hasard autour du
+# joueur, ses pas selon le sol (dalles, trottoirs, eau), l'épée, les coups
+# reçus, l'or, les échelons de l'échelle et les marches de l'escalier, le
+# scintillement du portail, la fin de partie. Les monstres, coffres,
+# torches et canaux font leurs propres bruits (scripts de nœud).
+
+const sounds = import "sounds"
+
+const CELL = 8.0
+const FLOOR = 7.0
+const HP_MAX = 100
+const DAMAGE = {"Easy": 6, "Normal": 10, "Hard": 14}
+const REWARDS = {"skeleton": 5, "zombie": 8, "spider": 6, "piranha": 4}
+const NAMES = {"skeleton": "Squelette", "zombie": "Zombie", "spider": "Araignée", "piranha": "Piranha"}
+const PX = 16   # taille d'une case sur la mini-carte
+const FADE = 0.45
+const WALKWAY = 1.15   # distance du trottoir à l'axe d'un canal
+const STRIDE = 1.5      # mètres entre deux pas du chevalier
+
+# Ambiance de chaque genre d'étage : couches en boucle et bruits isolés.
+const AMBIENCES = {
+    "high": {layers: [{sound: "game-music-cave", volume: 0.3}, {sound: "default_ambience_wind_cave_1", volume: 0.3}],
+             rumors: ["default_ambience_rocks_falling_cave", "backrooms_creak", "default_ambience_cave"]},
+    "sewer": {layers: [{sound: "game-music-cave", volume: 0.18}, {sound: "backrooms_drip", volume: 0.5},
+                        {sound: "default_ambience_water_drips_cave_1", volume: 0.3}],
+              rumors: ["backrooms_creak", "default_underwater_bubbles", "default_ambience_monster_sigh_cave"]},
+    "deep": {layers: [{sound: "game-music-cave", volume: 0.22, pitch: 0.85},
+                          {sound: "default_ambience_ghost_2", volume: 0.22},
+                          {sound: "default_ambience_wind_cave_1", volume: 0.25}],
+                rumors: ["default_ambience_ghost", "default_ambience_monster_sigh_cave",
+                          "default_ambience_rocks_falling_cave"]},
+}
+
+fn PlaneDistance(a, b) {
+    let dx = a[0] - b[0]
+    let dz = a[2] - b[2]
+    return math.sqrt(dx * dx + dz * dz)
+}
+
+fn DefaultPlan() {
+    # Scène lancée seule depuis l'éditeur : deux étages de 2 × 2 reliés par
+    # une échelle, le second dans les égouts.
+    let top = [
+        {x: 0, y: 0, open: [true, true, false, false], room: "entrance", rotation: 0, isRoom: true, sewer: false},
+        {x: 1, y: 0, open: [true, false, false, true], room: "corner_corridor", rotation: 3, isRoom: false,
+         sewer: false},
+        {x: 0, y: 1, open: [false, false, true, false], room: "treasure_room", rotation: 0, isRoom: true,
+         sewer: false},
+        {x: 1, y: 1, open: [false, false, true, false], room: "ladder_well", rotation: 0, isRoom: true,
+         sewer: false},
+    ]
+    let bottom = [
+        {x: 0, y: 0, open: [true, true, false, false], room: "sewer_corner", rotation: 0, isRoom: false, sewer: true},
+        {x: 1, y: 0, open: [true, false, false, true], room: "sewer_corner", rotation: 3, isRoom: false, sewer: true},
+        {x: 0, y: 1, open: [false, false, true, false], room: "exit", rotation: 0, isRoom: true, sewer: false},
+        {x: 1, y: 1, open: [false, false, true, false], room: "ladder_arrival", rotation: 0, isRoom: true,
+         sewer: false},
+    ]
+    return {name: "Crypte d'essai", seed: 0, difficulty: "Normal", floors: [
+        {number: 0, name: "Les salles hautes", width: 2, height: 2, cells: top, start: [0, 0],
+         path: [0, 1, 3], link: {x: 1, y: 1, kind: "ladder", rotation: 0}, exit: [1, 1], last: false,
+         sewer: false, monsters: [[1, 0, 0.5, 0.5, "skeleton"], [0, 1, 1.0, 0.0, "spider"]]},
+        {number: 1, name: "Les égouts", width: 2, height: 2, cells: bottom, start: [1, 1], path: [3, 1, 0, 2],
+         link: nil, exit: [0, 1], last: true, sewer: true,
+         monsters: [[1, 0, 0.0, 2.0, "piranha"], [0, 0, 2.0, 0.0, "piranha"], [0, 0, 1.15, 2.5, "zombie"]]},
+    ]}
+}
+
+# Côté (0 nord, 1 est, 2 sud, 3 ouest) de la case `a` qui mène à sa voisine `b`.
+fn SideTo(a, b) {
+    if (b[1] > a[1]) { return 0 }
+    if (b[0] > a[0]) { return 1 }
+    if (b[1] < a[1]) { return 2 }
+    return 3
+}
+
+# Seuil de la porte du côté `s` d'une case de centre `c` ; dans les égouts,
+# sur le trottoir plutôt que dans le canal.
+fn Threshold(c, s, sewer) {
+    let d = [[0, 1], [1, 0], [0, -1], [-1, 0]][s]
+    let x = c[0] + d[0] * CELL / 2
+    let z = c[1] + d[1] * CELL / 2
+    if (sewer) {
+        if (d[0] == 0) { x += WALKWAY } else { z += WALKWAY }
+    }
+    return [x, z]
+}
+
+# Coin du trottoir d'un égout, du côté du bras `s`.
+fn Corner(c, s) {
+    let d = [[WALKWAY, WALKWAY], [WALKWAY, WALKWAY], [WALKWAY, -WALKWAY], [-WALKWAY, WALKWAY]][s]
+    return [c[0] + d[0], c[1] + d[1]]
+}
+
+# ── Un étage du plan (objet de script ordinaire : aucune ressource) ──────────
+
+class Grid {
+    let number = 0
+    let w = 0
+    let h = 0
+    let y = 0
+    let cells = []
+
+    fn init(floor, number) {
+        this.number = number
+        this.w = floor.width
+        this.h = floor.height
+        this.y = -number * FLOOR
+        this.cells = floor.cells
+    }
+
+    fn Center(x, y) {
+        return [(x - (this.w - 1) / 2) * CELL, (y - (this.h - 1) / 2) * CELL]
+    }
+
+    fn CenterIndex(i) { return this.Center(i % this.w, i32(i / this.w)) }
+
+    fn CellOf(px, pz) {
+        return [i64(math.round(px / CELL + (this.w - 1) / 2)), i64(math.round(pz / CELL + (this.h - 1) / 2))]
+    }
+
+    fn Inside(c) { return c[0] >= 0 and c[1] >= 0 and c[0] < this.w and c[1] < this.h }
+}
+
+# ── Les ressources : pièces et monstres ──────────────────────────────────────
+
+# Un modèle de pièce : chaque `poser` en crée une instance sous « Niveau ».
+# (Les instances disparaissent avec l'objet de script : on les garde.)
+class Room extends ObjectAsset {
+    fn Place(x, y, z, quarts) {
+        return this.instantiate({parent: "Level", pos: [x, y, z], rot: [0, quarts * 90, 0]})
+    }
+}
+
+# Une espèce de monstre : le comportement du nœud « Corps » fait le reste
+# (c'est lui qui s'oriente : la racine de l'instance reste sans rotation).
+class Species extends ObjectAsset {
+    fn Place(x, y, z) {
+        return this.instantiate({parent: "Monsters", pos: [x, y, z]})
+    }
+}
+
+# ── La partie ────────────────────────────────────────────────────────────────
+
+class Dungeon extends Scene {
+    let plan = nil
+    let floors = []       # Grille par étage
+    let floor = 0         # étage du joueur
+    let rooms = {}       # nom de pièce → Piece
+    let species = {}      # espèce → Espece
+    let monsters = []     # {corps, espece} : chemin du nœud « Corps »
+    let hp = HP_MAX
+    let or_ = 0
+    let tues = {}
+    let totalKilled = 0
+    let time = 0
+    let finished = false
+    let damage = 10
+    let swingCooldown = 0
+    let wasSwinging = false
+    let chests = []      # {chemin, pos, ouvert}
+    let portal = nil     # {chemin, pos} du portail
+    let arrivals = []     # par étage : position où (re)poser le joueur
+    let steps = []       # par étage : chemins des étapes de la visite guidée
+    let visited = []       # par étage : cases découvertes (brouillard de la carte)
+    let transit = nil     # traversée en cours {de, vers, genre, role, t, fait}
+    let hud = {}
+    let messageTime = 0
+    let stuck = 0      # visite guidée : temps passé sans avancer
+    let lastPos = nil
+    let drowning = 0          # temps passé dans un canal
+    let previousTarget = ""
+    let targetDuration = 0
+    let ignores = {}      # corps → instant jusqu'auquel la visite l'ignore
+    let ambience = nil    # sons.Ambiance : couches de l'étage courant
+    let rumors = nil     # sons.Rumeurs : bruits isolés de l'étage courant
+    let soundGenre = ""    # genre d'ambiance en place (« haut », « egout », « profond »)
+    let stride = 0        # distance parcourue depuis le dernier pas
+    let previousStep = nil   # position du joueur à l'image précédente
+    let twinkle = 0     # attente avant le prochain tintement du portail
+
+    fn OnStart() {
+        this.plan = this.state().plan or DefaultPlan()
+        if (this.plan.floors == nil) { this.plan = DefaultPlan() } # ancien plan à un seul étage
+        this.damage = DAMAGE[this.plan.difficulty] or 10
+        let state = game.state()
+        state.playerDamage = 0
+        state.deaths = []
+        state.transit = nil
+        state.transitEnd = 0
+        state.transitRequest = nil
+        state.hint = nil
+        let map = []
+        for (n in range(len(this.plan.floors))) {
+            let e = this.plan.floors[n]
+            let g = Grid(e, n)
+            this.floors.append(g)
+            let vu = []
+            for (i in range(g.w * g.h)) { vu.append(false) }
+            this.visited.append(vu)
+            map.append({width: g.w, height: g.h, cells: e.cells})
+        }
+        state.dungeon = {floors: map}
+        this.Build()
+        this.StartAt(state.startFloor or 0)
+        state.startFloor = 0   # « Rejouer » repart d'en haut
+        this.CreateInterface()
+        this.ambience = sounds.Ambience()
+        this.FloorAmbience(3.0)
+        input.set_mouse_mode("captured")
+        this.Announce(this.plan.name .. " — " .. this.plan.floors[this.floor].name)
+        editor.log(format("{} : {} étages, {} monstres, {} coffres", this.plan.name, len(this.floors),
+                          len(this.monsters), len(this.chests)))
+    }
+
+    # ── Construction ─────────────────────────────────────────────────────────
+
+    fn Room(name) {
+        if (not this.rooms[name]) { this.rooms[name] = Room(name) }
+        return this.rooms[name]
+    }
+
+    fn Species(name) {
+        if (not this.species[name]) { this.species[name] = Species(name) }
+        return this.species[name]
+    }
+
+    # Premier enfant de `racine` portant l'un des `noms` (les objets peuvent
+    # être modifiés dans l'éditeur) : {chemin, pos}, ou nil s'il n'y en a pas.
+    fn FindNode(root, names) {
+        for (n in names) {
+            let path = root .. "/" .. n
+            let pos = node.world_position(path)
+            if (pos != nil) { return {path: path, pos: pos} }
+        }
+        editor.warn(format("{} : aucun nœud parmi {}", root, names))
+        return nil
+    }
+
+    fn Build() {
+        node.create_group("Monsters")
+        node.create_group("Path")
+        let top = nil   # passage du haut de l'étage précédent
+        for (n in range(len(this.floors))) {
+            let g = this.floors[n]
+            let e = this.plan.floors[n]
+            let bottom = nil
+            let next = nil
+            for (k in g.cells) {
+                let c = g.Center(k.x, k.y)
+                let root = node.path(this.Room(k.room).Place(c[0], g.y, c[1], k.rotation))
+                if (k.isRoom) {
+                    for (s in range(4)) {
+                        if (not k.open[s]) { this.Room("walled_door").Place(c[0], g.y, c[1], s) }
+                    }
+                }
+                if (k.room == "treasure_room") {
+                    let r = this.FindNode(root, ["Chest", "chest", "Chest"])
+                    if (r != nil) { this.chests.append({path: r.path, pos: r.pos, open: false}) }
+                }
+                if (k.room == "exit") { this.portal = this.FindNode(root, ["Portal", "portal", "Portal"]) }
+                if (k.room == "stairs_descent" or k.room == "ladder_well") {
+                    next = this.FindNode(root, ["Passage"])
+                }
+                if (n > 0 and k.x == e.start[0] and k.y == e.start[1] and
+                    (k.room == "stairs_arrival" or k.room == "ladder_arrival")) {
+                    bottom = this.FindNode(root, ["Passage"])
+                }
+            }
+            # Le passage du dessus et celui-ci se désignent l'un l'autre.
+            if (top != nil and bottom != nil) {
+                node.prop(top.path, "target", bottom.path)
+                node.prop(bottom.path, "target", top.path)
+                node.prop(top.path, "floor", n)
+                node.prop(bottom.path, "floor", n - 1)
+            } else if (n > 0) {
+                editor.warn(format("Étage {} : passage introuvable", n + 1))
+            }
+            # Point d'arrivée de l'étage : l'entrée, ou le pied du passage.
+            let d = g.Center(e.start[0], e.start[1])
+            let arrival = [d[0], g.y + 1, d[1]]
+            if (bottom != nil) {
+                let a = node.world_position(bottom.path .. "/Arrivée")
+                if (a != nil) { arrival = a }
+            }
+            this.arrivals.append(arrival)
+            this.SpawnMonsters(g, e)
+            this.SpawnSteps(g, e, n, next)
+            top = next
+        }
+        # Le joueur à l'entrée, tourné vers la première étape.
+        let d = this.arrivals[0]
+        let cap = 0
+        let path = this.plan.floors[0].path
+        if (len(path) > 1) {
+            let v = this.floors[0].CenterIndex(path[1])
+            cap = math.atan2(v[0] - d[0], v[1] - d[2]) * 180 / math.pi
+        }
+        node.set_position("Player", d[0], d[1], d[2])
+        node.set_rotation("Player", 0, cap, 0)
+    }
+
+    # Scénario qui commence plus bas : le joueur au pied du passage de
+    # l'étage `n` ; la visite guidée oublie les étages du dessus.
+    fn StartAt(n) {
+        if (n <= 0 or n >= len(this.floors)) { return nil }
+        this.floor = n
+        let a = this.arrivals[n]
+        node.set_position("Player", a[0], a[1], a[2])
+        for (k in range(n)) {
+            for (q in this.steps[k]) { scene.remove(q.name) }
+        }
+    }
+
+    fn SpawnMonsters(g, e) {
+        for (m in e.monsters) {
+            let c = g.Center(m[0], m[1])
+            let species = m[4] or "skeleton"
+            let name = this.Species(species).Place(c[0] + m[2], g.y, c[1] + m[3])
+            this.monsters.append({body: node.path(name) .. "/Corps", species: species})
+        }
+    }
+
+    # Étapes de la visite guidée, dans l'ordre : pour chaque case du chemin,
+    # le seuil de la porte puis l'intérieur de la case ; enfin le passage vers
+    # l'étage suivant. Dans les égouts, on longe le trottoir (à TROTTOIR de
+    # l'axe du canal), on tourne aux coins et on traverse par le pont central.
+    fn SpawnSteps(g, e, n, passage) {
+        let points = []
+        let previous = nil
+        for (i in e.path) {
+            let here = [i % g.w, i32(i / g.w)]
+            let k = g.cells[i]
+            let c = g.Center(here[0], here[1])
+            if (previous == nil) {
+                points.append(c)
+            } else {
+                let s = SideTo(previous, here)
+                let entry = (s + 2) % 4
+                let sewer = k.sewer or g.cells[previous[1] * g.w + previous[0]].sewer
+                points.append(Threshold(c, entry, sewer))
+                if (k.sewer) {
+                    let next = nil
+                    let rank = this.IndexOf(e.path, i)
+                    if (rank + 1 < len(e.path)) {
+                        let j = e.path[rank + 1]
+                        next = SideTo(here, [j % g.w, i32(j / g.w)])
+                    }
+                    let a = Corner(c, entry)
+                    points.append(a)
+                    if (next != nil) {
+                        let b = Corner(c, next)
+                        if (a[0] != b[0] or a[1] != b[1]) {
+                            points.append(c)   # le pont central
+                            points.append(b)
+                        }
+                    }
+                } else {
+                    points.append(c)
+                }
+            }
+            previous = here
+        }
+        if (passage != nil) { points.append([passage.pos[0], passage.pos[2]]) }
+        let list = []
+        let rank = 0
+        for (q in points) {
+            rank += 1
+            if (rank == 1) { continue }   # la case d'arrivée : on y est déjà
+            let name = format("Step {}.{}", n + 1, rank)
+            scene.spawn({name: name, parent: "Path", shape: "box", size: [0.2, 0.2, 0.2], pos: [q[0], g.y + 1, q[1]],
+                         visible: false, tag: "step"})
+            list.append({name: name, pos: [q[0], g.y + 1, q[1]]})
+        }
+        this.steps.append(list)
+    }
+
+    fn IndexOf(list, value) {
+        for (r in range(len(list))) { if (list[r] == value) { return r } }
+        return -1
+    }
+
+    # ── Son ──────────────────────────────────────────────────────────────────
+
+    # Ambiance de l'étage du joueur (fondu enchaîné si elle change).
+    fn FloorAmbience(duration) {
+        let e = this.plan.floors[this.floor]
+        let kind = "high"
+        if (e.sewer) { kind = "sewer" } else if (this.floor >= 2) { kind = "deep" }
+        if (kind == this.soundGenre) { return nil }
+        this.soundGenre = kind
+        let a = AMBIENCES[kind]
+        this.ambience.Crossfade(a.layers, duration)
+        this.rumors = sounds.Rumors(a.rumors, 0.45, 10, 26)
+    }
+
+    # Un pas tous les FOULEE mètres ; le sol décide du bruit : l'eau d'un
+    # canal, la pierre humide des trottoirs d'égout, les dalles ailleurs.
+    fn Footstep(p, g) {
+        if (this.previousStep == nil) { this.previousStep = p }
+        let d = PlaneDistance(p, this.previousStep)
+        this.previousStep = p
+        if (d > 3) { return nil }   # téléporté (secours, traversée) : pas un pas
+        this.stride += d
+        if (this.stride < STRIDE) { return nil }
+        this.stride = 0
+        let c = g.CellOf(p[0], p[2])
+        let family = "default_stone_footstep"
+        if (p[1] < g.y + 0.4) {
+            family = "default_water_footstep"
+        } else if (g.Inside(c) and g.cells[c[1] * g.w + c[0]].sewer) {
+            family = "backrooms_step_stone"
+        }
+        sounds.Variant(family, {volume: 0.32})
+    }
+
+    # Le portail tinte doucement quand on en approche.
+    fn Twinkle(p, dt) {
+        if (this.portal == nil) { return nil }
+        let d = PlaneDistance(p, this.portal.pos)
+        if (d > 14 or math.abs(this.portal.pos[1] - (p[1] - 1)) > 3) { return nil }
+        this.twinkle -= dt
+        if (this.twinkle > 0) { return nil }
+        this.twinkle = sounds.Rand(0.5, 1.3)
+        let q = this.portal.pos
+        sounds.Variant("default_crystal_chime", {volume: 0.3, pitch: sounds.Rand(0.8, 1.6),
+                                                position: [q[0], q[1] + sounds.Rand(0.5, 2.5), q[2]]})
+    }
+
+    # ── Interface ────────────────────────────────────────────────────────────
+
+    fn CreateInterface() {
+        let bloc = ui.column({anchor: "top_left", offset: [16, 14], gap: 6, pad: 12, bg: "#120e0cc8", radius: 8, w: 250})
+        this.hud.hp = ui.progress(HP_MAX, HP_MAX, {parent: bloc, w: 210})
+        this.hud.pv_texte = ui.label("PV", {parent: bloc, font_size: 13})
+        this.hud.or_ = ui.label("Or : 0", {parent: bloc, font_size: 16, color: "#ffd060"})
+        this.hud.floor = ui.label("", {parent: bloc, font_size: 14, color: "#e8c27a"})
+        this.hud.tues = ui.label("Monstres vaincus : 0", {parent: bloc, font_size: 13})
+        ui.label(this.plan.name, {anchor: "top", offset: [0, 14], font_size: 26, bold: true, color: "#e8c27a"})
+        this.hud.message = ui.label("", {anchor: "center", offset: [0, -120], font_size: 22, bold: true,
+                                         color: "#ffe9b0"})
+        this.hud.hint = ui.label("", {anchor: "center", offset: [0, 90], font_size: 17, color: "#f0e6d0"})
+        ui.button("Menu", fn(b) { this.load("main_menu") }, {anchor: "top_right", offset: [-14, 14], w: 80})
+        ui.label("ZQSD / WASD : marcher · souris : regarder · Espace ou clic : frapper · E : échelle · F7 : souris",
+                 {anchor: "bottom", offset: [0, -14], font_size: 13, color: "#c9bfaea0"})
+    }
+
+    fn Announce(text) {
+        this.hud.message.text = text
+        this.messageTime = 2.5
+    }
+
+    fn RefreshInterface(dt) {
+        this.hud.hp.value = this.hp
+        this.hud.pv_texte.text = format("PV {} / {}", this.hp, HP_MAX)
+        this.hud.or_.text = format("Or : {}", this.or_)
+        this.hud.floor.text = format("Étage {} / {} — {}", this.floor + 1, len(this.floors),
+                                     this.plan.floors[this.floor].name)
+        let detail = ""
+        for (name in ["skeleton", "zombie", "spider", "piranha"]) {
+            if ((this.tues[name] or 0) > 0) { detail = detail .. format(" · {} {}", NAMES[name], this.tues[name]) }
+        }
+        this.hud.tues.text = format("Monstres vaincus : {}{}", this.totalKilled, detail)
+        this.messageTime -= dt
+        if (this.messageTime <= 0) { this.hud.message.text = "" }
+        let state = game.state()
+        this.hud.hint.text = state.hint or ""
+        state.hint = nil   # les passages le reposent à chaque image
+    }
+
+    # Mini-carte de l'étage courant (2D, coin bas-droit) : seules les cases
+    # découvertes et leurs voisines ouvertes apparaissent.
+    fn DrawMap() {
+        let g = this.floors[this.floor]
+        let visited = this.visited[this.floor]
+        let e = this.plan.floors[this.floor]
+        let size = canvas.size()
+        let ox = size[0] - 24 - g.w * PX
+        let oy = size[1] - 60 - g.h * PX
+        draw2d.rect(ox - 6, oy - 6, g.w * PX + 12, g.h * PX + 12, "#0c0a09c0",
+                    {z: 40, outline: 1, outline_color: "#8a7f7480"})
+        draw2d.text(format("Étage {}", this.floor + 1), ox - 4, oy - 24, {z: 41, size: 12, color: "#c9bfae"})
+        for (i in range(g.w * g.h)) {
+            let k = g.cells[i]
+            let known = visited[i]
+            if (not known) {
+                for (s in range(4)) {
+                    let nx = k.x + [0, 1, 0, -1][s]
+                    let ny = k.y + [1, 0, -1, 0][s]
+                    if (k.open[s] and g.Inside([nx, ny]) and visited[ny * g.w + nx]) { known = true }
+                }
+            }
+            if (not known) { continue }
+            # Case (y vers le haut à l'écran = nord).
+            let cx = ox + (k.x + 0.5) * PX
+            let cy = oy + (g.h - k.y - 0.5) * PX
+            let tint = "#9c8f80"
+            if (k.sewer) { tint = "#6f9a8c" }
+            if (not visited[i]) { tint = "#5a5048" }
+            if (k.isRoom) {
+                draw2d.rect(cx - 6, cy - 6, 12, 12, tint, {z: 41})
+            } else {
+                draw2d.rect(cx - 2, cy - 2, 4, 4, tint, {z: 41})
+            }
+            let directions = [[0, -1], [1, 0], [0, 1], [-1, 0]] # nord = haut de l'écran
+            for (s in range(4)) {
+                if (k.open[s]) {
+                    draw2d.line(cx, cy, cx + directions[s][0] * PX / 2, cy + directions[s][1] * PX / 2, tint, {z: 41, width: 3})
+                }
+            }
+            if (k.room == "exit") { draw2d.circle(cx, cy, 3.5, "#78dcff", {z: 43}) }
+            if (k.room == "stairs_descent" or k.room == "ladder_well") {
+                draw2d.circle(cx, cy, 3.5, "#ffb050", {z: 43})   # vers le bas
+            }
+            if (k.room == "stairs_arrival" or k.room == "ladder_arrival") {
+                draw2d.circle(cx, cy, 3.5, "#a0d070", {z: 43})   # vers le haut
+            }
+        }
+        let p = node.position("Player")
+        let px = ox + (p[0] / CELL + (g.w - 1) / 2 + 0.5) * PX
+        let py = oy + (g.h - (p[2] / CELL + (g.h - 1) / 2) - 0.5) * PX
+        let a = node.rotation("Player")[1] * math.pi / 180
+        draw2d.line(px, py, px + math.sin(a) * 8, py - math.cos(a) * 8, "#ffd873", {z: 46, width: 2})
+        draw2d.circle(px, py, 3.5, "#ffd873", {z: 46, outline: 1, outline_color: "#000000"})
+    }
+
+    fn DrawCrosshair() {
+        if (input.mouse_mode() != "captured") { return nil }
+        let t = canvas.size()
+        let cx = t[0] / 2
+        let cy = t[1] / 2
+        draw2d.line(cx - 9, cy, cx - 3, cy, "#ffffffc0", {z: 50, width: 2})
+        draw2d.line(cx + 3, cy, cx + 9, cy, "#ffffffc0", {z: 50, width: 2})
+        draw2d.line(cx, cy - 9, cx, cy - 3, "#ffffffc0", {z: 50, width: 2})
+        draw2d.line(cx, cy + 3, cx, cy + 9, "#ffffffc0", {z: 50, width: 2})
+    }
+
+    # ── Traversée d'un étage à l'autre ───────────────────────────────────────
+
+    fn BeginTransit(request) {
+        let floor = node.prop(request.de, "floor")
+        if (floor == nil) { return nil }
+        this.transit = {de: request.de, target: request.target, kind: request.kind, role: request.role, t: 0,
+                        fait: false, floor: floor, prochain_pas: 0}
+        game.state().transit = this.transit
+        node.prop("Player", "transit", true)
+        node.prop("Player", "target", "")
+    }
+
+    fn PlayTransit(dt) {
+        let tr = this.transit
+        tr.t += dt
+        # Échelons de métal ou marches de pierre, au rythme de la traversée.
+        if (tr.t >= tr.prochain_pas and tr.t < 2 * FADE) {
+            tr.prochain_pas = tr.t + 0.17
+            let family = "default_stone_footstep"
+            if (tr.kind == "ladder") { family = "default_metal_footstep" }
+            sounds.Variant(family, {volume: 0.4})
+        }
+        let alpha = 0
+        if (tr.t < FADE) {
+            alpha = tr.t / FADE
+            # Le chevalier s'enfonce (descente) ou s'élève (montée) dans le noir.
+            let p = node.position("Player")
+            let direction = -1
+            if (tr.role == "up") { direction = 1 }
+            node.set_position("Player", p[0], p[1] + direction * dt * 2.2, p[2])
+        } else if (not tr.fait) {
+            tr.fait = true
+            alpha = 1
+            let a = node.world_position(tr.target .. "/Arrivée") or node.world_position(tr.target)
+            node.set_position("Player", a[0], a[1], a[2])
+            let leaving = this.floor
+            this.floor = tr.floor
+            this.FloorAmbience(2.0)
+            this.previousStep = nil
+            # La visite guidée a franchi cet étage : ses étapes restantes partent.
+            for (q in this.steps[leaving]) {
+                if (scene.exists(q.name)) { scene.remove(q.name) }
+            }
+            let verb = "descendez"
+            if (tr.role == "up") { verb = "montez" }
+            let way = "l'escalier"
+            if (tr.kind == "ladder") { way = "l'échelle" }
+            this.Announce(format("Vous {} par {} — étage {} : {}", verb, way, this.floor + 1,
+                                 this.plan.floors[this.floor].name))
+        } else {
+            alpha = math.max(0, 1 - (tr.t - FADE) / FADE)
+        }
+        let t = canvas.size()
+        draw2d.rect(0, 0, t[0], t[1], format("#000000{}", ["00", "40", "80", "c0", "ff"][i64(math.round(alpha * 4))]),
+                    {z: 60})
+        if (tr.t >= 2 * FADE) {
+            this.transit = nil
+            let state = game.state()
+            state.transit = nil
+            state.transitEnd = game.time() + 1.2
+            node.prop("Player", "transit", false)
+        }
+    }
+
+    # ── Combat ───────────────────────────────────────────────────────────────
+
+    fn Living() {
+        let restants = []
+        for (m in this.monsters) {
+            if (scene.exists(m.body)) { restants.append(m) }
+        }
+        this.monsters = restants
+        return restants
+    }
+
+    # Coup d'épée : les monstres à portée, devant le joueur, à son étage. Un
+    # piranha ne se touche que hors de l'eau.
+    fn Swing() {
+        # Le fouet de la lame ; le monstre touché fait son propre bruit.
+        sounds.Variant("default_grass_hit", {volume: 0.4, pitch: sounds.Rand(1.35, 1.55)})
+        let p = node.position("Player")
+        let ground = p[1] - 1
+        let cap = node.rotation("Player")[1] * math.pi / 180
+        for (m in this.Living()) {
+            let q = node.world_position(m.body)
+            if (q == nil or math.abs(q[1] - ground) > 1.8) { continue }
+            if (m.species == "piranha" and q[1] < ground - 0.15) { continue }
+            let dx = q[0] - p[0]
+            let dz = q[2] - p[2]
+            let d = math.sqrt(dx * dx + dz * dz)
+            if (d < 2.4 and (dx * math.sin(cap) + dz * math.cos(cap)) > d * 0.3) {
+                node.prop(m.body, "hits", (node.prop(m.body, "hits") or 0) + 1)
+            }
+        }
+        this.swingCooldown = 0.5
+    }
+
+    # Ce que les monstres ont fait depuis l'image précédente.
+    fn Tally() {
+        let state = game.state()
+        if ((state.playerDamage or 0) > 0) {
+            this.hp = math.max(0, this.hp - i64(math.round(state.playerDamage * this.damage)))
+            sounds.Variant("default_dirt_hit", {volume: 0.8, pitch: sounds.Rand(0.65, 0.75)})
+            this.Announce(format("{} vous frappe !", NAMES[state.lastHit] or "Un monstre"))
+            state.playerDamage = 0
+        }
+        if (state.deaths != nil and len(state.deaths) > 0) {
+            for (m in state.deaths) {
+                this.tues[m.species] = (this.tues[m.species] or 0) + 1
+                this.totalKilled += 1
+                this.or_ += REWARDS[m.species] or 5
+                sounds.Variant("default_item_drop_pickup", {volume: 0.45, pitch: sounds.Rand(1.1, 1.3)})
+                let name = NAMES[m.species] or "Monstre"
+                let suffix = ""
+                if (m.species == "spider") { suffix = "e" }
+                this.Announce(format("{} vaincu{} ! +{} or", name, suffix, REWARDS[m.species] or 5))
+            }
+            state.deaths = []
+        }
+    }
+
+    # Visite guidée : le chevalier fait face au monstre le plus proche qu'il
+    # peut toucher (pas un piranha sous l'eau) et frappe ; une cible qui lui
+    # résiste plus de 5 s est laissée de côté un moment.
+    fn Guide(dt) {
+        let p = node.position("Player")
+        let ground = p[1] - 1
+        let target = ""
+        let closest = 1e9
+        for (m in this.monsters) {
+            if ((this.ignores[m.body] or 0) > this.time) { continue }
+            let q = node.world_position(m.body)
+            if (q == nil or math.abs(q[1] - ground) > 1.8) { continue }
+            if (m.species == "piranha" and q[1] < ground - 0.15) { continue }
+            let d = PlaneDistance(p, q)
+            if (d < 4 and d < closest) {
+                closest = d
+                target = m.body
+            }
+        }
+        let manual = node.prop("Player", "manual") == true
+        if (manual) { target = "" }
+        if (target != "" and target == this.previousTarget) {
+            this.targetDuration += dt
+            if (this.targetDuration > 5) {
+                this.ignores[target] = this.time + 8
+                target = ""
+            }
+        } else {
+            this.targetDuration = 0
+        }
+        this.previousTarget = target
+        node.prop("Player", "target", target)
+        if (not manual and target != "" and closest < 2.3 and this.swingCooldown <= 0) { this.Swing() }
+    }
+
+    # La prochaine étape de la visite (la première encore posée à cet étage) ;
+    # une étape atteinte est retirée.
+    fn NextStep(p) {
+        for (q in this.steps[this.floor]) {
+            if (scene.exists(q.name)) {
+                if (PlaneDistance(p, q.pos) < 0.9) {
+                    scene.remove(q.name)
+                } else {
+                    return q
+                }
+            }
+        }
+        return nil
+    }
+
+    # Secours : hors d'un canal où l'on est tombé (le pont de la case), et,
+    # en visite guidée, un chevalier coincé 3 s saute à sa prochaine étape.
+    fn Rescue(p, g, dt) {
+        let q = this.NextStep(p)
+        if (p[1] < g.y + 0.4) {
+            if (this.drowning == 0) {
+                sounds.Variant("default_water_footstep", {volume: 0.9, pitch: 0.7})   # plouf
+                sounds.Variant("default_underwater_bubbles", {volume: 0.5})
+            }
+            this.drowning += dt
+            if (this.drowning > 1.5) {
+                let c = g.CellOf(p[0], p[2])
+                let o = g.Center(c[0], c[1])
+                node.set_position("Player", o[0], g.y + 1.2, o[1])
+                this.Announce("Vous vous hissez hors du canal")
+                sounds.Variant("default_water_footstep", {volume: 0.6, pitch: 1.1})
+                this.drowning = 0
+            }
+        } else {
+            this.drowning = 0
+        }
+        if (node.prop("Player", "manual") == true or node.prop("Player", "target") != "") {
+            this.stuck = 0
+            return nil
+        }
+        if (this.lastPos == nil or PlaneDistance(p, this.lastPos) > 0.3) {
+            this.lastPos = p
+            this.stuck = 0
+        } else {
+            this.stuck += dt
+        }
+        if (this.stuck > 3 and q != nil) {
+            node.set_position("Player", q.pos[0], q.pos[1], q.pos[2])
+            this.stuck = 0
+            this.lastPos = nil
+        }
+    }
+
+    # ── Partie ───────────────────────────────────────────────────────────────
+
+    fn End(victory) {
+        this.finished = true
+        input.set_mouse_mode("free") # boutons de fin de partie
+        node.prop("Player", "target", "")
+        let title = "Vous êtes tombé…"
+        if (victory) { title = "Vous avez trouvé la sortie !" }
+        if (victory) {
+            # Le portail : une cloche, un accord de clochettes, la musique du titre.
+            sounds.Play("backrooms_elevator_ding", {volume: 0.6})
+            for (h in [1.0, 1.26, 1.5, 2.0]) { sounds.Variant("default_crystal_chime", {volume: 0.4, pitch: h}) }
+            this.ambience.Crossfade([{sound: "game-music-main", volume: 0.5}], 2.0)
+        } else {
+            sounds.Play("default_ambience_ghost_1", {volume: 0.8, pitch: 0.8})
+            this.ambience.Crossfade([{sound: "default_ambience_ghost_2", volume: 0.4},
+                                  {sound: "default_ambience_wind_cave_1", volume: 0.3}], 1.5)
+        }
+        let panel = ui.column({anchor: "center", gap: 10, pad: 26, bg: "#120e0ce8", radius: 10, align: "center"})
+        ui.label(title, {parent: panel, font_size: 26, bold: true, color: "#e8c27a"})
+        ui.label(format("{} — étage {} / {}, {} s, {} pièces d'or, {} monstres vaincus", this.plan.name,
+                        this.floor + 1, len(this.floors), math.round(this.time), this.or_, this.totalKilled),
+                 {parent: panel, color: "#c9bfae"})
+        ui.button("Rejouer ce donjon", fn(b) { this.load("Dungeon") }, {parent: panel, w: 300})
+        ui.button("Nouveau donjon", fn(b) {
+            let state = this.state()
+            state.seed = (state.seed or 1234) + 1
+            this.load("generation")
+        }, {parent: panel, w: 300})
+        ui.button("main_menu", fn(b) { this.load("main_menu") }, {parent: panel, w: 300})
+        editor.log(format("{} : {} en {} s (étage {}, PV {}, or {}, tués {})", this.plan.name, title,
+                          math.round(this.time * 10) / 10, this.floor + 1, this.hp, this.or_, this.totalKilled))
+    }
+
+    fn OnMouseMode(mode) {
+        if (mode == "captured") {
+            this.Announce("Souris capturée · F7 pour la libérer")
+        } else {
+            this.Announce("Souris libre · F7 pour la capturer")
+        }
+    }
+
+    fn OnUpdate(dt) {
+        this.ambience.Update(dt)
+        this.DrawMap()
+        this.DrawCrosshair()
+        this.RefreshInterface(dt)
+        if (this.finished) { return nil }
+        this.time += dt
+        this.Tally()
+
+        let state = game.state()
+        if (this.transit != nil) {
+            this.PlayTransit(dt)
+            return nil
+        }
+        if (state.transitRequest != nil) {
+            let request = state.transitRequest
+            state.transitRequest = nil
+            this.BeginTransit(request)
+            return nil
+        }
+
+        let p = node.position("Player")
+        let g = this.floors[this.floor]
+        let c = g.CellOf(p[0], p[2])
+        if (g.Inside(c)) { this.visited[this.floor][c[1] * g.w + c[0]] = true }
+        this.Footstep(p, g)
+        this.rumors.Update(dt)
+        this.Twinkle(p, dt)
+
+        this.swingCooldown -= dt
+        let swing = input.key("space") or (input.mouse_mode() == "captured" and canvas.mouse_pressed(1))
+        if (swing and not this.wasSwinging and this.swingCooldown <= 0) { this.Swing() }
+        this.wasSwinging = swing
+        this.Guide(dt)
+        this.Rescue(p, g, dt)
+
+        for (k in this.chests) {
+            if (not k.open and math.abs(k.pos[1] - (p[1] - 1)) < 2 and PlaneDistance(p, k.pos) < 2.2) {
+                k.open = true
+                node.prop(k.path, "open", true)
+                this.or_ += 25
+                this.Announce("Un coffre plein d'or : +25")
+            }
+        }
+        if (this.portal != nil and math.abs(this.portal.pos[1] - (p[1] - 1)) < 2 and
+            PlaneDistance(p, this.portal.pos) < 2.4) {
+            this.End(true)
+        } else if (this.hp <= 0) {
+            this.End(false)
+        } else if (p[1] < g.y - 4) {
+            # Filet de sécurité : tombé sous le sol, retour à l'arrivée de l'étage.
+            let a = this.arrivals[this.floor]
+            node.set_position("Player", a[0], a[1], a[2])
+        }
+    }
+}

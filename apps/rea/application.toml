@@ -1,0 +1,17 @@
+[application]
+name = "rea"
+version = "0.1.0"
+description = "Rétro-ingénierie de binaires x86-64 : désassemblage, lifting C, chaînes et graphe d'appels (REA)"
+language = "c++"
+
+[dependencies]
+modules = ["foundation.core", "foundation.rea", "engine.disasm", "platform.sdl3", "graphics.ui", "graphics.app"]
+pkg_config = []
+system = []
+
+[run]
+args = []
+
+[review]
+status = "approved"
+date = "2026-11-15"

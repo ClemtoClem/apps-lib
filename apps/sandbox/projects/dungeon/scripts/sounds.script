@@ -1,0 +1,208 @@
+# ── Sons : module commun (importé par le donjon, les monstres, les décors) ───
+#
+# Les sons vivent dans le dossier du projet (assets/sounds/*.ogg) ; un nom
+# s'écrit sans dossier ni extension (« default_chest_open »). Les familles à
+# variantes (« default_stone_footstep.1 … .5 ») se jouent au hasard, avec un
+# léger écart de hauteur : jamais deux pas identiques.
+#
+#   sons.jouer(nom, options)          un son, options d'audio.play
+#   sons.variante(famille, options)   une variante au hasard de la famille
+#   sons.ici(famille, pos, volume)    spatialisé, à une position monde
+#   sons.sur(famille, chemin, volume) spatialisé, qui suit un nœud
+#   Ambiance                          musique et nappes en fondu enchaîné
+#   Proximite                         boucle qui ne sonne qu'à portée de l'auditeur
+#   Rumeurs                           sons isolés au hasard autour de l'auditeur
+#
+# L'auditeur est la caméra (camera.position()) : dans le donjon, l'œil du
+# chevalier ; au menu, la caméra de la scène.
+
+const SOUND_DIR = "assets/sounds/"
+
+# Nombre de variantes de chaque famille (fichiers « famille.N.ogg »).
+const VARIANTS = {
+    "default_stone_footstep": 5, "backrooms_step_stone": 5, "default_water_footstep": 4,
+    "default_metal_footstep": 5, "default_wood_footstep": 6, "default_gravel_footstep": 6,
+    "default_mud_footstep": 5, "default_leaves_footstep": 4, "backrooms_hard_footstep": 6,
+    "default_bamboo_hit": 5, "default_leaves_hit": 2, "default_dirt_hit": 3, "default_stone_hit": 3,
+    "default_grass_hit": 3, "default_metal_hit": 3, "default_wood_hit": 6, "default_gravel_dug": 4,
+    "default_leaves_dug": 2, "default_crystal_chime": 6, "default_underwater_bubbles": 3,
+    "default_creaky_door_open": 2, "default_item_drop_pickup": 4, "default_ambience_ghost": 6,
+    "default_ambience_wind_cave": 5, "default_ambience_cave": 9, "default_ambience_water_drips_cave": 2,
+    "default_ambience_ice_cracking": 3, "default_ceramic_hit": 6, "default_stone_place": 4,
+}
+
+# Les familles des ambiances s'écrivent « famille_N » (sans point).
+const UNDERSCORED = {"default_ambience_ghost": true, "default_ambience_wind_cave": true, "default_ambience_cave": true,
+                  "default_ambience_water_drips_cave": true, "default_ambience_ice_cracking": true}
+
+fn SoundPath(name) { return SOUND_DIR .. name .. ".ogg" }
+
+fn Rand(a, b) { return a + math.random() * (b - a) }
+
+# Chemin d'une variante au hasard (ou du son lui-même s'il n'en a pas).
+fn PickVariant(family) {
+    let n = VARIANTS[family]
+    if (n == nil) { return SoundPath(family) }
+    let k = 1 + i64(math.floor(math.random() * n))
+    if (k > n) { k = n }
+    if (UNDERSCORED[family] == true) { return SoundPath(format("{}_{}", family, k)) }
+    return SoundPath(format("{}.{}", family, k))
+}
+
+# Tous les fichiers d'une famille (pour audio.preload).
+fn VariantFiles(family) {
+    let n = VARIANTS[family]
+    if (n == nil) { return [SoundPath(family)] }
+    let list = []
+    for (k in range(1, n + 1)) {
+        if (UNDERSCORED[family] == true) {
+            list.append(SoundPath(format("{}_{}", family, k)))
+        } else {
+            list.append(SoundPath(format("{}.{}", family, k)))
+        }
+    }
+    return list
+}
+
+fn Preload(families) {
+    let all = []
+    for (f in families) {
+        for (c in VariantFiles(f)) { all.append(c) }
+    }
+    audio.preload(all)
+}
+
+fn Play(name, options) { return audio.play(SoundPath(name), options) }
+
+# Une variante, hauteur légèrement variée (sauf si `pitch` est donné).
+fn Variant(family, options) {
+    if (options.pitch == nil) { options.pitch = Rand(0.92, 1.08) }
+    return audio.play(PickVariant(family), options)
+}
+
+fn At(family, pos, volume) { return Variant(family, {volume: volume, position: pos}) }
+
+fn OnNode(family, node, volume) { return Variant(family, {volume: volume, node: node}) }
+
+# ── Ambiance : couches en boucle, fondus enchaînés ──────────────────────────
+#
+# `passer([{son, volume}, …], duree)` fait taire les couches qui ne sont plus
+# demandées et monter les nouvelles ; `mettre_a_jour(dt)` à chaque image.
+
+class Ambience {
+    let layers = []   # {son, voix, volume, cible, vitesse}
+
+    fn Crossfade(list, duration) {
+        let speed = 1 / math.max(0.05, duration)
+        for (c in this.layers) {
+            c.target = 0
+            c.speed = speed
+        }
+        for (request in list) {
+            let existing = nil
+            for (c in this.layers) {
+                if (c.sound == request.sound and c.voice != nil) { existing = c }
+            }
+            if (existing != nil) {
+                existing.target = request.volume
+            } else {
+                let voice = audio.play(SoundPath(request.sound), {volume: 0, loop: true, pitch: request.pitch or 1})
+                this.layers.append({sound: request.sound, voice: voice, volume: 0, target: request.volume,
+                                     speed: speed})
+            }
+        }
+    }
+
+    fn Update(dt) {
+        let remaining = []
+        for (c in this.layers) {
+            let step = c.speed * dt * math.max(c.target, 0.3)
+            if (c.volume < c.target) { c.volume = math.min(c.target, c.volume + step) }
+            if (c.volume > c.target) { c.volume = math.max(c.target, c.volume - step) }
+            if (c.target == 0 and c.volume <= 0.001) {
+                audio.stop(c.voice)
+            } else {
+                audio.volume(c.voice, c.volume)
+                remaining.append(c)
+            }
+        }
+        this.layers = remaining
+    }
+
+    fn Stop() {
+        for (c in this.layers) { audio.stop(c.voice) }
+        this.layers = []
+    }
+}
+
+# ── Proximité : une boucle accrochée à un nœud, jouée à portée du joueur ─────
+#
+# Des dizaines de torches ou de canaux dans un donjon : seuls ceux qui sont
+# près du joueur ont une voix (au-delà, le mixeur n'a rien à faire).
+
+class Proximity {
+    let sound = ""
+    let node = ""
+    let volume = 0.3
+    let pitch = 1.0
+    let range = 9.0
+    let voice = nil
+
+    fn init(sound, node, volume, range) {
+        this.sound = sound
+        this.node = node
+        this.volume = volume
+        this.range = range
+        this.pitch = Rand(0.9, 1.1)
+    }
+
+    fn Follow(pos) {
+        let player = camera.position()   # l'auditeur, c'est la caméra
+        let near = false
+        if (player != nil and pos != nil) {
+            let dx = player[0] - pos[0]
+            let dy = player[1] - pos[1]
+            let dz = player[2] - pos[2]
+            let d = math.sqrt(dx * dx + dy * dy + dz * dz)
+            near = d < this.range or (this.voice != nil and d < this.range + 1.5)   # hystérésis
+        }
+        if (near and this.voice == nil) {
+            this.voice = audio.play(SoundPath(this.sound), {volume: this.volume, loop: true, pitch: this.pitch,
+                                                      node: this.node})
+        } else if (not near and this.voice != nil) {
+            audio.stop(this.voice)
+            this.voice = nil
+        }
+    }
+}
+
+# ── Rumeurs : un son isolé de temps en temps, quelque part autour du joueur ──
+
+class Rumors {
+    let families = []
+    let volume = 0.4
+    let wait = 8.0
+    let min = 12.0
+    let max = 30.0
+
+    fn init(families, volume, min, max) {
+        this.families = families
+        this.volume = volume
+        this.min = min
+        this.max = max
+        this.wait = Rand(min * 0.5, max * 0.5)
+    }
+
+    fn Update(dt) {
+        this.wait -= dt
+        if (this.wait > 0) { return nil }
+        this.wait = Rand(this.min, this.max)
+        let player = camera.position()   # l'auditeur, c'est la caméra
+        if (player == nil or len(this.families) == 0) { return nil }
+        let family = this.families[i64(math.floor(math.random() * len(this.families))) % len(this.families)]
+        let a = math.random() * 2 * math.pi
+        let d = Rand(5, 11)
+        At(family, [player[0] + math.sin(a) * d, player[1] + Rand(-0.5, 2), player[2] + math.cos(a) * d],
+            this.volume * Rand(0.7, 1.0))
+    }
+}
