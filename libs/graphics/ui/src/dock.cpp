@@ -191,7 +191,7 @@ void DockLayout::Draw(Context &ctx, const sdl3::FRect &area, std::function<void(
 		float tx = bar.x + 4;
 		for (int i = 0; i < int(reg.tabs.size()); ++i) {
 			const DockTab &t = reg.tabs[size_t(i)];
-			const float w = c.MeasureText(t.title, 13) + (t.icon ? 26 : 18);
+			const float w = c.MeasureText(t.title, 13) + (t.icon ? 26 : 18) + (t.dirty ? 12 : 0) + (t.closable ? 22 : 0);
 			const sdl3::FRect tr{tx, bar.y + 3, w, bar.h - 6};
 			const bool active = i == reg.active;
 			const bool hover = ctx.MouseIn(tr);
@@ -199,14 +199,29 @@ void DockLayout::Draw(Context &ctx, const sdl3::FRect &area, std::function<void(
 				c.FillRoundRect(tr, 4, active ? th.widget : th.widgetHover);
 			if (t.icon)
 				c.Icon({tr.x + 6, tr.y, 16, tr.h}, t.icon, active ? th.accent : th.textDim, 15);
-			c.Text(tr.x + (t.icon ? 24 : 8), tr.y + (tr.h - c.LineHeight(13)) * 0.5f, t.title, active ? th.text : th.textDim, 13);
+			// Titre teinté à la couleur d'avertissement du thème si le document n'est pas enregistré.
+			const sdl3::Color titleColor = t.dirty ? th.warning : (active ? th.text : th.textDim);
+			c.Text(tr.x + (t.icon ? 24 : 8), tr.y + (tr.h - c.LineHeight(13)) * 0.5f, t.title, titleColor, 13);
+			const sdl3::FRect close{tr.Right() - 20, tr.y + 3, 17, tr.h - 6};
+			if (t.closable) {
+				const bool closeHover = ctx.MouseIn(close);
+				if (closeHover)
+					c.FillRoundRect(close, 3, th.widgetActive);
+				c.Icon(close, icons::Codepoint(icons::MaterialIcons::CLOSE), closeHover ? th.text : th.textDim, 14);
+			}
+			if (t.dirty) // point « non enregistré »
+				c.FillCircle(tr.Right() - (t.closable ? 32 : 12), tr.y + tr.h / 2, 3, th.warning);
 			if (active)
 				c.FillRect({tr.x, tr.Bottom() - 1, tr.w, 2}, th.accent);
 			if (hover && ctx.MousePressed(sdl3::MouseButton::Left)) {
-				reg.active = i;
-				if (m_dragIndex < 0) {
-					m_dragFrom = side;
-					m_dragIndex = i;
+				if (t.closable && ctx.MouseIn(close)) // fermeture demandée (traitée après Draw)
+					m_closeRequested = t.id;
+				else {
+					reg.active = i;
+					if (m_dragIndex < 0) {
+						m_dragFrom = side;
+						m_dragIndex = i;
+					}
 				}
 			}
 			tx += w + 2;

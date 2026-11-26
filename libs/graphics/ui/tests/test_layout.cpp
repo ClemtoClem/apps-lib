@@ -574,6 +574,51 @@ TEST(Retained_TabsScrollWhenTooMany) {
 	CHECK(fw->scroll.x == 0.f);
 }
 
+TEST(Retained_HiddenTabsDoNotCapturePointer) {
+	Fixture f;
+	if (!f.ok || !f.sdl)
+		SKIP("renderer logiciel, polices ou évènements SDL indisponibles");
+	int tab = 0;
+	ui::Ui ui(f.canvas, f.events);
+	// Trois onglets, chacun portant un bouton : quand un onglet cesse d'être actif, sa page
+	// garde les bornes de son dernier passage, qui chevauchent exactement celles de l'onglet
+	// actif (même corps de TabWidget).
+	f.Present(ui, ui::TabWidget().Id("tabs").Tabs({"A", "B", "C"}).Bind(tab).Children({
+					  ui::Column().Id("page-a").Children({ui::Button("A").Id("btn-a")}),
+					  ui::Column().Id("page-b").Children({ui::Button("B").Id("btn-b")}),
+					  ui::Column().Id("page-c").Children({ui::Button("C").Id("btn-c")}),
+				  }));
+	const auto frame = [&] {
+		f.canvas.Begin();
+		ui.Present(0.016f, sdl3::FRect{0, 0, kW, kH});
+		f.canvas.End();
+	};
+	// Passe par C puis revient à A : la page C (masquée) garde les bornes de son bouton,
+	// au même endroit que celui de la page A (active).
+	tab = 2;
+	frame();
+	frame();
+	tab = 0;
+	frame();
+	frame();
+	const ui::Widget active = ui.Find("btn-a"), hidden = ui.Find("btn-c");
+	REQUIRE(active && hidden);
+	const sdl3::FRect ba = active.Bounds(), bc = hidden.Bounds();
+	REQUIRE(ba.w > 0.f && bc.w > 0.f); // les deux ont des bornes (le masqué : périmées)
+	CHECK(Near(ba.x, bc.x) && Near(ba.y, bc.y)); // même emplacement
+	// Pointeur au centre : seul le bouton de l'onglet actif est survolé, pas celui du masqué.
+	const float cx = ba.x + ba.w / 2.f, cy = ba.y + ba.h / 2.f;
+	SDL_Event m{};
+	m.type = SDL_EVENT_MOUSE_MOTION;
+	m.motion.x = cx;
+	m.motion.y = cy;
+	SDL_PushEvent(&m);
+	f.events.Poll();
+	frame();
+	CHECK(active.Hovered());
+	CHECK(!hidden.Hovered());
+}
+
 TEST(Retained_ToolGroupsScrollHorizontally) {
 	Fixture f;
 	if (!f.ok || !f.sdl)

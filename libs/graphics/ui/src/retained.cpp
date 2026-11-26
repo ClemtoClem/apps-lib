@@ -329,6 +329,11 @@ constexpr float kToolGroupCaption = 11.f; ///< corps de la légende d'un groupe 
 void CollectFocusable(Node &n, std::vector<Node *> &out) {
 	if (IsFocusable(n))
 		out.push_back(&n);
+	if (KindOf(n) == WidgetKind::TabWidget) { // seul l'onglet actif participe au cycle de focus
+		if (n.selectedIndex >= 0 && size_t(n.selectedIndex) < n.children.size())
+			CollectFocusable(*n.children[size_t(n.selectedIndex)], out);
+		return;
+	}
 	for (NodePtr &ch : n.children)
 		CollectFocusable(*ch, out);
 }
@@ -2216,6 +2221,13 @@ void Ui::HitTest(Node &node, float x, float y, Node *&hit) {
 		return;
 	if (node.bounds.Contains(x, y) && !node.passThrough) // calque transparent au pointeur : ses enfants seulement
 		hit = &node;
+	// Un TabWidget n'expose que son onglet actif : les widgets des onglets masqués ne
+	// reçoivent pas le pointeur (leurs bornes peuvent chevaucher celles de l'onglet actif).
+	if (KindOf(node) == WidgetKind::TabWidget) {
+		if (node.selectedIndex >= 0 && size_t(node.selectedIndex) < node.children.size())
+			HitTest(*node.children[size_t(node.selectedIndex)], x, y, hit);
+		return;
+	}
 	for (NodePtr &child : node.children)
 		HitTest(*child, x, y, hit);
 }
@@ -2658,8 +2670,15 @@ void Ui::HandleWidgetInput(Node &node, Node *hit, Node *pressed) {
 			default: break;
 			}
 		}
-		for (NodePtr &c : n.children)
-			dispatch(*c);
+		// Un TabWidget ne distribue les clics qu'à son onglet actif (les onglets masqués
+		// peuvent porter un `clicked` périmé ; leurs bornes chevauchent l'onglet actif).
+		if (KindOf(n) == WidgetKind::TabWidget) {
+			if (n.selectedIndex >= 0 && size_t(n.selectedIndex) < n.children.size())
+				dispatch(*n.children[size_t(n.selectedIndex)]);
+		} else {
+			for (NodePtr &c : n.children)
+				dispatch(*c);
+		}
 	};
 	dispatch(node);
 

@@ -23,6 +23,7 @@
 #include <span>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 #include <sdl3/render/canvas.hpp>
@@ -36,6 +37,8 @@ struct DockTab {
 	std::string id;
 	std::string title;
 	char32_t icon = 0;
+	bool dirty = false;		///< non enregistré : teinte d'avertissement (thème)
+	bool closable = true; ///< bouton de fermeture à droite de l'onglet
 };
 
 /// État d'une région (sérialisable : identifiants d'onglets seulement).
@@ -81,6 +84,10 @@ public:
 	/// utile de la région (sous sa barre d'onglets).
 	void Draw(Context &ctx, const sdl3::FRect &area, std::function<void(Side, const sdl3::FRect &, std::string_view)> content);
 
+	/// Identifiant de l'onglet dont le bouton « fermer » a été cliqué pendant le dernier
+	/// `Draw` (vide sinon). À traiter après le dessin (l'appelant peut alors retirer l'onglet).
+	[[nodiscard]] std::string TakeCloseRequest() { return std::exchange(m_closeRequested, {}); }
+
 private:
 	struct Region {
 		std::vector<DockTab> tabs;
@@ -95,6 +102,7 @@ private:
 	int m_dragSplitter = -1;  // 0 left|center, 1 center|right, 2 center|bottom
 	Side m_dragFrom = Side::Left; // région source d'un onglet en cours de glissement
 	int m_dragIndex = -1;	 // index de l'onglet glissé (-1 = aucun)
+	std::string m_closeRequested; // onglet à fermer (demandé au dernier Draw)
 };
 
 } // namespace ui
